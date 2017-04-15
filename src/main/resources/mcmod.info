@@ -1,0 +1,16 @@
+[
+{
+  "modid": "examplemod",
+  "name": "Example Mod",
+  "description": "Example mod for exampling examples",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://gaben.tv/",
+  "updateUrl": "http://gaben.tv/",
+  "authorList": [ "NotTehNut" ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
