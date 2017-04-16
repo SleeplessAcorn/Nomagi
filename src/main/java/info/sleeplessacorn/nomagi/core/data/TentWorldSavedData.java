@@ -1,20 +1,26 @@
 package info.sleeplessacorn.nomagi.core.data;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.chunk.Chunk;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 
 public class TentWorldSavedData extends WorldSavedData {
 
     private final Map<UUID, Tent> tents = Maps.newHashMap();
+    private final BiMap<Pair<Integer, Integer>, UUID> chunkPos = HashBiMap.create();
 
     public TentWorldSavedData() {
         super("nomagi_tents");
@@ -22,13 +28,14 @@ public class TentWorldSavedData extends WorldSavedData {
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
-        NBTTagList tents = nbt.getTagList("tents", 10);
-        for (int i = 0; i < tents.tagCount(); i++) {
-            NBTTagCompound tentData = tents.getCompoundTagAt(i);
+        NBTTagList tentList = nbt.getTagList("tents", 10);
+        for (int i = 0; i < tentList.tagCount(); i++) {
+            NBTTagCompound tentData = tentList.getCompoundTagAt(i);
             UUID uuid = UUID.fromString(tentData.getString("uuid"));
-            Tent tent = new Tent(0, 0);
+            Tent tent = new Tent(UUID.randomUUID(), 0, 0);
             tent.deserializeNBT(tentData.getCompoundTag("tent"));
-            this.tents.put(uuid, tent);
+            tents.put(uuid, tent);
+            chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
         }
     }
 
@@ -51,15 +58,31 @@ public class TentWorldSavedData extends WorldSavedData {
 
     @Nullable
     public Tent getTent(int chunkX, int chunkZ) {
-        for (Tent tent : tents.values())
-            if (tent.getChunkX() == chunkX && tent.getChunkZ() == chunkZ)
-                return tent;
+        UUID playerId = chunkPos.get(Pair.of(chunkX, chunkZ));
+        if (playerId != null)
+            return tents.get(playerId);
+
+        for (Tent tent : tents.values()) {
+            Set<Chunk> usedChunks = tent.getUsedChunks();
+            for (Chunk chunk : usedChunks)
+                if (chunk.xPosition == chunkX && chunk.zPosition == chunkZ)
+                    return tent;
+        }
 
         return null;
     }
 
     public void setTent(EntityPlayer player, Tent tent) {
-        tents.put(player.getGameProfile().getId(), tent);
+        UUID uuid = player.getGameProfile().getId();
+        if (tent == null) {
+            tents.remove(uuid);
+            chunkPos.inverse().remove(uuid);
+            markDirty();
+            return;
+        }
+        tents.put(uuid, tent);
+        chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
+        markDirty();
     }
 
     public static TentWorldSavedData getData(World world) {

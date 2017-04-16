@@ -24,7 +24,7 @@ public class SerializerBlockState extends SerializerBase<IBlockState> {
         if (block == Blocks.AIR)
             return Blocks.AIR.getDefaultState();
 
-        assert block != null;
+        assert block != null; // getValue is marked as nullable, but it isn't for Blocks
         BlockStateContainer blockState = block.getBlockState();
         IBlockState returnState = blockState.getBaseState();
 

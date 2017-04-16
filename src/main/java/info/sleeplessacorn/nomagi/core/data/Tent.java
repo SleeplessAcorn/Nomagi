@@ -1,27 +1,37 @@
 package info.sleeplessacorn.nomagi.core.data;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.util.GeneratorUtil;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public class Tent implements INBTSerializable<NBTTagCompound> {
 
     public static final Pair<Integer, Integer> ORIGIN = Pair.of(0, 0);
     private final Map<Pair<Integer, Integer>, Room> rooms = Maps.newHashMap();
 
+    private UUID ownerId;
     private int chunkX;
     private int chunkZ;
 
-    public Tent(int chunkX, int chunkZ) {
+    public Tent(UUID ownerId, int chunkX, int chunkZ) {
+        this.ownerId = ownerId;
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
 
@@ -31,6 +41,42 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     public void initialize(EntityPlayer player) {
         GeneratorUtil.generateInitialRoom(player.getEntityWorld(), chunkX, chunkZ);
         TentWorldSavedData.getData(player.getEntityWorld()).setTent(player, this);
+    }
+
+    public boolean isInside(Entity entity) {
+        Set<Chunk> tentChunks = Sets.newHashSet();
+        for (int x = -2; x < 2; x++)
+            for (int z = -2; z < 2; z++)
+                tentChunks.add(entity.getEntityWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
+
+        return tentChunks.contains(entity.getEntityWorld().getChunkFromBlockCoords(entity.getPosition()));
+    }
+
+    public Set<Chunk> getUsedChunks() {
+        Set<Chunk> tentChunks = Sets.newHashSet();
+        for (int x = -2; x < 2; x++)
+            for (int z = -2; z < 2; z++)
+                if (rooms.containsKey(Pair.of(x, z)))
+                    tentChunks.add(getWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
+
+        return tentChunks;
+    }
+
+    public Set<EntityPlayer> getPlayersInside() {
+        World world = getWorld();
+
+        return Sets.newHashSet(
+            world.getPlayers(EntityPlayer.class, new Predicate<EntityPlayer>() {
+                @Override
+                public boolean apply(@Nullable EntityPlayer input) {
+                    return isInside(input);
+                }
+            })
+        );
+    }
+
+    public UUID getOwnerId() {
+        return ownerId;
     }
 
     public int getChunkX() {
@@ -68,6 +114,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound data = new NBTTagCompound();
 
+        data.setTag("uuid", NBTUtil.createUUIDTag(ownerId));
         data.setInteger("chunkX", chunkX);
         data.setInteger("chunkZ", chunkZ);
 
@@ -82,6 +129,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
+        ownerId = NBTUtil.getUUIDFromTag(nbt.getCompoundTag("uuid"));
         chunkX = nbt.getInteger("chunkX");
         chunkZ = nbt.getInteger("chunkZ");
 
