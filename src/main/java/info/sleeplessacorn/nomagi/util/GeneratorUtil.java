@@ -18,10 +18,15 @@ import java.io.InputStream;
 public class GeneratorUtil {
 
     public static void generateInitialRoom(World world, int chunkX, int chunkZ) {
+        //noinspection ConstantConditions - STARTER always exists.
         ModObjects.STARTER.getTemplate().addBlocksToWorld(world, new BlockPos(chunkX * 16, 100, chunkZ * 16), new PlacementSettings());
     }
 
     public static void generateRoom(World world, Tent tent, int roomPosX, int roomPosZ, Room room) {
+        if (room.getTemplate() == null) {
+            Nomagi.LOGGER.error("Error generating room {} as the schematic can't be found.", room.getSchematic());
+            return;
+        }
         room.getTemplate().addBlocksToWorld(world, new BlockPos((tent.getChunkX() + roomPosX) * 16, 100, (tent.getChunkZ() + roomPosZ) * 16), new PlacementSettings());
     }
 
