@@ -5,6 +5,6 @@
     },
 	"ctm" : {
 		"model": { "model": "cube" },
-		"face": "umberstone.cf"
+		"face": "nomagi:umberstone.cf"
 	}
 }
