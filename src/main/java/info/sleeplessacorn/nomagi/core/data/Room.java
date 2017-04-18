@@ -63,7 +63,7 @@ public class Room {
 
     public static class Customization {
 
-        public boolean canPlaceBlock(World world, BlockPos roomOffset, IBlockState state) {
+        public boolean canModify(World world, BlockPos roomOffset, IBlockState state) {
             return true;
         }
     }
@@ -77,7 +77,7 @@ public class Room {
         }
 
         @Override
-        public boolean canPlaceBlock(World world, BlockPos roomOffset, IBlockState state) {
+        public boolean canModify(World world, BlockPos roomOffset, IBlockState state) {
             Matches posMatches = matches.get(roomOffset);
             if (posMatches == null)
                 return false;

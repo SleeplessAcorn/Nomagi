@@ -16,6 +16,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +24,10 @@ import java.util.UUID;
 
 public class Tent implements INBTSerializable<NBTTagCompound> {
 
+    public static final int BASE_HEIGHT = 50;
     public static final Pair<Integer, Integer> ORIGIN = Pair.of(0, 0);
-    private final Map<Pair<Integer, Integer>, Room> rooms = Maps.newHashMap();
 
+    private final Map<Pair<Integer, Integer>, Room> rooms = Maps.newHashMap();
     private UUID ownerId;
     private int chunkX;
     private int chunkZ;
@@ -52,6 +54,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         return tentChunks.contains(entity.getEntityWorld().getChunkFromBlockCoords(entity.getPosition()));
     }
 
+    @Nonnull
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> tentChunks = Sets.newHashSet();
         for (int x = -2; x < 2; x++)
@@ -62,6 +65,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         return tentChunks;
     }
 
+    @Nonnull
     public Set<EntityPlayer> getPlayersInside() {
         World world = getWorld();
 
@@ -93,6 +97,16 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
 
     public Room getRoom(Pair<Integer, Integer> location) {
         return rooms.get(location);
+    }
+
+    @Nullable
+    public Room getRoom(EntityPlayer player) {
+        if (!isInside(player))
+            return null;
+
+        int xPos = chunkX - player.chunkCoordX;
+        int zPos = chunkZ - player.chunkCoordZ;
+        return getRoom(xPos, zPos);
     }
 
     public Tent setRoom(Room room, int x, int z) {
