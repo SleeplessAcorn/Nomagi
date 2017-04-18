@@ -1,3 +1,7 @@
-tile.nomagi.ebonstone_brick.name=Ebonstone Brick
-tile.nomagi.table.name=Wooden Table
-tile.nomagi.tent_wall.name=Tent Wall
+# Creative tab
+itemGroup.nomagi=Nomagi
+
+# Blocks
+tile.nomagi.decor.umberstone.name=Umberstone
+tile.nomagi.decor.ebonstone.name=Ebonstone
+tile.nomagi.decor.tent_wall.name=Tent Wall

@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "umberstone": {
+        "model": "nomagi:umberstone"
+      },
+      "ebonstone": {
+        "textures": {
+          "all": "nomagi:blocks/ebonstone_brick"
+        }
+      },
+      "tent_wall": {
+        "model": "nomagi:tent_wall"
+      }
+    }
+  }
+}
