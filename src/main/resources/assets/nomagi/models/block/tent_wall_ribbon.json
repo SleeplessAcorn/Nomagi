@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "nomagi:blocks/tent_wall_horizontal"
+  }
+}

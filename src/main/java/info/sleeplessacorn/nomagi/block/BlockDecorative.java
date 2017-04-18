@@ -43,6 +43,23 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
         return state.getValue(getProperty()).getBlockType().getRight();
     }
 
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        if (getProperty() == null)
+            return super.isOpaqueCube(state); // Fuck you Mojang
+        return state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+    }
+
     // IModeled
 
     @Override
@@ -55,6 +72,7 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
         UMBERSTONE(Material.ROCK, SoundType.STONE),
         EBONSTONE(Material.ROCK, SoundType.STONE),
         TENT_WALL(Material.CLOTH, SoundType.CLOTH),
+        TENT_WALL_RIBBON(Material.CLOTH, SoundType.CLOTH),
         ;
 
         private final AxisAlignedBB hitBox;
@@ -64,8 +82,8 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
             this(FULL_BLOCK_AABB, material, soundType);
         }
 
-        Decor(AxisAlignedBB hitBox, Material material, SoundType soundType) {
-            this.hitBox = hitBox;
+        Decor(AxisAlignedBB bounds, Material material, SoundType soundType) {
+            this.hitBox = bounds;
             this.blockType = Pair.of(material, soundType);
         }
 

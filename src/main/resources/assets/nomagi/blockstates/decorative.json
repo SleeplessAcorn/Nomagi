@@ -17,6 +17,9 @@
       },
       "tent_wall": {
         "model": "nomagi:tent_wall"
+      },
+      "tent_wall_ribbon": {
+        "model": "nomagi:tent_wall_ribbon"
       }
     }
   }
