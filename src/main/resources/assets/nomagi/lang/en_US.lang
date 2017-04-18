@@ -3,5 +3,6 @@ itemGroup.nomagi=Nomagi
 
 # Blocks
 tile.nomagi.decor.umberstone.name=Umberstone
-tile.nomagi.decor.ebonstone.name=Ebonstone
+tile.nomagi.decor.ebonstone.name=Ebonstone Bricks
 tile.nomagi.decor.tent_wall.name=Tent Wall
+tile.nomagi.decor.tent_wall_ribbon.name=Tent Wall
