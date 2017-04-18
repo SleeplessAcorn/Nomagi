@@ -17,6 +17,11 @@ plugins {
 
 apply plugin: 'maven-publish'
 
+configurations {
+    shade
+    compile.extendsFrom shade
+}
+
 def username = "${mod_name}"
 if (project.hasProperty('dev_username'))
     username = "${dev_username}"
@@ -37,9 +42,9 @@ repositories {
 dependencies {
     // TehNut Maven
     deobfCompile "mcp.mobius.waila:Hwyla:1.8.13-B26_1.11"
-    deobfCompile "tehnut.lib:LendingLibrary:1.11.2-2.0.0-19"
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.11-2.1.0-51"
-    
+    shade "tehnut.lib:LendingLibrary:1.11.2-2.0.0-19"
+
     // Prog Maven
     deobfCompile "mezz.jei:jei_1.11.2:4.2.10.248"
 }
@@ -73,8 +78,19 @@ processResources {
     }
 }
 
+reobf {
+    jar {
+        extraLines "PK: tehnut/lib info/sleeplessacorn/nomagi/lib"
+    }
+}
+
 jar {
     classifier = ''
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
     manifest.mainAttributes(
             "Built-By": System.getProperty('user.name'),
             "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
