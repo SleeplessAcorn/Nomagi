@@ -2,9 +2,7 @@
 	"__comment": "Copyright © InsomniaKitten 2017",
 	"textures": {
 		"particle": "blocks/tapestry/tapestry_upper",
-		"upper": "blocks/tapestry/tapestry_upper",
-		"lower": "blocks/tapestry/tapestry_lower",
-		"beam": "blocks/tapestry/tapestry_beam"
+		"lower": "blocks/tapestry/tapestry_lower"
 	},
 	"elements": [
 		{
