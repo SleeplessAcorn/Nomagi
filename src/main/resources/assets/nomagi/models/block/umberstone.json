@@ -1,10 +1,10 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "nomagi:blocks/ctm/umberstone/umberstone"
+        "all": "nomagi:blocks/ctm/umberstone/normal"
     },
 	"ctm" : {
 		"model": { "model": "cube" },
-		"face": "nomagi:umberstone.cf"
+		"face": "nomagi:ctm/umberstone.cf"
 	}
 }
