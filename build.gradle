@@ -22,6 +22,9 @@ configurations {
     compile.extendsFrom shade
 }
 
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 def username = "${mod_name}"
 if (project.hasProperty('dev_username'))
     username = "${dev_username}"
@@ -36,6 +39,7 @@ version = "${mc_version}-${mod_version}-${build_number}"
 
 repositories {
     maven { url "http://tehnut.info/maven" }
+    maven { url "http://maven.tterrag.com" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
 }
 
@@ -44,6 +48,9 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Hwyla:1.8.13-B26_1.11"
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.11-2.1.0-51"
     shade "tehnut.lib:LendingLibrary:1.11.2-2.0.0-19"
+
+    // tterrag maven
+    deobfCompile "team.chisel:Chisel:MC1.11.2-0.0.9.13"
 
     // Prog Maven
     deobfCompile "mezz.jei:jei_1.11.2:4.2.10.248"

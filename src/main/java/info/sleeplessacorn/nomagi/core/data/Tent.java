@@ -1,6 +1,5 @@
 package info.sleeplessacorn.nomagi.core.data;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import info.sleeplessacorn.nomagi.core.ModObjects;
@@ -68,15 +67,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     @Nonnull
     public Set<EntityPlayer> getPlayersInside() {
         World world = getWorld();
-
-        return Sets.newHashSet(
-            world.getPlayers(EntityPlayer.class, new Predicate<EntityPlayer>() {
-                @Override
-                public boolean apply(@Nullable EntityPlayer input) {
-                    return isInside(input);
-                }
-            })
-        );
+        return Sets.newHashSet(world.getPlayers(EntityPlayer.class, this::isInside));
     }
 
     public UUID getOwnerId() {
