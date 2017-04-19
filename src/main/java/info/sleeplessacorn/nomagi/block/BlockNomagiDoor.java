@@ -25,6 +25,7 @@ public class BlockNomagiDoor extends BlockDoor implements IModeled {
         setSoundType(SoundType.WOOD);
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setHardness(3.0F);
+        setHarvestLevel("axe", 0);
     }
 
     @Override

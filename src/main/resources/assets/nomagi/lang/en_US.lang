@@ -1,8 +1,11 @@
 # Creative tab
 itemGroup.nomagi=Nomagi
 
-# Blocks
+# Decorative Blocks
 tile.nomagi.decor.umberstone.name=Umberstone
 tile.nomagi.decor.ebonstone.name=Ebonstone Bricks
 tile.nomagi.decor.tent_wall.name=Tent Wall
 tile.nomagi.decor.tent_wall_ribbon.name=Tent Wall
+
+# Technical Blocks
+tile.nomagi.door.name=Room Door
