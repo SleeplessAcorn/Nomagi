@@ -1,0 +1,111 @@
+{
+	"__comment": "Copyright © InsomniaKitten 2017",
+	"textures": {
+		"particle": "#side",
+		"barrel_side": "#side",
+		"barrel_top": "#top"
+	},
+	"elements": [
+		{
+			"__comment": "up",
+			"from": [ 3, 13, 3 ],
+			"to": [ 13, 14, 13 ],
+			"faces": {
+				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#barrel_top" },
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#barrel_top" }
+			}
+		},
+		{
+			"__comment": "down",
+			"from": [ 3, 1, 3 ],
+			"to": [ 13, 2, 13 ],
+			"faces": {
+				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#barrel_top" },
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#barrel_top" }
+			}
+		},
+		{
+			"__comment": "north",
+			"from": [ 3, 0, 2 ],
+			"to": [ 14, 15, 3 ],
+			"faces": {
+				"down": { "uv": [ 3, 13, 14, 14 ], "texture": "#barrel_top", "cullface": "down" },
+				"up": { "uv": [ 3, 2, 14, 3 ], "texture": "#barrel_top" },
+				"north": { "uv": [ 2, 1, 13, 16 ], "texture": "#barrel_side" },
+				"south": { "uv": [ 3, 1, 14, 16 ], "texture": "#barrel_side" },
+				"east": { "uv": [ 13, 1, 14, 16 ], "texture": "#barrel_side" }
+			}
+		},
+		{
+			"__comment": "south",
+			"from": [ 2, 0, 13 ],
+			"to": [ 13, 15, 14 ],
+			"faces": {
+				"down": { "uv": [ 2, 2, 13, 3 ], "texture": "#barrel_top", "cullface": "down" },
+				"up": { "uv": [ 2, 13, 13, 14 ], "texture": "#barrel_top" },
+				"north": { "uv": [ 3, 1, 14, 16 ], "texture": "#barrel_side" },
+				"south": { "uv": [ 2, 1, 13, 16 ], "texture": "#barrel_side" },
+				"west": { "uv": [ 13, 1, 14, 16 ], "texture": "#barrel_side" }
+			}
+		},
+		{
+			"__comment": "east",
+			"from": [ 13, 0, 3 ],
+			"to": [ 14, 15, 14 ],
+			"faces": {
+				"down": { "uv": [ 13, 2, 14, 13 ], "texture": "#barrel_top", "cullface": "down" },
+				"up": { "uv": [ 13, 3, 14, 14 ], "texture": "#barrel_top" },
+				"south": { "uv": [ 13, 1, 14, 16 ], "texture": "#barrel_side" },
+				"west": { "uv": [ 3, 1, 14, 16 ], "texture": "#barrel_side" },
+				"east": { "uv": [ 2, 1, 13, 16 ], "texture": "#barrel_side" }
+			}
+		},
+		{
+			"__comment": "west",
+			"from": [ 2, 0, 2 ],
+			"to": [ 3, 15, 13 ],
+			"faces": {
+				"down": { "uv": [ 2, 3, 3, 14 ], "texture": "#barrel_top", "cullface": "down" },
+				"up": { "uv": [ 2, 2, 3, 13 ], "texture": "#barrel_top" },
+				"north": { "uv": [ 13, 1, 14, 16 ], "texture": "#barrel_side" },
+				"west": { "uv": [ 2, 1, 13, 16 ], "texture": "#barrel_side" },
+				"east": { "uv": [ 3, 1, 14, 16 ], "texture": "#barrel_side" }
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation":  [ 75, 45, 0 ],
+			"translation":  [ 0, 2.5, 0 ],
+			"scale":  [ 0.375, 0.375, 0.375 ]
+		},
+		"thirdperson_lefthand": {
+			"rotation":  [ 75, 45, 0 ],
+			"translation":  [ 0, 2.5, 0 ],
+			"scale":  [ 0.375, 0.375, 0.375 ]
+		},
+		"firstperson_righthand": {
+			"rotation":  [ 0, 45, 0 ],
+			"scale":  [ 0.4, 0.4, 0.4 ]
+		},
+		"firstperson_lefthand": {
+			"rotation":  [ 0, 45, 0 ],
+			"scale":  [ 0.4, 0.4, 0.4 ]
+		},
+		"gui": {
+			"rotation":  [ 30, 225, 0 ],
+			"scale":  [ 0.625, 0.625, 0.625 ]
+		},
+		"head": {
+			"translation":  [ 0, 12, 0 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"ground": {
+			"translation":  [ 0, 3, 0 ],
+			"scale":  [ 0.25, 0.25, 0.25 ]
+		},
+		"fixed": {
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		}
+	}
+}
