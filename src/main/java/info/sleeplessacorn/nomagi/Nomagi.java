@@ -1,9 +1,11 @@
 package info.sleeplessacorn.nomagi;
 
 import info.sleeplessacorn.nomagi.core.ModObjects;
+import info.sleeplessacorn.nomagi.proxy.ProxyCommon;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +23,13 @@ public class Nomagi {
         }
     };
 
+    @SidedProxy(clientSide = "info.sleeplessacorn.nomagi.proxy.ProxyClient", serverSide = "info.sleeplessacorn.nomagi.proxy.ProxyServer")
+    public static ProxyCommon PROXY;
+    @Mod.Instance(MODID)
+    public static Nomagi INSTANCE;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        ModObjects.preInit();
+        PROXY.preInit();
     }
 }
