@@ -9,3 +9,8 @@ tile.nomagi.decor.tent_wall_ribbon.name=Tent Wall
 
 # Technical Blocks
 tile.nomagi.door.name=Room Door
+
+# GUI
+
+gui.nomagi.create=Create
+gui.nomagi.reset=Reset

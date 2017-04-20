@@ -7,4 +7,12 @@ public class ProxyCommon {
     public void preInit() {
         ModObjects.preInit();
     }
+
+    public void postInit() {
+
+    }
+
+    public void displayRoomControllerGui() {
+
+    }
 }

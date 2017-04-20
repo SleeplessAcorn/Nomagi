@@ -9,6 +9,7 @@ import info.sleeplessacorn.nomagi.core.json.SerializerCustomization;
 import info.sleeplessacorn.nomagi.core.json.SerializerCustomizationMatches;
 import info.sleeplessacorn.nomagi.core.json.SerializerResourceLocation;
 import info.sleeplessacorn.nomagi.util.GeneratorUtil;
+import info.sleeplessacorn.nomagi.util.SubTexture;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
@@ -35,17 +36,25 @@ public class Room {
             .create();
 
     private transient final String name;
+    private transient final String description;
     private transient Customization customization;
     private final ResourceLocation schematic;
+    private final SubTexture previewImage;
 
-    public Room(ResourceLocation schematic) {
-        this.name = "tent." + schematic.toString() + ".name";
+    public Room(ResourceLocation schematic, SubTexture previewImage) {
+        this.name = "room." + schematic.getResourceDomain() + "." + schematic.getResourcePath() + ".name";
+        this.description = "room." + schematic.getResourceDomain() + "." + schematic.getResourcePath() + ".desc";
         this.customization = CustomizationJson.fromFile(schematic);
         this.schematic = schematic;
+        this.previewImage = previewImage;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Customization getCustomization() {
@@ -54,6 +63,10 @@ public class Room {
 
     public ResourceLocation getSchematic() {
         return schematic;
+    }
+
+    public SubTexture getPreviewImage() {
+        return previewImage;
     }
 
     @Nullable
