@@ -6,9 +6,11 @@ tile.nomagi.decor.umberstone.name=Umberstone
 tile.nomagi.decor.ebonstone.name=Ebonstone Bricks
 tile.nomagi.decor.tent_wall.name=Tent Wall
 tile.nomagi.decor.tent_wall_ribbon.name=Tent Wall
+tile.nomagi.decor.tent_wall_inset.name=Tent Wall
 
 # Technical Blocks
 tile.nomagi.door.name=Room Door
+tile.nomagi.door_controller.name=Door Controller
 
 # GUI
 

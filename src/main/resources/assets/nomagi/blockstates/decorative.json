@@ -20,6 +20,9 @@
       },
       "tent_wall_ribbon": {
         "model": "nomagi:tent_wall_ribbon"
+      },
+      "tent_wall_inset": {
+        "model": "nomagi:tent_wall_inset"
       }
     }
   }
