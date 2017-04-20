@@ -1,8 +1,8 @@
 {
-  "parent": "block/orientable",
+  "parent": "block/cube_column",
   "textures": {
-    "top": "nomagi:blocks/tent_wall",
-    "front": "nomagi:blocks/door_controller_front",
+    "end": "nomagi:blocks/ctm/tent_wall_inset/normal",
     "side": "nomagi:blocks/door_controller_front"
   }
 }
+
