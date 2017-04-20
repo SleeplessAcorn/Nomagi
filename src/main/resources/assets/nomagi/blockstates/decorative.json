@@ -23,6 +23,9 @@
       },
       "tent_wall_inset": {
         "model": "nomagi:tent_wall_inset"
+      },
+      "room_pillar": {
+        "model": "nomagi:room_pillar"
       }
     }
   }

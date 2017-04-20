@@ -20,6 +20,8 @@ import java.util.Locale;
 
 public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements IModeled {
 
+    private static final AxisAlignedBB PILLAR_AABB = new AxisAlignedBB(-0.5D, 0D, -0.5D, 1.5D, 1.0D, 1.5D);
+
     public BlockDecorative() {
         super(Material.ROCK, Decor.class);
 
@@ -74,6 +76,7 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
         TENT_WALL(Material.CLOTH, SoundType.CLOTH),
         TENT_WALL_RIBBON(Material.CLOTH, SoundType.CLOTH),
         TENT_WALL_INSET(Material.CLOTH, SoundType.CLOTH),
+        ROOM_PILLAR(PILLAR_AABB, Material.WOOD, SoundType.WOOD),
         ;
 
         private final AxisAlignedBB hitBox;
