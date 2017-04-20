@@ -3,6 +3,6 @@
   "textures": {
     "top": "nomagi:blocks/tent_wall",
     "front": "nomagi:blocks/door_controller_front",
-    "side": "nomagi:blocks/door_controller_side"
+    "side": "nomagi:blocks/door_controller_front"
   }
 }
