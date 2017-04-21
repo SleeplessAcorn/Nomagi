@@ -41,6 +41,7 @@ public class ModObjects {
     public static final Block BARREL = new BlockBarrel();
     public static final Block DOOR = new BlockNomagiDoor();
     public static final Block DOOR_CONTROLLER = new BlockDoorController();
+    public static final Block TAPESTRY = new BlockTapestry();
 
     public static final DimensionType TENT_DIMENSION = DimensionType.register(Nomagi.MODID, "_tent", 10, WorldProviderTent.class, false);
 
@@ -54,6 +55,8 @@ public class ModObjects {
         RegistryHelper.register(BARREL, "barrel");
         RegistryHelper.register(DOOR, "door");
         RegistryHelper.register(new ItemNomagiDoor(DOOR), "door");
+        RegistryHelper.register(TAPESTRY, "tapestry");
+        RegistryHelper.register(new ItemBlock(TAPESTRY), "tapestry");
         RegistryHelper.register(DOOR_CONTROLLER, "door_controller");
         RegistryHelper.register(new ItemBlock(DOOR_CONTROLLER) {
             @Override

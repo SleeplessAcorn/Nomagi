@@ -4,9 +4,15 @@
     "inventory": {"model": "nomagi:tapestry"}
   },
   "variants": {
-    "bottom": {
-      "true": {"model": "nomagi:tapestry_lower"},
-      "false": {"model": "nomagi:tapestry_upper"}
+    "top": {
+      "true": {"model": "nomagi:tapestry_upper"},
+      "false": {"model": "nomagi:tapestry_lower"}
+    },
+    "facing": {
+      "north": {},
+      "east": { "y": 90 },
+      "south": { "y": 180 },
+      "west": { "y": 270 }
     }
   }
 }
