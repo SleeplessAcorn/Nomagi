@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "radiant_grass": {
+        "model": "nomagi:nature/radiant_grass"
+      },
+      "ancient_bark": {
+          "model": "nomagi:nature/ancient_bark"
+      },
+      "ancient_planks": {
+          "model": "nomagi:nature/ancient_planks"
+      },
+      "ancient_leaves": {
+        "model": "nomagi:nature/ancient_leaves"
+      }
+    }
+  }
+}

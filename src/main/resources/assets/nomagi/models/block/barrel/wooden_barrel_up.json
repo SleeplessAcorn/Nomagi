@@ -1,5 +1,5 @@
 {
-    "parent": "nomagi:block/barrel/barrel",
+    "parent": "nomagi:block/barrel/barrel_up",
     "textures": {
         "side": "nomagi:blocks/barrel/wooden_barrel_side",
         "top": "nomagi:blocks/barrel/wooden_barrel_top"

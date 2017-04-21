@@ -9,9 +9,23 @@ tile.nomagi.decor.tent_wall_ribbon.name=Tent Wall
 tile.nomagi.decor.tent_wall_inset.name=Tent Wall
 tile.nomagi.decor.room_pillar.name=Support Pillar
 
+# Nature Blocks
+tile.nomagi.nature.ancient_bark.name=Ancient Bark
+tile.nomagi.nature.ancient_planks.name=Ancient Planks
+tile.nomagi.nature.ancient_leaves.name=Ancient Leaves
+tile.nomagi.nature.radiant_grass.name=Radiant Grass
+
+# Barrels
+tile.nomagi.barrel.wooden_barrel.name=Wooden Barrel
+tile.nomagi.barrel.metal_barrel.name=Metal Barrel
+
 # Technical Blocks
 tile.nomagi.door.name=Room Door
-tile.nomagi.door_controller.name=Door Controller
+tile.nomagi.controller.tent.name=Door Controller
+tile.nomagi.controller.brick.name=Door Controller
+
+# Tent
+tile.nomagi.tent.name=Basic Tent
 
 # GUI
 

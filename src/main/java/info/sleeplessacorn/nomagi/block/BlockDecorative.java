@@ -76,7 +76,7 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
         TENT_WALL(Material.CLOTH, SoundType.CLOTH),
         TENT_WALL_RIBBON(Material.CLOTH, SoundType.CLOTH),
         TENT_WALL_INSET(Material.CLOTH, SoundType.CLOTH),
-        ROOM_PILLAR(PILLAR_AABB, Material.WOOD, SoundType.WOOD),
+        EBONSTONE_INSET(Material.ROCK, SoundType.STONE),
         ;
 
         private final AxisAlignedBB hitBox;

@@ -2,13 +2,9 @@
   "forge_marker": 1,
   "defaults": {},
   "variants": {
-    "facing": {
-      "up": {"model": "nomagi:barrel/wooden_barrel_up"},
-      "down": {"model": "nomagi:barrel/wooden_barrel_up"},
-      "north": {"model": "nomagi:barrel/wooden_barrel_nswe", "y": 0},
-      "south": {"model": "nomagi:barrel/wooden_barrel_nswe", "y": 180},
-      "east": {"model": "nomagi:barrel/wooden_barrel_nswe", "y": 90},
-      "west": {"model": "nomagi:barrel/wooden_barrel_nswe", "y": 270}
+    "type": {
+      "wooden_barrel": {"model": "nomagi:barrel/wooden_barrel_up"},
+      "metal_barrel": {"model": "nomagi:barrel/metal_barrel_up"}
     }
   }
 }

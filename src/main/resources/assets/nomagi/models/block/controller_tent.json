@@ -2,7 +2,7 @@
   "parent": "block/cube_column",
   "textures": {
     "end": "nomagi:blocks/ctm/tent_wall_inset/normal",
-    "side": "nomagi:blocks/door_controller_front"
+    "side": "nomagi:blocks/controller_tent_front"
   }
 }
 

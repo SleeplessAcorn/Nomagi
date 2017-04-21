@@ -14,9 +14,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import tehnut.lib.mc.model.IModeled;
+
+import java.util.List;
 
 // TODO - Move to LendingLibrary
-public class ItemNomagiDoor extends ItemBlock {
+public class ItemNomagiDoor extends ItemBlock implements IModeled {
 
     public ItemNomagiDoor(Block block) {
         super(block);
@@ -83,5 +86,10 @@ public class ItemNomagiDoor extends ItemBlock {
         world.setBlockState(pos.up(), placeSate.withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER), 2);
         world.notifyNeighborsOfStateChange(pos, door, false);
         world.notifyNeighborsOfStateChange(pos.up(), door, false);
+    }
+
+    @Override
+    public void getVariants(List<String> variants) {
+        variants.add("inventory");
     }
 }

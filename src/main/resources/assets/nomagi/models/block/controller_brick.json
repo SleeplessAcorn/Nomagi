@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "nomagi:blocks/ebonstone_brick",
+    "side": "nomagi:blocks/controller_brick_front"
+  }
+}
+

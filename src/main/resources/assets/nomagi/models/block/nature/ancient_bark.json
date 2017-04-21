@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "nomagi:blocks/ancient_bark"
+  }
+}

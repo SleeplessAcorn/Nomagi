@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "nomagi:door_controller"
+      "model": "nomagi:tent_multi"
     }
   }
 }

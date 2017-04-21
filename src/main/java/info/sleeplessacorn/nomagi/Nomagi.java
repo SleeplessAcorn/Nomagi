@@ -20,7 +20,7 @@ public class Nomagi {
     public static final CreativeTabs TAB_NOMAGI = new CreativeTabs("nomagi") {
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(ModObjects.DECOR);
+            return new ItemStack(ModObjects.DECOR, 1, 1);
         }
     };
 

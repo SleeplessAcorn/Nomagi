@@ -1,9 +1,9 @@
 {
 	"__comment": "Copyright © InsomniaKitten 2017",
 	"textures": {
-		"particle": "blocks/tapestry/tapestry_upper",
-		"upper": "blocks/tapestry/tapestry_upper",
-		"beam": "blocks/tapestry/tapestry_beam"
+		"particle": "nomagi:blocks/tapestry/tapestry_upper",
+		"upper": "nomagi:blocks/tapestry/tapestry_upper",
+		"beam": "nomagi:blocks/tapestry/tapestry_beam"
 	},
 	"elements": [
 		{

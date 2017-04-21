@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "inventory": {"model": "nomagi:tapestry"}
+  },
+  "variants": {
+    "bottom": {
+      "true": {"model": "nomagi:tapestry_lower"},
+      "false": {"model": "nomagi:tapestry_upper"}
+    }
+  }
+}
