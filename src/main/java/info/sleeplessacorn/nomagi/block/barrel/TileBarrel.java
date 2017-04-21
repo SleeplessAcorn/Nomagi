@@ -1,14 +1,5 @@
 package info.sleeplessacorn.nomagi.block.barrel;
 
-/*
- * This file was created at 01:17 on 21 Apr 2017 by InsomniaKitten
- *
- * It is distributed as part of the DimensionallyTranscendentalTents mod.
- * Source code is visible at: https://github.com/InsomniaKitten/DimensionallyTranscendentalTents
- *
- * Copyright (c) InsomniaKitten 2017. All Rights Reserved.
- */
-
 import jline.internal.Nullable;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

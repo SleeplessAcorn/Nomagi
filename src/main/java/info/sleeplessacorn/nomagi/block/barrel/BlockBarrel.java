@@ -1,14 +1,5 @@
 package info.sleeplessacorn.nomagi.block.barrel;
 
-/*
- * This file was created at 17:45 on 20 Apr 2017 by InsomniaKitten
- *
- * It is distributed as part of the DimensionallyTranscendentalTents mod.
- * Source code is visible at: https://github.com/InsomniaKitten/DimensionallyTranscendentalTents
- *
- * Copyright (c) InsomniaKitten 2017. All Rights Reserved.
- */
-
 import com.google.common.collect.Lists;
 import info.sleeplessacorn.nomagi.Nomagi;
 import net.minecraft.block.SoundType;
