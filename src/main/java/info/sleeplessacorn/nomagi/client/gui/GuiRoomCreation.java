@@ -123,9 +123,11 @@ public class GuiRoomCreation extends GuiScreen {
     public void handleMouseInput() throws IOException {
         int mouseWheel = Mouse.getEventDWheel();
         if (mouseWheel < 0)
-            prevRoom();
-        else if (mouseWheel > 0)
             nextRoom();
+        else if (mouseWheel > 0)
+            prevRoom();
+
+        super.handleMouseInput();
     }
 
     @Override
