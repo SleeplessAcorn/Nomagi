@@ -11,9 +11,7 @@
         "model": "nomagi:umberstone"
       },
       "ebonstone": {
-        "textures": {
-          "all": "nomagi:blocks/ebonstone_brick"
-        }
+        "model": "nomagi:ebonstone_brick"
       },
       "tent_wall": {
         "model": "nomagi:tent_wall"
@@ -24,8 +22,8 @@
       "tent_wall_inset": {
         "model": "nomagi:tent_wall_inset"
       },
-      "room_pillar": {
-        "model": "nomagi:room_pillar"
+      "ebonstone_inset": {
+        "model": "nomagi:ebonstone_brick_inset"
       }
     }
   }
