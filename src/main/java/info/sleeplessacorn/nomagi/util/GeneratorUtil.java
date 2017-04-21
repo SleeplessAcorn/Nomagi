@@ -4,10 +4,13 @@ import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.core.data.Room;
 import info.sleeplessacorn.nomagi.core.data.Tent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
@@ -19,15 +22,43 @@ public class GeneratorUtil {
 
     public static void generateInitialRoom(World world, int chunkX, int chunkZ) {
         //noinspection ConstantConditions - STARTER always exists.
-        ModObjects.STARTER.getTemplate().addBlocksToWorld(world, new BlockPos(chunkX * 16, Tent.BASE_HEIGHT, chunkZ * 16), new PlacementSettings());
+        ModObjects.EMPTY_ROOM.getTemplate().addBlocksToWorld(world, new BlockPos(chunkX * 16, Tent.BASE_HEIGHT, chunkZ * 16), new PlacementSettings());
     }
 
-    public static void generateRoom(World world, Tent tent, int roomPosX, int roomPosZ, Room room) {
+    public static void generateRoom(World world, Tent tent, int roomPosX, int roomPosZ, Room room, EnumFacing facing) {
         if (room.getTemplate() == null) {
             Nomagi.LOGGER.error("Error generating room {} as the schematic can't be found.", room.getSchematic());
             return;
         }
-        room.getTemplate().addBlocksToWorld(world, new BlockPos((tent.getChunkX() + roomPosX) * 16, Tent.BASE_HEIGHT, (tent.getChunkZ() + roomPosZ) * 16), new PlacementSettings());
+
+        int chunkX = tent.getChunkX();
+        int chunkZ = tent.getChunkZ();
+
+        switch (facing) {
+            case DOWN:
+                return;
+            case UP:
+                return;
+            case NORTH: {
+                chunkZ -= 1;
+                break;
+            }
+            case EAST: {
+                chunkX += 1;
+                break;
+            }
+            case SOUTH: {
+                chunkZ += 1;
+                break;
+            }
+            case WEST: {
+                chunkX -= 1;
+                break;
+            }
+        }
+
+        BlockPos pos = new ChunkPos(chunkX, chunkZ).getBlock(0, Tent.BASE_HEIGHT, 0);
+        room.getTemplate().addBlocksToWorld(world, pos, new PlacementSettings());
     }
 
     @Nullable

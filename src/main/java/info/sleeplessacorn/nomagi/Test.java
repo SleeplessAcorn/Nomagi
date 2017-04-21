@@ -30,7 +30,7 @@ public class Test {
             return;
 
         if (item == Items.DIAMOND)
-            tent.setRoom(ModObjects.STARTER, 1, 0);
+            tent.setRoom(ModObjects.EMPTY_ROOM, 1, 0);
 
         if (item == Items.APPLE)
             TentWorldSavedData.getData(event.getWorld()).setTent(event.getEntityPlayer(), null);

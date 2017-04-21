@@ -36,7 +36,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
 
-        rooms.put(ORIGIN, ModObjects.STARTER);
+        rooms.put(ORIGIN, ModObjects.EMPTY_ROOM);
     }
 
     public void initialize(EntityPlayer player) {
@@ -106,7 +106,6 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
 
     public Tent setRoom(Room room, Pair<Integer, Integer> location) {
         rooms.put(location, room);
-        GeneratorUtil.generateRoom(getWorld(), this, location.getLeft(), location.getRight(), room);
         return this;
     }
 

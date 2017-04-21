@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "nomagi:blocks/tent_wall",
+      "front": "nomagi:blocks/controller_tent_front",
+      "side": "nomagi:blocks/tent_wall"
+    },
+    "transform": "forge:default-block",
+    "model": "orientable",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "tent": {},
+      "brick": {
+        "textures": {
+          "top": "nomagi:blocks/ebonstone_brick",
+          "front": "nomagi:blocks/controller_brick_front",
+          "side": "nomagi:blocks/ebonstone_brick"
+        }
+      }
+    },
+    "facing": {
+      "north": {},
+      "east": { "y": 90 },
+      "south": { "y": 180 },
+      "west": { "y": 270 }
+    }
+  }
+}

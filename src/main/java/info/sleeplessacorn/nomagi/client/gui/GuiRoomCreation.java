@@ -3,6 +3,7 @@ package info.sleeplessacorn.nomagi.client.gui;
 import com.google.common.collect.Lists;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.client.RenderHelper;
+import info.sleeplessacorn.nomagi.network.MessageCreateRoom;
 import info.sleeplessacorn.nomagi.proxy.ProxyClient;
 import info.sleeplessacorn.nomagi.util.SubTexture;
 import info.sleeplessacorn.nomagi.client.gui.button.GuiButtonDirection;
@@ -12,12 +13,12 @@ import info.sleeplessacorn.nomagi.core.data.Room;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,8 +38,18 @@ public class GuiRoomCreation extends GuiScreen {
 
     public static int roomIndex;
 
+    private final int chunkX;
+    private final int chunkZ;
+    private final EnumFacing direction;
+
     private int left;
     private int top;
+
+    public GuiRoomCreation(int chunkX, int chunkZ, EnumFacing direction) {
+        this.chunkX = chunkX;
+        this.chunkZ = chunkZ;
+        this.direction = direction;
+    }
 
     @Override
     public void initGui() {
@@ -89,9 +100,11 @@ public class GuiRoomCreation extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         switch (button.id) {
             case 0: {
+                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(ROOMS.get(roomIndex)), chunkX, chunkZ, direction));
                 break;
             }
             case 1: {
+                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(chunkX, chunkZ, direction));
                 break;
             }
             case 2: {

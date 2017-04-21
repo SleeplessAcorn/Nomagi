@@ -12,8 +12,4 @@ public class ProxyCommon {
     public void postInit() {
         GuiHandler.init();
     }
-
-    public void displayRoomControllerGui() {
-
-    }
 }
