@@ -42,7 +42,7 @@ public class MessageOpenCreateRoomGui implements IMessage {
 
         @Override
         public IMessage onMessage(MessageOpenCreateRoomGui message, MessageContext ctx) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiRoomCreation(message.chunkX, message.chunkZ, message.facing));
+            Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(new GuiRoomCreation(message.chunkX, message.chunkZ, message.facing)));
             return null;
         }
     }
