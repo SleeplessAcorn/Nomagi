@@ -38,3 +38,6 @@ room.nomagi.cellar_room.name=Cellar
 room.nomagi.cellar_room.desc=Did you know cellars are a place to store ores? Me neither.
 room.nomagi.empty_room.name=Empty
 room.nomagi.empty_room.desc=It's empty. Or is it?
+
+# Waila
+info.nomagi.owner=Home Owner: %s
