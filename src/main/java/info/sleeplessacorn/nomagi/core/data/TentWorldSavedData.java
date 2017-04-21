@@ -26,6 +26,10 @@ public class TentWorldSavedData extends WorldSavedData {
         super("nomagi_tents");
     }
 
+    public TentWorldSavedData(String name) {
+        super(name);
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         NBTTagList tentList = nbt.getTagList("tents", 10);
@@ -46,6 +50,7 @@ public class TentWorldSavedData extends WorldSavedData {
             NBTTagCompound tentData = new NBTTagCompound();
             tentData.setString("uuid", entry.getKey().toString());
             tentData.setTag("tent", entry.getValue().serializeNBT());
+            tents.appendTag(tentData);
         }
         compound.setTag("tents", tents);
         return compound;
@@ -86,10 +91,10 @@ public class TentWorldSavedData extends WorldSavedData {
     }
 
     public static TentWorldSavedData getData(World world) {
-        TentWorldSavedData savedData = (TentWorldSavedData) world.getMapStorage().getOrLoadData(TentWorldSavedData.class, "generated_tents");
+        TentWorldSavedData savedData = (TentWorldSavedData) world.getMapStorage().getOrLoadData(TentWorldSavedData.class, "nomagi_tents");
         if (savedData == null) {
             savedData = new TentWorldSavedData();
-            world.getMapStorage().setData("generated_tents", savedData);
+            world.getMapStorage().setData(savedData.mapName, savedData);
         }
         return savedData;
     }

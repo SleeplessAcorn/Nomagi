@@ -87,6 +87,9 @@ public class BlockDoorController extends Block implements IModeled {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
+        if (hand != EnumHand.MAIN_HAND)
+            return false;
+
         Tent tent = TentWorldSavedData.getData(world).getTent(player.chunkCoordX, player.chunkCoordZ);
         if (tent == null || !tent.isInside(player) || !tent.getOwnerId().equals(player.getGameProfile().getId()))
             return false;
@@ -101,7 +104,8 @@ public class BlockDoorController extends Block implements IModeled {
 
     @Override
     public void getVariants(List<String> variants) {
-        variants.add("facing=east");
+        variants.add("facing=east,type=tent");
+        variants.add("facing=east,type=brick");
     }
 
     public enum Type implements IStringSerializable {

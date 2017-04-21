@@ -19,7 +19,8 @@ public class ProxyClient extends ProxyCommon {
         super.preInit();
 
         handleModel(Item.getItemFromBlock(ModObjects.DOOR), 0, "inventory");
-        handleModel(Item.getItemFromBlock(ModObjects.DOOR_CONTROLLER), 0, "facing=north");
+        handleModel(Item.getItemFromBlock(ModObjects.DOOR_CONTROLLER), 0, "facing=east,type=tent");
+        handleModel(Item.getItemFromBlock(ModObjects.DOOR_CONTROLLER), 1, "facing=east,type=brick");
 
         ModelLoader.setCustomStateMapper(ModObjects.DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
     }

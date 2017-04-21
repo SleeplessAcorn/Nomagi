@@ -1,7 +1,6 @@
 package info.sleeplessacorn.nomagi.proxy;
 
 import info.sleeplessacorn.nomagi.core.ModObjects;
-import info.sleeplessacorn.nomagi.util.GuiHandler;
 
 public class ProxyCommon {
 
@@ -10,6 +9,5 @@ public class ProxyCommon {
     }
 
     public void postInit() {
-        GuiHandler.init();
     }
 }
