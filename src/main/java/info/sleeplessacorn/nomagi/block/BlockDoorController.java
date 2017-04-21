@@ -4,6 +4,7 @@ import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.core.data.Room;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
+import info.sleeplessacorn.nomagi.network.MessageOpenCreateRoomGui;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -15,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -87,7 +89,7 @@ public class BlockDoorController extends Block implements IModeled {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
-        if (hand != EnumHand.MAIN_HAND)
+        if (world.isRemote || hand != EnumHand.MAIN_HAND)
             return false;
 
         Tent tent = TentWorldSavedData.getData(world).getTent(player.chunkCoordX, player.chunkCoordZ);
@@ -98,7 +100,7 @@ public class BlockDoorController extends Block implements IModeled {
         if (room == null)
             return false;
 
-        player.openGui(Nomagi.INSTANCE, 0, world, player.chunkCoordX, player.chunkCoordZ, state.getValue(FACING).ordinal());
+        Nomagi.NETWORK_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX, player.chunkCoordZ, state.getValue(FACING)), (EntityPlayerMP) player);
         return true;
     }
 
