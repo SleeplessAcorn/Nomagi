@@ -24,6 +24,7 @@ import java.util.UUID;
 public class Tent implements INBTSerializable<NBTTagCompound> {
 
     public static final int BASE_HEIGHT = 50;
+    public static final int RADIUS = 2;
     public static final Pair<Integer, Integer> ORIGIN = Pair.of(0, 0);
 
     private final Map<Pair<Integer, Integer>, Room> rooms = Maps.newHashMap();
@@ -45,19 +46,14 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     }
 
     public boolean isInside(Entity entity) {
-        Set<Chunk> tentChunks = Sets.newHashSet();
-        for (int x = -2; x < 2; x++)
-            for (int z = -2; z < 2; z++)
-                tentChunks.add(entity.getEntityWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
-
-        return tentChunks.contains(entity.getEntityWorld().getChunkFromBlockCoords(entity.getPosition()));
+        return getUsedChunks().contains(entity.getEntityWorld().getChunkFromBlockCoords(entity.getPosition()));
     }
 
     @Nonnull
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> tentChunks = Sets.newHashSet();
-        for (int x = -2; x < 2; x++)
-            for (int z = -2; z < 2; z++)
+        for (int x = -RADIUS; x < RADIUS; x++)
+            for (int z = -RADIUS; z < RADIUS; z++)
                 if (rooms.containsKey(Pair.of(x, z)))
                     tentChunks.add(getWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
 
@@ -95,8 +91,8 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         if (!isInside(player))
             return null;
 
-        int xPos = chunkX - player.chunkCoordX;
-        int zPos = chunkZ - player.chunkCoordZ;
+        int xPos = player.chunkCoordX - chunkX;
+        int zPos = player.chunkCoordZ - chunkZ;
         return getRoom(xPos, zPos);
     }
 
@@ -109,9 +105,18 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         return this;
     }
 
+    public boolean canExtendTo(int x, int z) {
+        if (x > RADIUS || x < -RADIUS)
+            return false;
+        if (z > RADIUS || z < -RADIUS)
+            return false;
+
+        return true;
+    }
+
     // TODO - Remove when moving to own dimension
     private World getWorld() {
-        return DimensionManager.getWorld(0);
+        return DimensionManager.getWorld(ModObjects.TENT_DIMENSION.getId());
     }
 
     @Override

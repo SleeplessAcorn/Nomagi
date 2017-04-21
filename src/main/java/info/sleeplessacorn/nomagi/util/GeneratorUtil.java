@@ -25,14 +25,23 @@ public class GeneratorUtil {
         ModObjects.EMPTY_ROOM.getTemplate().addBlocksToWorld(world, new BlockPos(chunkX * 16, Tent.BASE_HEIGHT, chunkZ * 16), new PlacementSettings());
     }
 
+    /**
+     *
+     * @param world - Current world
+     * @param tent - Tent to add room to
+     * @param roomPosX - Current room's internal grid x coord
+     * @param roomPosZ - Current room's internal grid z coord
+     * @param room - Room to generate
+     * @param facing - Side of current room to generate on
+     */
     public static void generateRoom(World world, Tent tent, int roomPosX, int roomPosZ, Room room, EnumFacing facing) {
         if (room.getTemplate() == null) {
             Nomagi.LOGGER.error("Error generating room {} as the schematic can't be found.", room.getSchematic());
             return;
         }
 
-        int chunkX = tent.getChunkX();
-        int chunkZ = tent.getChunkZ();
+        int chunkX = tent.getChunkX() + roomPosX;
+        int chunkZ = tent.getChunkZ() + roomPosZ;
 
         switch (facing) {
             case DOWN:
@@ -57,8 +66,14 @@ public class GeneratorUtil {
             }
         }
 
+        int internalX = chunkX - tent.getChunkX();
+        int internalZ = chunkZ - tent.getChunkZ();
+        if (!tent.canExtendTo(internalX, internalZ))
+            return;
+
         BlockPos pos = new ChunkPos(chunkX, chunkZ).getBlock(0, Tent.BASE_HEIGHT, 0);
         room.getTemplate().addBlocksToWorld(world, pos, new PlacementSettings());
+        tent.setRoom(room, internalX, internalZ);
     }
 
     @Nullable

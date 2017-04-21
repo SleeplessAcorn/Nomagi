@@ -18,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,16 +39,16 @@ public class GuiRoomCreation extends GuiScreen {
 
     public static int roomIndex;
 
-    private final int chunkX;
-    private final int chunkZ;
+    private final int currentChunkX;
+    private final int currentChunkZ;
     private final EnumFacing direction;
 
     private int left;
     private int top;
 
-    public GuiRoomCreation(int chunkX, int chunkZ, EnumFacing direction) {
-        this.chunkX = chunkX;
-        this.chunkZ = chunkZ;
+    public GuiRoomCreation(int currentChunkX, int currentChunkZ, EnumFacing direction) {
+        this.currentChunkX = currentChunkX;
+        this.currentChunkZ = currentChunkZ;
         this.direction = direction;
     }
 
@@ -85,7 +86,7 @@ public class GuiRoomCreation extends GuiScreen {
 
         room.getPreviewImage().draw(left + PREVIEW_LOCATION.getLeft(), top + PREVIEW_LOCATION.getRight());
 
-        List<String> cutString = ProxyClient.fontRenderer.listFormattedStringToWidth(I18n.format(room.getDescription()), 102);
+        List<String> cutString = ProxyClient.fontRenderer.listFormattedStringToWidth(I18n.format(room.getDescription()), 100);
         int offsetY = 0;
         for (String string : cutString) {
             ProxyClient.fontRenderer.drawString(TextFormatting.WHITE + string, left + 68, top + 10 + offsetY, 0); // TODO - Figure out why this is always black
@@ -100,11 +101,11 @@ public class GuiRoomCreation extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         switch (button.id) {
             case 0: {
-                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(ROOMS.get(roomIndex)), chunkX, chunkZ, direction));
+                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(ROOMS.get(roomIndex)), currentChunkX, currentChunkZ, direction));
                 break;
             }
             case 1: {
-                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(chunkX, chunkZ, direction));
+                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(currentChunkX, currentChunkZ, direction));
                 break;
             }
             case 2: {
@@ -116,6 +117,15 @@ public class GuiRoomCreation extends GuiScreen {
                 break;
             }
         }
+    }
+
+    @Override
+    public void handleMouseInput() throws IOException {
+        int mouseWheel = Mouse.getEventDWheel();
+        if (mouseWheel < 0)
+            prevRoom();
+        else if (mouseWheel > 0)
+            nextRoom();
     }
 
     @Override

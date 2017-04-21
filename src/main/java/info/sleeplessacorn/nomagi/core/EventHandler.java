@@ -12,6 +12,8 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.PlaceEvent event) {
+        if (true)
+            return;
         TentWorldSavedData savedData = TentWorldSavedData.getData(event.getWorld());
         Tent tent = savedData.getTent(event.getPos().getX() / 16, event.getPos().getZ() / 16);
         if (tent == null)
@@ -28,6 +30,8 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (true)
+            return;
         TentWorldSavedData savedData = TentWorldSavedData.getData(event.getWorld());
         Tent tent = savedData.getTent(event.getPos().getX() / 16, event.getPos().getZ() / 16);
         if (tent == null)

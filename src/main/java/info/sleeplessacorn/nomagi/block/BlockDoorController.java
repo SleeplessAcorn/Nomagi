@@ -1,6 +1,7 @@
 package info.sleeplessacorn.nomagi.block;
 
 import info.sleeplessacorn.nomagi.Nomagi;
+import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.core.data.Room;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
@@ -92,15 +93,27 @@ public class BlockDoorController extends Block implements IModeled {
         if (world.isRemote || hand != EnumHand.MAIN_HAND)
             return false;
 
-        Tent tent = TentWorldSavedData.getData(world).getTent(player.chunkCoordX, player.chunkCoordZ);
-        if (tent == null || !tent.isInside(player) || !tent.getOwnerId().equals(player.getGameProfile().getId()))
+        TentWorldSavedData tentData = TentWorldSavedData.getData(world);
+        Tent tent = tentData.getTent(player.chunkCoordX, player.chunkCoordZ);
+        if (tent == null)
             return false;
+
+        if (!tent.isInside(player))
+            return false;
+
+        if (!tent.getOwnerId().equals(player.getGameProfile().getId()))
+            return false;
+
+        if (player.isSneaking() && world.provider.getDimension() == ModObjects.TENT_DIMENSION.getId()) {
+            tentData.sendBack(player);
+            return false;
+        }
 
         Room room = tent.getRoom(player);
         if (room == null)
             return false;
 
-        Nomagi.NETWORK_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX, player.chunkCoordZ, state.getValue(FACING)), (EntityPlayerMP) player);
+        Nomagi.NETWORK_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(), player.chunkCoordZ - tent.getChunkZ(), state.getValue(FACING)), (EntityPlayerMP) player);
         return true;
     }
 

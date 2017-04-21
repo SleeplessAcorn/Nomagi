@@ -3,9 +3,13 @@ package info.sleeplessacorn.nomagi.core.data;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
+import info.sleeplessacorn.nomagi.world.TeleporterTent;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.chunk.Chunk;
@@ -21,6 +25,7 @@ public class TentWorldSavedData extends WorldSavedData {
 
     private final Map<UUID, Tent> tents = Maps.newHashMap();
     private final BiMap<Pair<Integer, Integer>, UUID> chunkPos = HashBiMap.create();
+    private final Map<UUID, Pair<Integer, BlockPos>> back = Maps.newHashMap();
 
     public TentWorldSavedData() {
         super("nomagi_tents");
@@ -41,6 +46,15 @@ public class TentWorldSavedData extends WorldSavedData {
             tents.put(uuid, tent);
             chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
         }
+
+        NBTTagList backList = nbt.getTagList("back", 10);
+        for (int i = 0 ; i < backList.tagCount(); i++) {
+            NBTTagCompound tagCompound = backList.getCompoundTagAt(i);
+            UUID playerId = UUID.fromString(tagCompound.getString("uuid"));
+            int dimension = tagCompound.getInteger("dim");
+            BlockPos pos = BlockPos.fromLong(tagCompound.getLong("pos"));
+            back.put(playerId, Pair.of(dimension, pos));
+        }
     }
 
     @Override
@@ -53,6 +67,16 @@ public class TentWorldSavedData extends WorldSavedData {
             tents.appendTag(tentData);
         }
         compound.setTag("tents", tents);
+
+        NBTTagList back = new NBTTagList();
+        for (Map.Entry<UUID, Pair<Integer, BlockPos>> entry : this.back.entrySet()) {
+            NBTTagCompound tagCompound = new NBTTagCompound();
+            tagCompound.setString("uuid", entry.getKey().toString());
+            tagCompound.setInteger("dim", entry.getValue().getLeft());
+            tagCompound.setLong("pos", entry.getValue().getRight().toLong());
+            back.appendTag(tagCompound);
+        }
+
         return compound;
     }
 
@@ -88,6 +112,27 @@ public class TentWorldSavedData extends WorldSavedData {
         tents.put(uuid, tent);
         chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
         markDirty();
+    }
+
+    public void sendBack(EntityPlayer player) {
+//        TeleporterTent.teleportToDimension(player, 0, new BlockPos(0, 10, 0));
+//        if (true)
+//            return;
+        Pair<Integer, BlockPos> backPos = back.remove(player.getGameProfile().getId());
+        if (backPos == null)
+            return;
+
+        TeleporterTent.teleportToDimension(player, backPos.getLeft(), backPos.getRight());
+    }
+
+    public void sendTo(EntityPlayer player, Tent tent) {
+        back.put(player.getGameProfile().getId(), Pair.of(player.getEntityWorld().provider.getDimension(), new BlockPos(player.posX, player.posY, player.posZ)));
+        BlockPos tele = new ChunkPos(tent.getChunkX(), tent.getChunkZ()).getBlock(8, Tent.BASE_HEIGHT + 3, 8);
+        TeleporterTent.teleportToDimension(player, 10, tele);
+    }
+
+    public int getCount() {
+        return tents.size();
     }
 
     public static TentWorldSavedData getData(World world) {

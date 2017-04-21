@@ -7,6 +7,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 // Fuck IGuiHandler
 public class MessageOpenCreateRoomGui implements IMessage {
@@ -40,6 +42,7 @@ public class MessageOpenCreateRoomGui implements IMessage {
 
     public static class Handler implements IMessageHandler<MessageOpenCreateRoomGui, IMessage> {
 
+        @SideOnly(Side.CLIENT)
         @Override
         public IMessage onMessage(MessageOpenCreateRoomGui message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(new GuiRoomCreation(message.chunkX, message.chunkZ, message.facing)));

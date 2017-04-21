@@ -17,41 +17,41 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class MessageCreateRoom implements IMessage {
 
     private Room room;
-    private int chunkX;
-    private int chunkZ;
+    private int currentChunkX;
+    private int currentChunkZ;
     private EnumFacing direction;
 
     public MessageCreateRoom() {
 
     }
 
-    public MessageCreateRoom(Room room, int chunkX, int chunkZ, EnumFacing direction) {
+    public MessageCreateRoom(Room room, int currentChunkX, int currentChunkZ, EnumFacing direction) {
         this.room = room;
-        this.chunkX = chunkX;
-        this.chunkZ = chunkZ;
+        this.currentChunkX = currentChunkX;
+        this.currentChunkZ = currentChunkZ;
         this.direction = direction;
     }
 
-    public MessageCreateRoom(int chunkX, int chunkZ, EnumFacing direction) {
+    public MessageCreateRoom(int currentChunkX, int currentChunkZ, EnumFacing direction) {
         this.room = null;
-        this.chunkX = chunkX;
-        this.chunkZ = chunkZ;
+        this.currentChunkX = currentChunkX;
+        this.currentChunkZ = currentChunkZ;
         this.direction = direction;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
         room = ModObjects.ROOMS.get(new ResourceLocation(ByteBufUtils.readUTF8String(buf)));
-        chunkX = buf.readInt();
-        chunkZ = buf.readInt();
+        currentChunkX = buf.readInt();
+        currentChunkZ = buf.readInt();
         direction = EnumFacing.values()[buf.readInt()];
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         ByteBufUtils.writeUTF8String(buf, room == null ? "null" : room.getSchematic().toString());
-        buf.writeInt(chunkX);
-        buf.writeInt(chunkZ);
+        buf.writeInt(currentChunkX);
+        buf.writeInt(currentChunkZ);
         buf.writeInt(direction.ordinal());
     }
 
@@ -59,9 +59,6 @@ public class MessageCreateRoom implements IMessage {
 
         @Override
         public IMessage onMessage(MessageCreateRoom message, MessageContext ctx) {
-            int chunkX = message.chunkX;
-            int chunkZ = message.chunkZ;
-
             TentWorldSavedData savedData = TentWorldSavedData.getData(ctx.getServerHandler().playerEntity.getEntityWorld());
             Tent tent = savedData.getTent(ctx.getServerHandler().playerEntity);
             if (tent == null) {
@@ -71,8 +68,8 @@ public class MessageCreateRoom implements IMessage {
 
             Room room = message.room == null ? tent.getRoom(ctx.getServerHandler().playerEntity) : message.room;
 
-            tent.setRoom(room, chunkX, chunkZ);
-            GeneratorUtil.generateRoom(ctx.getServerHandler().playerEntity.getEntityWorld(), tent, chunkX, chunkZ, room, message.direction.getOpposite());
+            GeneratorUtil.generateRoom(ctx.getServerHandler().playerEntity.getEntityWorld(), tent, message.currentChunkX, message.currentChunkZ, room, message.direction.getOpposite());
+            savedData.markDirty();
             return null;
         }
     }
