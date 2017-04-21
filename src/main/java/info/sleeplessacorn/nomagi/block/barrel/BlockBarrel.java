@@ -105,7 +105,7 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
                                     float side, float hitX, float hitY) {
         if (!world.isRemote) {
             playOpeningSound(world, pos);
-            player.openGui(Nomagi.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
+//            player.openGui(Nomagi.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }
