@@ -47,7 +47,7 @@ dependencies {
     // TehNut Maven
     deobfCompile "mcp.mobius.waila:Hwyla:1.8.13-B26_1.11"
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.11-2.1.0-51"
-    shade "tehnut.lib:LendingLibrary:1.11.2-2.0.0-21"
+    shade "tehnut.lib:LendingLibrary:1.11.2-2.0.0-22"
 
     // tterrag maven
     deobfCompile "team.chisel:Chisel:MC1.11.2-0.0.9.13"
