@@ -3,9 +3,9 @@ package info.sleeplessacorn.nomagi.core.data;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
+import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.world.TeleporterTent;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-
 
 public class TentWorldSavedData extends WorldSavedData {
 
@@ -128,7 +127,7 @@ public class TentWorldSavedData extends WorldSavedData {
     public void sendTo(EntityPlayer player, Tent tent) {
         back.put(player.getGameProfile().getId(), Pair.of(player.getEntityWorld().provider.getDimension(), new BlockPos(player.posX, player.posY, player.posZ)));
         BlockPos tele = new ChunkPos(tent.getChunkX(), tent.getChunkZ()).getBlock(8, Tent.BASE_HEIGHT + 3, 8);
-        TeleporterTent.teleportToDimension(player, 10, tele);
+        TeleporterTent.teleportToDimension(player, ModObjects.TENT_DIMENSION.getId(), tele);
     }
 
     public int getCount() {
