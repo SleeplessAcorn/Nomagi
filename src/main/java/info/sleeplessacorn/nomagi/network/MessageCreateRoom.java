@@ -9,6 +9,7 @@ import info.sleeplessacorn.nomagi.util.GeneratorUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -65,6 +66,9 @@ public class MessageCreateRoom implements IMessage {
                 Nomagi.LOGGER.error("Tried to set a room for a Tent that didn't exist. (Owner: {})", ctx.getServerHandler().playerEntity.getGameProfile().getId());
                 return null;
             }
+
+            if (!ctx.getServerHandler().playerEntity.getEntityWorld().isBlockLoaded(new ChunkPos(message.currentChunkX, message.currentChunkZ).getBlock(0, 0, 0)))
+                return null; // Client has requested an unloaded chunk
 
             Room room = message.room == null ? tent.getRoom(ctx.getServerHandler().playerEntity) : message.room;
 

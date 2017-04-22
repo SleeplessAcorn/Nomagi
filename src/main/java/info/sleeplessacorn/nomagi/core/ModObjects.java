@@ -3,6 +3,7 @@ package info.sleeplessacorn.nomagi.core;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
+import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.*;
 import info.sleeplessacorn.nomagi.block.BlockDoorController;
@@ -43,7 +44,7 @@ public class ModObjects {
     public static final Block DOOR_CONTROLLER = new BlockDoorController();
     public static final Block TAPESTRY = new BlockTapestry();
 
-    public static final DimensionType TENT_DIMENSION = DimensionType.register(Nomagi.MODID, "_tent", 10, WorldProviderTent.class, false);
+    public static final DimensionType TENT_DIMENSION = DimensionType.register(Nomagi.MODID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
 
     private static int roomId;
 
