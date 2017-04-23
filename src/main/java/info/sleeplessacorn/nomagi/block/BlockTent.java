@@ -1,5 +1,6 @@
 package info.sleeplessacorn.nomagi.block;
 
+import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
@@ -49,7 +50,7 @@ public class BlockTent extends Block {
                 if (tent == null)
                     return true;
             } else { // Generate a new tent for player
-                tent = new Tent(tileEntityTent.getOwnerId(), tentData.getCount() * 16, 0);
+                tent = new Tent(tileEntityTent.getOwnerId(), tentData.getCount() * ConfigHandler.tentSpacing, 0);
                 newTent = true;
                 tentData.setTent(player, tent);
             }
@@ -85,8 +86,7 @@ public class BlockTent extends Block {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(
-            IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return new AxisAlignedBB(-0.5D, 0D, 0D, 1.5D, 1.75D, 2D);
     }
 

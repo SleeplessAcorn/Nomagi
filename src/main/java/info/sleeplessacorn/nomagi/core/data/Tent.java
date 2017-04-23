@@ -2,6 +2,7 @@ package info.sleeplessacorn.nomagi.core.data;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.util.GeneratorUtil;
 import net.minecraft.entity.Entity;
@@ -24,7 +25,6 @@ import java.util.UUID;
 public class Tent implements INBTSerializable<NBTTagCompound> {
 
     public static final int BASE_HEIGHT = 50;
-    public static final int RADIUS = 2;
     public static final Pair<Integer, Integer> ORIGIN = Pair.of(0, 0);
 
     private final Map<Pair<Integer, Integer>, Room> rooms = Maps.newHashMap();
@@ -53,8 +53,8 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     @Nonnull
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> tentChunks = Sets.newHashSet();
-        for (int x = -RADIUS; x < RADIUS; x++)
-            for (int z = -RADIUS; z < RADIUS; z++)
+        for (int x = -ConfigHandler.tentRadius; x < ConfigHandler.tentRadius; x++)
+            for (int z = -ConfigHandler.tentRadius; z < ConfigHandler.tentRadius; z++)
                 if (rooms.containsKey(Pair.of(x, z)))
                     tentChunks.add(getWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
 
@@ -107,9 +107,9 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     }
 
     public boolean canExtendTo(int x, int z) {
-        if (x > RADIUS || x < -RADIUS)
+        if (x > ConfigHandler.tentRadius || x < -ConfigHandler.tentRadius)
             return false;
-        if (z > RADIUS || z < -RADIUS)
+        if (z > ConfigHandler.tentRadius || z < -ConfigHandler.tentRadius)
             return false;
 
         return true;
