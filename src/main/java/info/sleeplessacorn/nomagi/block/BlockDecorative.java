@@ -50,7 +50,7 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
         if (state.getValue(getProperty()) != Decor.SOMETHING_SPECIAL)
             return super.getRenderType(state);
         String username = Minecraft.getMinecraft().player.getGameProfile().getName().toLowerCase(Locale.ENGLISH);
-        if (!username.contains("eladkay") && !username.contains("tehnut"))
+        if (!username.contains("eladkay") && !username.contains("tehnut") && !username.contains("insomniakitten"))
             return EnumBlockRenderType.INVISIBLE;
 
         return super.getRenderType(state);

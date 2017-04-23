@@ -9,7 +9,7 @@
   "updateUrl": "http://tehnut.info/",
   "authorList": [ "TehNut", "InsomniaKitten" ],
   "credits": "",
-  "logoFile": "",
+  "logoFile": "/nomagi_icon.png",
   "screenshots": [],
   "dependencies": []
 }
