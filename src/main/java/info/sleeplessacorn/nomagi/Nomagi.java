@@ -1,5 +1,6 @@
 package info.sleeplessacorn.nomagi;
 
+import info.sleeplessacorn.nomagi.command.CommandNomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.network.MessageCreateRoom;
 import info.sleeplessacorn.nomagi.network.MessageOpenCreateRoomGui;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
@@ -45,5 +47,10 @@ public class Nomagi {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         PROXY.postInit();
+    }
+
+    @Mod.EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandNomagi());
     }
 }
