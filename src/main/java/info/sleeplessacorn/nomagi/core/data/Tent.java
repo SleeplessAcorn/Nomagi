@@ -43,6 +43,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     public void initialize(EntityPlayer player) {
         GeneratorUtil.generateInitialRoom(player.getEntityWorld(), chunkX, chunkZ);
         TentWorldSavedData.getData(player.getEntityWorld()).setTent(player, this);
+        getWorld().getChunkFromChunkCoords(chunkX, chunkZ).checkLight();
     }
 
     public boolean isInside(Entity entity) {

@@ -81,7 +81,11 @@ public class TentWorldSavedData extends WorldSavedData {
 
     @Nullable
     public Tent getTent(EntityPlayer player) {
-        return tents.get(player.getGameProfile().getId());
+        return getTent(player.getGameProfile().getId());
+    }
+
+    public Tent getTent(UUID ownerId) {
+        return tents.get(ownerId);
     }
 
     @Nullable

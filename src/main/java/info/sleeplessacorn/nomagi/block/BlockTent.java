@@ -32,27 +32,33 @@ public class BlockTent extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
-        if (worldIn.isRemote || !playerIn.isSneaking())
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote || !player.isSneaking())
             return false;
 
-        TentWorldSavedData tentData = TentWorldSavedData.getData(worldIn);
-        Tent tent = tentData.getTent(playerIn);
-        TileEntityTent tileEntityTent = (TileEntityTent) worldIn.getTileEntity(pos);
+        TentWorldSavedData tentData = TentWorldSavedData.getData(world);
+        Tent tent = tentData.getTent(player);
+        TileEntityTent tileEntityTent = (TileEntityTent) world.getTileEntity(pos);
+        if (tileEntityTent.getOwnerId() == null)
+            tileEntityTent.setOwnerId(player.getGameProfile().getId());
+
         boolean newTent = false;
         if (tent == null) {
-            if (!tileEntityTent.getOwnerId().equals(playerIn.getGameProfile().getId()))
-                return true;
-
-            tent = new Tent(tileEntityTent.getOwnerId(), tentData.getCount() * 16, 0);
-            newTent = true;
-            tentData.setTent(playerIn, tent);
+            if (!tileEntityTent.getOwnerId().equals(player.getGameProfile().getId())) { // Attempt to enter another player's tent
+                tent = tentData.getTent(tileEntityTent.getOwnerId());
+                if (tent == null)
+                    return true;
+            } else { // Generate a new tent for player
+                tent = new Tent(tileEntityTent.getOwnerId(), tentData.getCount() * 16, 0);
+                newTent = true;
+                tentData.setTent(player, tent);
+            }
         }
 
-        tentData.sendTo(playerIn, tent);
+        tentData.sendTo(player, tent); // Teleport to the dimension
         if (newTent)
-            tent.initialize(playerIn);
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY);
+            tent.initialize(player); // Generate the initial tent room
+        return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
     }
 
     @Override

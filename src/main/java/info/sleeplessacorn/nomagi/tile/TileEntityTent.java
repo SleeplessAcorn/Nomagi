@@ -27,5 +27,6 @@ public class TileEntityTent extends TileBase {
 
     public void setOwnerId(UUID ownerId) {
         this.ownerId = ownerId;
+        markDirty();
     }
 }
