@@ -52,14 +52,14 @@ public class ContainerBarrel extends Container {
 
             if (index > invStart) {
                 if (!this.mergeItemStack(stack, 0, invStart, false))
-                    return ItemStack.field_190927_a; // Inventory -> Slot
+                    return ItemStack.EMPTY; // Inventory -> Slot
             } else if (!mergeItemStack(stack, invStart, invEnd, true))
-                return ItemStack.field_190927_a; // Slot -> Inventory
+                return ItemStack.EMPTY; // Slot -> Inventory
 
             return stack;
         }
 
-        return ItemStack.field_190927_a;
+        return ItemStack.EMPTY;
     }
 
     @Override

@@ -10,7 +10,8 @@ import net.minecraft.world.chunk.IChunkGenerator;
 public class WorldProviderTent extends WorldProvider {
 
     @Override
-    protected void createBiomeProvider() {
+    protected void init() {
+        hasSkyLight = true;
         biomeProvider = new BiomeProviderSingle(Biomes.VOID);
     }
 

@@ -30,7 +30,7 @@ public class BlockNomagiDoor extends BlockDoor implements IModeled {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.field_190931_a : getDoorItem().getItem();
+        return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.AIR : getDoorItem().getItem();
     }
 
     @Override

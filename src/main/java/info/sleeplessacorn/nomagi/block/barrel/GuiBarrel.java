@@ -32,8 +32,8 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRendererObj.drawString(I18n.format("tile." + Nomagi.MODID + ".barrel"), 8, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 1, 4210752);
+        this.fontRenderer.drawString(I18n.format("tile." + Nomagi.MODID + ".barrel"), 8, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 1, 4210752);
 
     }
 

@@ -73,7 +73,7 @@ public class GuiRoomCreation extends GuiScreen {
         drawDefaultBackground();
         BACKGROUND.draw(left, top, 0.0D);
 
-        drawString(fontRendererObj, TextFormatting.WHITE + "?", left + 7, top + 7, 0);
+        drawString(fontRenderer, TextFormatting.WHITE + "?", left + 7, top + 7, 0);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
 
@@ -93,8 +93,8 @@ public class GuiRoomCreation extends GuiScreen {
             offsetY += 9;
         }
 
-        if (RenderHelper.isBetween(mouseX, mouseY, left + 7, top + 7, fontRendererObj.getStringWidth("?"), fontRendererObj.FONT_HEIGHT))
-            GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(room.getName())), mouseX, mouseY, width, height, 300, fontRendererObj);
+        if (RenderHelper.isBetween(mouseX, mouseY, left + 7, top + 7, fontRenderer.getStringWidth("?"), fontRenderer.FONT_HEIGHT))
+            GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(room.getName())), mouseX, mouseY, width, height, 300, fontRenderer);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class GuiButtonNomagi extends GuiButton {
         if (!enabled)
             BUTTON_DISABLED.draw(xPosition, yPosition, 0.0D);
 
-        drawCenteredString(mc.fontRendererObj, TextFormatting.WHITE + I18n.format(displayString), xPosition + width / 2, yPosition + (height - 8) / 2, 0);
+        drawCenteredString(mc.fontRenderer, TextFormatting.WHITE + I18n.format(displayString), xPosition + width / 2, yPosition + (height - 8) / 2, 0);
     }
 
     public GuiButtonNomagi offset(int x, int y) {
