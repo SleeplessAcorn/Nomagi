@@ -22,12 +22,14 @@ import java.util.UUID;
 
 public class TentWorldSavedData extends WorldSavedData {
 
+    private static final String ID = "nomagi_tents";
+
     private final Map<UUID, Tent> tents = Maps.newHashMap();
     private final BiMap<Pair<Integer, Integer>, UUID> chunkPos = HashBiMap.create();
     private final Map<UUID, Pair<Integer, BlockPos>> back = Maps.newHashMap();
 
     public TentWorldSavedData() {
-        super("nomagi_tents");
+        super(ID);
     }
 
     public TentWorldSavedData(String name) {
@@ -139,10 +141,10 @@ public class TentWorldSavedData extends WorldSavedData {
     }
 
     public static TentWorldSavedData getData(World world) {
-        TentWorldSavedData savedData = (TentWorldSavedData) world.getMapStorage().getOrLoadData(TentWorldSavedData.class, "nomagi_tents");
+        TentWorldSavedData savedData = (TentWorldSavedData) world.getMapStorage().getOrLoadData(TentWorldSavedData.class, ID);
         if (savedData == null) {
             savedData = new TentWorldSavedData();
-            world.getMapStorage().setData(savedData.mapName, savedData);
+            world.getMapStorage().setData(ID, savedData);
         }
         return savedData;
     }
