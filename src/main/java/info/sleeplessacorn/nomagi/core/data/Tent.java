@@ -53,8 +53,8 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     @Nonnull
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> tentChunks = Sets.newHashSet();
-        for (int x = -ConfigHandler.tentRadius; x < ConfigHandler.tentRadius; x++)
-            for (int z = -ConfigHandler.tentRadius; z < ConfigHandler.tentRadius; z++)
+        for (int x = -ConfigHandler.tentRadius; x <= ConfigHandler.tentRadius; x++)
+            for (int z = -ConfigHandler.tentRadius; z <= ConfigHandler.tentRadius; z++)
                 if (rooms.containsKey(Pair.of(x, z)))
                     tentChunks.add(getWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
 
@@ -63,8 +63,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
 
     @Nonnull
     public Set<EntityPlayer> getPlayersInside() {
-        World world = getWorld();
-        return Sets.newHashSet(world.getPlayers(EntityPlayer.class, this::isInside));
+        return Sets.newHashSet(getWorld().getPlayers(EntityPlayer.class, this::isInside));
     }
 
     public UUID getOwnerId() {
@@ -97,12 +96,19 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         return getRoom(xPos, zPos);
     }
 
-    public Tent setRoom(Room room, int x, int z) {
+    public Tent setRoom(@Nonnull Room room, int x, int z) {
         return setRoom(room, Pair.of(x, z));
     }
 
-    public Tent setRoom(Room room, Pair<Integer, Integer> location) {
+    public Tent setRoom(@Nonnull Room room, Pair<Integer, Integer> location) {
         rooms.put(location, room);
+        return this;
+    }
+
+    public Tent reset() {
+        rooms.clear();
+        rooms.put(ORIGIN, ModObjects.EMPTY_ROOM);
+        markDirty();
         return this;
     }
 
@@ -118,6 +124,10 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     // TODO - Remove when moving to own dimension
     private World getWorld() {
         return DimensionManager.getWorld(ModObjects.TENT_DIMENSION.getId());
+    }
+
+    public void markDirty() {
+        TentWorldSavedData.getData(getWorld()).markDirty();
     }
 
     @Override
@@ -151,7 +161,8 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
             if (!roomId.toString().equalsIgnoreCase("null"))
                 room = ModObjects.ROOMS.get(roomId);
 
-            setRoom(room, location);
+            if (room != null)
+                setRoom(room, location);
         }
     }
 }
