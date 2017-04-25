@@ -1,4 +1,23 @@
 ------------------------------------------------------
+Version 1.0.1
+------------------------------------------------------
+
+- Added a command to teleport between dimensions
+    - /nomagi tpd <dimension> [player] [x] [y] [z]
+    - Tab completion support for Dimension and Player args
+- Added a command to reset a tent back to it's default state
+    - /nomagi tent reset [playerId]
+    - Tab completion for Player ID arg
+- Added a command to completely remove a tent
+    - /nomagi tent remove [playerId]
+    - Tab completion for Player ID arg
+- Fixed not being able to enter other player's tents
+    - Still need to add the privacy feature
+- Added config for dimension ID
+- Added config for the max radius of a tent
+- Added config for how spaced apart tents are
+
+------------------------------------------------------
 Version 1.0.0
 ------------------------------------------------------
 
