@@ -12,6 +12,7 @@ public class CommandTent extends CommandTreeBase {
 
     public CommandTent() {
         addSubcommand(new CommandReset());
+        addSubcommand(new CommandRemove());
     }
 
     @Override

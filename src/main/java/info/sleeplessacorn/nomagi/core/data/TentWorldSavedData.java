@@ -104,8 +104,11 @@ public class TentWorldSavedData extends WorldSavedData {
         return null;
     }
 
-    public void setTent(EntityPlayer player, Tent tent) {
-        UUID uuid = player.getGameProfile().getId();
+    public void setTent(EntityPlayer player, @Nullable Tent tent) {
+        setTent(player.getGameProfile().getId(), tent);
+    }
+
+    public void setTent(UUID uuid, @Nullable Tent tent) {
         if (tent == null) {
             tents.remove(uuid);
             chunkPos.inverse().remove(uuid);
@@ -121,15 +124,16 @@ public class TentWorldSavedData extends WorldSavedData {
         return ImmutableSet.copyOf(tents.values());
     }
 
-    public void sendBack(EntityPlayer player) {
+    public boolean sendBack(EntityPlayer player) {
 //        TeleporterTent.teleportToDimension(player, 0, new BlockPos(0, 10, 0));
 //        if (true)
 //            return;
         Pair<Integer, BlockPos> backPos = back.remove(player.getGameProfile().getId());
         if (backPos == null)
-            return;
+            return false;
 
         TeleporterTent.teleportToDimension(player, backPos.getLeft(), backPos.getRight());
+        return true;
     }
 
     public void sendTo(EntityPlayer player, Tent tent) {
