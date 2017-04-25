@@ -1,8 +1,6 @@
 package info.sleeplessacorn.nomagi.core.data;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.*;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.world.TeleporterTent;
 import net.minecraft.entity.player.EntityPlayer;
@@ -117,6 +115,10 @@ public class TentWorldSavedData extends WorldSavedData {
         tents.put(uuid, tent);
         chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
         markDirty();
+    }
+
+    public ImmutableSet<Tent> getTents() {
+        return ImmutableSet.copyOf(tents.values());
     }
 
     public void sendBack(EntityPlayer player) {

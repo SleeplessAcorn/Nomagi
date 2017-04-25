@@ -1,5 +1,6 @@
 package info.sleeplessacorn.nomagi.command.tent;
 
+import com.google.common.collect.Lists;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
@@ -18,6 +19,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public class CommandReset extends CommandBase {
@@ -72,5 +75,19 @@ public class CommandReset extends CommandBase {
         }
 
         GeneratorUtil.generateInitialRoom(world, tent.getChunkX(), tent.getChunkZ());
+    }
+
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> completions = Lists.newArrayList();
+        switch (args.length) {
+            case 1: {
+                TentWorldSavedData tentData = TentWorldSavedData.getData(server.getEntityWorld());
+                for (Tent tent : tentData.getTents())
+                    completions.add(tent.getOwnerId().toString());
+                break;
+            }
+        }
+        return completions;
     }
 }
