@@ -37,28 +37,25 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         IBlockState iblockstate = world.getBlockState(pos.offset(side));
-        return state != iblockstate || !Objects.equals(state.getValue(getProperty()).getName(), "ancient_leaves");
+        return state != iblockstate || state.getValue(getProperty()) != Nature.ANCIENT_LEAVES;
     }
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         if (getProperty() == null)
             return super.isOpaqueCube(state); // Fuck you Mojang
-        else
-            return !Objects.equals(state.getValue(getProperty()).getName(), "ancient_leaves")
-                    && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+
+            return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
     }
 
     @Override
     public boolean isFullCube(IBlockState state) {
-        return !Objects.equals(state.getValue(getProperty()).getName(), "ancient_leaves")
-                && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
     }
 
     @Override
     public boolean isFullBlock(IBlockState state) {
-        return !Objects.equals(state.getValue(getProperty()).getName(), "ancient_leaves")
-                && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
     }
 
     @Override
@@ -114,10 +111,9 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
             return blockType;
         }
 
-    @Override
-    public String getName() {
-        return name().toLowerCase(Locale.ENGLISH);
+        @Override
+        public String getName() {
+            return name().toLowerCase(Locale.ENGLISH);
+        }
     }
-    }
-
 }
