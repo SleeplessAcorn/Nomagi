@@ -1,7 +1,16 @@
 {
+  "forge_marker": 1,
   "variants": {
-    "normal": {
-      "model": "nomagi:tent_multi"
+    "facing": {
+      "north": {},
+      "east": { "y": 90 },
+      "south": { "y": 180 },
+      "west": { "y": 270 }
+    },
+    "tent_type": {
+      "basic": {
+        "model": "nomagi:tent_multi"
+      }
     }
   }
 }

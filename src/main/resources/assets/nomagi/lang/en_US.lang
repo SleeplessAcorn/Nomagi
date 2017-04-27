@@ -28,6 +28,7 @@ tile.nomagi.door_controller.name=Door Controller
 
 # Tent
 tile.nomagi.tent.name=Basic Tent
+tile.nomagi.tent.basic.name=Basic Tent
 
 # GUI
 gui.nomagi.create=Create
@@ -35,6 +36,7 @@ gui.nomagi.reset=Reset
 
 # Chat
 chat.nomagi.resetting=Tent is being reset.
+chat.nomagi.removing=Tent is being removed.
 
 # Rooms
 room.nomagi.nature_room.name=Nature
