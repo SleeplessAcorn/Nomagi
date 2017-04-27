@@ -25,18 +25,18 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import tehnut.lib.mc.block.BlockDirectional;
+import tehnut.lib.mc.block.BlockAxisY;
 import tehnut.lib.mc.model.IModeled;
 
 import java.util.List;
 import java.util.Locale;
 
-public class BlockDoorController extends BlockDirectional implements IModeled {
+public class BlockDoorController extends BlockAxisY implements IModeled {
 
     public static final IProperty<Type> TYPE = PropertyEnum.create("type", Type.class);
 
     public BlockDoorController() {
-        super(Material.WOOD, PlacementStyle.FACE_AWAY, EnumFacing.Plane.HORIZONTAL);
+        super(Material.WOOD, PlacementStyle.FACE_AWAY);
 
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setUnlocalizedName(Nomagi.MODID + ".door_controller");
