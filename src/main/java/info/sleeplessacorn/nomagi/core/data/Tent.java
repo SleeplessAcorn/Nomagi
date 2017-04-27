@@ -31,11 +31,13 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     private UUID ownerId;
     private int chunkX;
     private int chunkZ;
+    private Privacy privacy;
 
-    public Tent(UUID ownerId, int chunkX, int chunkZ) {
+    public Tent(UUID ownerId, int chunkX, int chunkZ, Privacy privacy) {
         this.ownerId = ownerId;
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
+        this.privacy = privacy;
 
         rooms.put(ORIGIN, ModObjects.EMPTY_ROOM);
     }
@@ -105,6 +107,10 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         return this;
     }
 
+    public Privacy getPrivacy() {
+        return privacy;
+    }
+
     public Tent reset() {
         rooms.clear();
         rooms.put(ORIGIN, ModObjects.EMPTY_ROOM);
@@ -137,6 +143,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         data.setTag("uuid", NBTUtil.createUUIDTag(ownerId));
         data.setInteger("chunkX", chunkX);
         data.setInteger("chunkZ", chunkZ);
+        data.setTag("privacy", privacy.serializeNBT());
 
         NBTTagCompound roomArray = new NBTTagCompound();
         for (Map.Entry<Pair<Integer, Integer>, Room> entry : rooms.entrySet())
@@ -152,6 +159,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         ownerId = NBTUtil.getUUIDFromTag(nbt.getCompoundTag("uuid"));
         chunkX = nbt.getInteger("chunkX");
         chunkZ = nbt.getInteger("chunkZ");
+        privacy = nbt.hasKey("privacy") ? Privacy.fromNBT(nbt.getCompoundTag("privacy"), ownerId) : new Privacy(ownerId);
 
         NBTTagCompound roomArray = nbt.getCompoundTag("roomArray");
         for (String key : roomArray.getKeySet()) {

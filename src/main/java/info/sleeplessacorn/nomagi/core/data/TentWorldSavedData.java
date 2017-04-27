@@ -40,7 +40,7 @@ public class TentWorldSavedData extends WorldSavedData {
         for (int i = 0; i < tentList.tagCount(); i++) {
             NBTTagCompound tentData = tentList.getCompoundTagAt(i);
             UUID uuid = UUID.fromString(tentData.getString("uuid"));
-            Tent tent = new Tent(UUID.randomUUID(), 0, 0);
+            Tent tent = new Tent(UUID.randomUUID(), 0, 0, new Privacy(uuid));
             tent.deserializeNBT(tentData.getCompoundTag("tent"));
             tents.put(uuid, tent);
             chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);

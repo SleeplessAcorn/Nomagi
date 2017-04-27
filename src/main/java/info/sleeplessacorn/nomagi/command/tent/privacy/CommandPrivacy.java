@@ -1,30 +1,25 @@
-package info.sleeplessacorn.nomagi.command.tent;
+package info.sleeplessacorn.nomagi.command.tent.privacy;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import info.sleeplessacorn.nomagi.command.tent.privacy.CommandPrivacy;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.server.command.CommandTreeBase;
 
 import java.util.List;
 
-public class CommandTent extends CommandTreeBase {
+public class CommandPrivacy extends CommandTreeBase {
 
-    public CommandTent() {
-        addSubcommand(new CommandReset());
-        addSubcommand(new CommandRemove());
-        addSubcommand(new CommandPrivacy());
+    public CommandPrivacy() {
+        addSubcommand(new CommandListPlayer());
+        addSubcommand(new CommandUnlistPlayer());
+        addSubcommand(new CommandAccessMode());
+        addSubcommand(new CommandKnocking());
     }
 
     @Override
     public String getName() {
-        return "tent";
-    }
-
-    @Override
-    public int getRequiredPermissionLevel() {
-        return 2;
+        return "privacy";
     }
 
     @Override
@@ -32,6 +27,6 @@ public class CommandTent extends CommandTreeBase {
         List<String> subCommands = Lists.newArrayList();
         for (ICommand subCommand : getSubCommands())
             subCommands.add(subCommand.getName());
-        return "tent [" + Joiner.on("|").join(subCommands) + "]";
+        return "privacy [" + Joiner.on("|").join(subCommands) + "]";
     }
 }
