@@ -1,0 +1,41 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {},
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "umberstone": {
+        "textures": {
+          "all": "nomagi:blocks/ctm/umberstone/normal_alt"
+        }
+      },
+      "ebonstone": {
+        "model": "nomagi:ebonstone_brick"
+      },
+      "tent_wall": {
+        "model": "nomagi:tent_wall"
+      },
+      "tent_wall_ribbon": {
+        "textures": {
+          "all": "nomagi:blocks/ctm/tent_wall_ribbon/normal_alt"
+        }
+      },
+      "tent_wall_inset": {
+        "textures": {
+          "all": "nomagi:blocks/ctm/tent_wall_inset/normal_alt"
+        }
+      },
+      "ebonstone_inset": {
+        "textures": {
+          "all": "nomagi:blocks/ctm/ebonstone_brick_inset/normal_alt"
+        }
+      },
+      "something_special": {
+        "model": "nomagi:barrel/metal_barrel_nswe"
+      }
+    }
+  }
+}
