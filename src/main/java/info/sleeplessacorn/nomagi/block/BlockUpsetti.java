@@ -60,6 +60,6 @@ public class BlockUpsetti extends BlockAxisY implements IModeled {
 
     @Override
     public void getVariants(List<String> variants) {
-        variants.add("facing=south");
+        variants.add("facing=north");
     }
 }

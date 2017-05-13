@@ -9,6 +9,7 @@ import info.sleeplessacorn.nomagi.block.*;
 import info.sleeplessacorn.nomagi.block.barrel.BlockBarrel;
 import info.sleeplessacorn.nomagi.block.barrel.TileBarrel;
 import info.sleeplessacorn.nomagi.core.data.Room;
+import info.sleeplessacorn.nomagi.item.ItemBlockMulti;
 import info.sleeplessacorn.nomagi.item.ItemBlockTapestry;
 import info.sleeplessacorn.nomagi.item.ItemBlockTent;
 import info.sleeplessacorn.nomagi.item.ItemNomagiDoor;
@@ -35,7 +36,7 @@ public class ModObjects {
     public static final Block NATURE = new BlockNature();
     public static final Block BARREL = new BlockBarrel();
     public static final Block DOOR = new BlockNomagiDoor();
-    public static final Block DOOR_CONTROLLER = new BlockDoorController();
+    public static final Block DOOR_CONTROLLER = new BlockControllerRoom();
     public static final Block TAPESTRY = new BlockTapestry();
     public static final Block UPSETTI = new BlockUpsetti();
 
@@ -49,24 +50,20 @@ public class ModObjects {
     private static int roomId;
 
     public static void preInit() {
-        RegistryHelper.register(TENT, "tent");
         RegistryHelper.register(new ItemBlockTent(), "tent");
+        RegistryHelper.register(TENT, "tent");
+        RegistryHelper.register(new ItemNomagiDoor(DOOR), "door");
+        RegistryHelper.register(DOOR, "door");
+        RegistryHelper.register(new ItemBlockTapestry(TAPESTRY), "tapestry");
+        RegistryHelper.register(TAPESTRY, "tapestry");
+        RegistryHelper.register(new ItemBlockMulti(DOOR_CONTROLLER), "door_controller");
+        RegistryHelper.register(DOOR_CONTROLLER, "door_controller");
+        RegistryHelper.register(new ItemBlock(UPSETTI), "upsetti");
+        RegistryHelper.register(UPSETTI, "upsetti");
+
         RegistryHelper.register(DECOR, "decorative");
         RegistryHelper.register(NATURE, "nature");
         RegistryHelper.register(BARREL, "barrel");
-        RegistryHelper.register(DOOR, "door");
-        RegistryHelper.register(new ItemNomagiDoor(DOOR), "door");
-        RegistryHelper.register(TAPESTRY, "tapestry");
-        RegistryHelper.register(new ItemBlockTapestry(TAPESTRY), "tapestry");
-        RegistryHelper.register(DOOR_CONTROLLER, "door_controller");
-        RegistryHelper.register(new ItemBlock(DOOR_CONTROLLER) {
-            @Override
-            public int getMetadata(int damage) {
-                return damage;
-            }
-        }.setHasSubtypes(true), "door_controller");
-        RegistryHelper.register(UPSETTI, "upsetti");
-        RegistryHelper.register(new ItemBlock(UPSETTI), "upsetti");
 
         GameRegistry.registerTileEntity(TileBarrel.class, BARREL.getRegistryName().toString());
         GameRegistry.registerTileEntity(TileEntityTent.class, TENT.getRegistryName().toString());

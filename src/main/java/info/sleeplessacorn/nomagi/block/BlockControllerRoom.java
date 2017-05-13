@@ -31,11 +31,11 @@ import tehnut.lib.mc.model.IModeled;
 import java.util.List;
 import java.util.Locale;
 
-public class BlockDoorController extends BlockAxisY implements IModeled {
+public class BlockControllerRoom extends BlockAxisY implements IModeled {
 
     public static final IProperty<Type> TYPE = PropertyEnum.create("type", Type.class);
 
-    public BlockDoorController() {
+    public BlockControllerRoom() {
         super(Material.WOOD, PlacementStyle.FACE_AWAY);
 
         setCreativeTab(Nomagi.TAB_NOMAGI);

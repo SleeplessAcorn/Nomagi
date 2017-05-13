@@ -16,8 +16,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import tehnut.lib.mc.model.IModeled;
 
-public class BlockTapestry extends Block {
+import java.util.List;
+
+public class BlockTapestry extends Block implements IModeled {
 
     public static final IProperty<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final IProperty<Boolean> TOP = PropertyBool.create("top");
@@ -108,5 +111,10 @@ public class BlockTapestry extends Block {
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(TOP, meta == 1);
+    }
+
+    @Override
+    public void getVariants(List<String> variants) {
+        variants.add("inventory");
     }
 }

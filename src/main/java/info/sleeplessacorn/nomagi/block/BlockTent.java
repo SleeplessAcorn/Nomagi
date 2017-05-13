@@ -28,11 +28,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import tehnut.lib.mc.model.IModeled;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Locale;
 
-public class BlockTent extends Block {
+public class BlockTent extends Block implements IModeled {
 
     public static final IProperty<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final IProperty<TentType> TENT_TYPE = PropertyEnum.create("tent_type", TentType.class);
@@ -160,6 +162,12 @@ public class BlockTent extends Block {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileEntityTent();
+    }
+
+    // IModeled
+    @Override
+    public void getVariants(List<String> variants) {
+        variants.add("inventory");
     }
 
     public enum TentType implements IStringSerializable {

@@ -4,17 +4,14 @@ import info.sleeplessacorn.nomagi.block.BlockTent;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
-public class ItemBlockTent extends ItemBlock {
+public class ItemBlockTent extends ItemBlockMulti {
 
     public ItemBlockTent() {
         super(ModObjects.TENT);
-
-        setHasSubtypes(true);
     }
 
     @Override
