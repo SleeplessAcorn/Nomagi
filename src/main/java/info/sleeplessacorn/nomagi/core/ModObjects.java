@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.*;
-import info.sleeplessacorn.nomagi.block.BlockDoorController;
 import info.sleeplessacorn.nomagi.block.barrel.BlockBarrel;
 import info.sleeplessacorn.nomagi.block.barrel.TileBarrel;
 import info.sleeplessacorn.nomagi.core.data.Room;
@@ -28,14 +27,8 @@ import java.util.Map;
 
 public class ModObjects {
 
-    private static final ResourceLocation ROOM_PREVIEWS = new ResourceLocation(Nomagi.MODID, "textures/gui/room_previews.png");
-
     public static final Map<ResourceLocation, Room> ROOMS = Maps.newHashMap();
     public static final BiMap<ResourceLocation, Integer> ROOM_IDS = HashBiMap.create();
-
-    public static final Room EMPTY_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "empty_room"), new SubTexture(ROOM_PREVIEWS, 0, 0, 52, 52));
-    public static final Room NATURE_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "nature_room"), new SubTexture(ROOM_PREVIEWS, 52, 0, 52, 52));
-    public static final Room CELLAR_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "cellar_room"), new SubTexture(ROOM_PREVIEWS, 104, 0, 52, 52));
 
     public static final Block TENT = new BlockTent();
     public static final Block DECOR = new BlockDecorative();
@@ -48,6 +41,11 @@ public class ModObjects {
 
     public static final DimensionType TENT_DIMENSION = DimensionType.register(Nomagi.MODID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
 
+    private static final ResourceLocation ROOM_PREVIEWS = new ResourceLocation(Nomagi.MODID, "textures/gui/room_previews.png");
+
+    public static final Room EMPTY_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "empty_room"), new SubTexture(ROOM_PREVIEWS, 0, 0, 52, 52));
+    public static final Room NATURE_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "nature_room"), new SubTexture(ROOM_PREVIEWS, 52, 0, 52, 52));
+    public static final Room CELLAR_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "cellar_room"), new SubTexture(ROOM_PREVIEWS, 104, 0, 52, 52));
     private static int roomId;
 
     public static void preInit() {

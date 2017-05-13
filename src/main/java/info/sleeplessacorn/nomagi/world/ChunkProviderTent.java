@@ -29,7 +29,7 @@ public class ChunkProviderTent extends ChunkProviderFlat {
         byte[] ids = ret.getBiomeArray();
 
         for (int i = 0; i < ids.length; ++i)
-            ids[i] = (byte)Biome.getIdForBiome(biomes[i]);
+            ids[i] = (byte) Biome.getIdForBiome(biomes[i]);
 
         ret.generateSkylightMap();
         return ret;

@@ -1,10 +1,7 @@
 package info.sleeplessacorn.nomagi.tile;
 
 import info.sleeplessacorn.nomagi.block.BlockTent;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.EnumFacing;
-import tehnut.lib.mc.tile.TileBase;
 import tehnut.lib.mc.tile.sync.TileSyncBase;
 import tehnut.lib.mc.tile.sync.adapters.NBT;
 import tehnut.lib.mc.tile.sync.adapters.NBTAdapterUUID;

@@ -37,9 +37,9 @@ public class Room {
 
     private transient final String name;
     private transient final String description;
-    private transient Customization customization;
     private final ResourceLocation schematic;
     private final SubTexture previewImage;
+    private transient Customization customization;
 
     public Room(ResourceLocation schematic, SubTexture previewImage) {
         this.name = "room." + schematic.getResourceDomain() + "." + schematic.getResourcePath() + ".name";

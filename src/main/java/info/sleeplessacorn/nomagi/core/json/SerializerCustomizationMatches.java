@@ -20,15 +20,15 @@ public class SerializerCustomizationMatches extends SerializerBase<Room.Customiz
         Room.CustomizationJson.Matches matches = new Room.CustomizationJson.Matches();
 
         // Block matches
-        Set<ResourceLocation> blockMatches = context.deserialize(json.getAsJsonObject().get("block"), new TypeToken<Set<ResourceLocation>>(){}.getType());
+        Set<ResourceLocation> blockMatches = context.deserialize(json.getAsJsonObject().get("block"), new TypeToken<Set<ResourceLocation>>() {}.getType());
         matches.getBlockMatches().addAll(blockMatches);
 
         // State matches
-        Set<IBlockState> stateMatches = context.deserialize(json.getAsJsonObject().getAsJsonArray("state"), new TypeToken<Set<IBlockState>>(){}.getType());
+        Set<IBlockState> stateMatches = context.deserialize(json.getAsJsonObject().getAsJsonArray("state"), new TypeToken<Set<IBlockState>>() {}.getType());
         matches.getStateMatches().addAll(stateMatches);
 
         // Instance matches
-        Set<String> instanceMatches = context.deserialize(json.getAsJsonObject().getAsJsonArray("instance"), new TypeToken<Set<String>>(){}.getType());
+        Set<String> instanceMatches = context.deserialize(json.getAsJsonObject().getAsJsonArray("instance"), new TypeToken<Set<String>>() {}.getType());
         String className = "";
         try {
             for (String instance : instanceMatches) {
@@ -51,13 +51,13 @@ public class SerializerCustomizationMatches extends SerializerBase<Room.Customiz
     @Override
     public JsonElement serialize(Room.CustomizationJson.Matches src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.add("block", context.serialize(src.getBlockMatches(), new TypeToken<Set<ResourceLocation>>(){}.getType()));
-        jsonObject.add("state", context.serialize(src.getStateMatches(), new TypeToken<Set<IBlockState>>(){}.getType()));
+        jsonObject.add("block", context.serialize(src.getBlockMatches(), new TypeToken<Set<ResourceLocation>>() {}.getType()));
+        jsonObject.add("state", context.serialize(src.getStateMatches(), new TypeToken<Set<IBlockState>>() {}.getType()));
 
         Set<String> instanceMatches = Sets.newHashSet();
         for (Class<? extends Block> blockClass : src.getInstanceMatches())
             instanceMatches.add(blockClass.getCanonicalName());
-        jsonObject.add("instance", context.serialize(instanceMatches, new TypeToken<Set<String>>(){}.getType()));
+        jsonObject.add("instance", context.serialize(instanceMatches, new TypeToken<Set<String>>() {}.getType()));
 
         return jsonObject;
     }

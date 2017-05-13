@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class Privacy  implements INBTSerializable<NBTTagCompound> {
+public class Privacy implements INBTSerializable<NBTTagCompound> {
 
     private transient final UUID ownerId;
     private boolean allowKnocking;
@@ -51,7 +51,8 @@ public class Privacy  implements INBTSerializable<NBTTagCompound> {
                     return true;
                 return false;
             }
-            default: return false;
+            default:
+                return false;
         }
     }
 

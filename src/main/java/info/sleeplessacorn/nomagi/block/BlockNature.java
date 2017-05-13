@@ -21,7 +21,6 @@ import tehnut.lib.mc.model.IModeled;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModeled {
 
@@ -45,7 +44,7 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
         if (getProperty() == null)
             return super.isOpaqueCube(state); // Fuck you Mojang
 
-            return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package info.sleeplessacorn.nomagi.core.data;
 
-import com.google.common.collect.*;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.world.TeleporterTent;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +50,7 @@ public class TentWorldSavedData extends WorldSavedData {
         }
 
         NBTTagList backList = nbt.getTagList("back", 10);
-        for (int i = 0 ; i < backList.tagCount(); i++) {
+        for (int i = 0; i < backList.tagCount(); i++) {
             NBTTagCompound tagCompound = backList.getCompoundTagAt(i);
             UUID playerId = UUID.fromString(tagCompound.getString("uuid"));
             int dimension = tagCompound.getInteger("dim");

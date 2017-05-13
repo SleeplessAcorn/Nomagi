@@ -12,6 +12,11 @@ import javax.annotation.Nonnull;
 
 public class TeleporterTent extends Teleporter {
 
+    private final WorldServer worldServer;
+    private double x;
+    private double y;
+    private double z;
+
     @SuppressWarnings("all")
     public TeleporterTent(WorldServer world, double x, double y, double z) {
         super(world);
@@ -20,9 +25,6 @@ public class TeleporterTent extends Teleporter {
         this.y = y;
         this.z = z;
     }
-
-    private final WorldServer worldServer;
-    private double x, y, z;
 
     @Override
     public void placeInPortal(@Nonnull Entity entity, float rotationYaw) {
@@ -34,7 +36,7 @@ public class TeleporterTent extends Teleporter {
         entity.motionZ = 0.0f;
     }
 
-    public static void teleportToDimension(EntityPlayer player, int dimension, BlockPos pos){
+    public static void teleportToDimension(EntityPlayer player, int dimension, BlockPos pos) {
         teleportToDimension(player, dimension, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
     }
 

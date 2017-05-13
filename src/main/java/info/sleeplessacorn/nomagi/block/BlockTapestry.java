@@ -10,7 +10,6 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -35,10 +34,14 @@ public class BlockTapestry extends Block {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         switch (state.getValue(FACING)) {
-            case NORTH: return new AxisAlignedBB(0.0D, 0.0D, 0.75D, 1D, 1D, 1D);
-            case EAST: return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.25D, 1D, 1D);
-            case SOUTH: return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 1D, 0.25D);
-            case WEST: return new AxisAlignedBB(0.75D, 0.0D, 0.0D, 1D, 1D, 1D);
+            case NORTH:
+                return new AxisAlignedBB(0.0D, 0.0D, 0.75D, 1D, 1D, 1D);
+            case EAST:
+                return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.25D, 1D, 1D);
+            case SOUTH:
+                return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 1D, 0.25D);
+            case WEST:
+                return new AxisAlignedBB(0.75D, 0.0D, 0.0D, 1D, 1D, 1D);
         }
         return FULL_BLOCK_AABB;
     }
@@ -78,10 +81,18 @@ public class BlockTapestry extends Block {
         int meta = 0;
         EnumFacing facing = state.getValue(FACING);
         switch (facing) {
-            case NORTH: meta = 0; break;
-            case EAST: meta = 1; break;
-            case SOUTH: meta = 2; break;
-            case WEST: meta = 3; break;
+            case NORTH:
+                meta = 0;
+                break;
+            case EAST:
+                meta = 1;
+                break;
+            case SOUTH:
+                meta = 2;
+                break;
+            case WEST:
+                meta = 3;
+                break;
         }
         if (state.getValue(TOP))
             meta += 4;

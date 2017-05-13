@@ -4,7 +4,6 @@ import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.core.data.Room;
 import info.sleeplessacorn.nomagi.core.data.Tent;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -26,13 +25,12 @@ public class GeneratorUtil {
     }
 
     /**
-     *
-     * @param world - Current world
-     * @param tent - Tent to add room to
+     * @param world    - Current world
+     * @param tent     - Tent to add room to
      * @param roomPosX - Current room's internal grid x coord
      * @param roomPosZ - Current room's internal grid z coord
-     * @param room - Room to generate
-     * @param facing - Side of current room to generate on
+     * @param room     - Room to generate
+     * @param facing   - Side of current room to generate on
      */
     public static void generateRoom(World world, Tent tent, int roomPosX, int roomPosZ, Room room, EnumFacing facing) {
         if (room.getTemplate() == null) {

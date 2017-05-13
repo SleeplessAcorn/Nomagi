@@ -17,7 +17,7 @@ public class GuiButtonDirection extends GuiButton {
     public static final SubTexture BUTTON_PREV_HOVER = new SubTexture(RenderHelper.GUI_CREATION, 176, 64, 10, 10);
     public static final SubTexture BUTTON_PREV_PRESSED = new SubTexture(RenderHelper.GUI_CREATION, 186, 64, 10, 10);
     public static final SubTexture BUTTON_PREV_DISABLED = new SubTexture(RenderHelper.GUI_CREATION, 196, 64, 10, 10);
-    
+
     private boolean right;
 
     public GuiButtonDirection(int buttonId, Pair<Integer, Integer> position, boolean right) {

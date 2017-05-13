@@ -14,7 +14,7 @@ public class SerializerCustomization extends SerializerBase<Room.CustomizationJs
 
     @Override
     public Room.CustomizationJson deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Map<String, Room.CustomizationJson.Matches> stringMatches = context.deserialize(json.getAsJsonObject().get("matches"), new TypeToken<Map<String, Room.CustomizationJson.Matches>>(){}.getType());
+        Map<String, Room.CustomizationJson.Matches> stringMatches = context.deserialize(json.getAsJsonObject().get("matches"), new TypeToken<Map<String, Room.CustomizationJson.Matches>>() {}.getType());
         Map<BlockPos, Room.CustomizationJson.Matches> matches = Maps.newHashMap();
         for (Map.Entry<String, Room.CustomizationJson.Matches> match : stringMatches.entrySet())
             matches.put(stringToPos(match.getKey()), match.getValue());
@@ -29,7 +29,7 @@ public class SerializerCustomization extends SerializerBase<Room.CustomizationJs
         for (Map.Entry<BlockPos, Room.CustomizationJson.Matches> match : src.getMatches().entrySet())
             matches.put(posToString(match.getKey()), match.getValue());
 
-        jsonObject.add("matches", context.serialize(matches, new TypeToken<Map<String, Room.CustomizationJson.Matches>>(){}.getType()));
+        jsonObject.add("matches", context.serialize(matches, new TypeToken<Map<String, Room.CustomizationJson.Matches>>() {}.getType()));
 
         return jsonObject;
     }

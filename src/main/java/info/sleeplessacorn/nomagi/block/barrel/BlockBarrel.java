@@ -39,9 +39,20 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
         setSoundType(SoundType.STONE);
     }
 
-    @Override public boolean isFullBlock(IBlockState state) { return false; }
-    @Override public boolean isFullCube(IBlockState state) { return false; }
-    @Override public boolean isOpaqueCube(IBlockState state) { return false; }
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -56,14 +67,6 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
     @Override
     public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
         return state.getValue(getProperty()).getBlockType().getRight();
-    }
-
-    public static void playOpeningSound(World world, BlockPos pos){
-        if (!world.isRemote)
-            world.playSound(
-                    null, pos, SoundEvents.ENTITY_ITEMFRAME_PLACE,
-                    SoundCategory.BLOCKS, 0.6f, 0.3f
-            );
     }
 
     @Override
@@ -87,7 +90,6 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileBarrel();
     }
-
 
     @Override
     @Nonnull
@@ -114,6 +116,14 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
     public void getVariants(List<String> variants) {
         for (BlockBarrel.Barrel barrels : BlockBarrel.Barrel.values())
             variants.add("type=" + barrels.getName());
+    }
+
+    public static void playOpeningSound(World world, BlockPos pos) {
+        if (!world.isRemote)
+            world.playSound(
+                    null, pos, SoundEvents.ENTITY_ITEMFRAME_PLACE,
+                    SoundCategory.BLOCKS, 0.6f, 0.3f
+            );
     }
 
     public enum Barrel implements IStringSerializable {
