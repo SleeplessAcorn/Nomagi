@@ -59,8 +59,8 @@ public class BlockTapestry extends Block {
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        worldIn.destroyBlock(pos.offset(state.getValue(TOP) ? EnumFacing.DOWN : EnumFacing.UP), false);
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        world.destroyBlock(pos.offset(state.getValue(TOP) ? EnumFacing.DOWN : EnumFacing.UP), false);
     }
 
     @Override
@@ -95,20 +95,7 @@ public class BlockTapestry extends Block {
     }
 
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        IBlockState stateUp = world.getBlockState(pos.up());
-        return state.getBlock().isReplaceable(world, pos) && stateUp.getBlock().isReplaceable(world, pos);
-    }
-
-    @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(TOP, meta == 1);
-    }
-
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        if (!state.getValue(TOP))
-            worldIn.setBlockState(pos.up(), state.withProperty(TOP, true));
     }
 }

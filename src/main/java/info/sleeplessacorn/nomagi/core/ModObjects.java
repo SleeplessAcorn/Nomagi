@@ -10,6 +10,7 @@ import info.sleeplessacorn.nomagi.block.BlockDoorController;
 import info.sleeplessacorn.nomagi.block.barrel.BlockBarrel;
 import info.sleeplessacorn.nomagi.block.barrel.TileBarrel;
 import info.sleeplessacorn.nomagi.core.data.Room;
+import info.sleeplessacorn.nomagi.item.ItemBlockTapestry;
 import info.sleeplessacorn.nomagi.item.ItemBlockTent;
 import info.sleeplessacorn.nomagi.item.ItemNomagiDoor;
 import info.sleeplessacorn.nomagi.tile.TileEntityTent;
@@ -57,7 +58,7 @@ public class ModObjects {
         RegistryHelper.register(DOOR, "door");
         RegistryHelper.register(new ItemNomagiDoor(DOOR), "door");
         RegistryHelper.register(TAPESTRY, "tapestry");
-        RegistryHelper.register(new ItemBlock(TAPESTRY), "tapestry");
+        RegistryHelper.register(new ItemBlockTapestry(TAPESTRY), "tapestry");
         RegistryHelper.register(DOOR_CONTROLLER, "door_controller");
         RegistryHelper.register(new ItemBlock(DOOR_CONTROLLER) {
             @Override
