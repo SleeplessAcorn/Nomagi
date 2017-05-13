@@ -46,9 +46,8 @@ public class TeleporterTent extends Teleporter {
         WorldServer worldServer = server.worldServerForDimension(dimension);
         player.addExperienceLevel(0);
 
-        if (worldServer == null || worldServer.getMinecraftServer() == null){ //Dimension doesn't exist
-            throw new IllegalArgumentException("Dimension: "+dimension+" doesn't exist!");
-        }
+        if (worldServer == null || worldServer.getMinecraftServer() == null) //Dimension doesn't exist
+            throw new IllegalArgumentException("Dimension: " + dimension + " doesn't exist!");
 
         worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension(entityPlayerMP, dimension, new TeleporterTent(worldServer, x, y, z));
         player.setPositionAndUpdate(x, y, z);
@@ -56,9 +55,8 @@ public class TeleporterTent extends Teleporter {
             // For some reason teleporting out of the end does weird things.
             player.setPositionAndUpdate(x, y, z);
             worldServer.spawnEntity(player);
-            worldServer.updateEntityWithOptionalForce(player, false);
-            player.setSneaking(false);
+            worldServer.updateEntityWithOptionalForce(player, true);
         }
+        player.setSneaking(false);
     }
-
 }

@@ -1,6 +1,5 @@
 package info.sleeplessacorn.nomagi.item;
 
-import info.sleeplessacorn.nomagi.Nomagi;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -20,8 +19,6 @@ public class ItemNomagiDoor extends ItemBlock {
 
     public ItemNomagiDoor(Block block) {
         super(block);
-
-        setCreativeTab(Nomagi.TAB_NOMAGI);
     }
 
     @Override
@@ -53,8 +50,7 @@ public class ItemNomagiDoor extends ItemBlock {
         return EnumActionResult.FAIL;
     }
 
-    public static void placeDoor(World world, BlockPos pos, EnumFacing facing, Block door, boolean isRightHinge)
-    {
+    public static void placeDoor(World world, BlockPos pos, EnumFacing facing, Block door, boolean isRightHinge) {
         BlockPos blockpos = pos.offset(facing.rotateY());
         BlockPos blockpos1 = pos.offset(facing.rotateYCCW());
 
@@ -69,13 +65,8 @@ public class ItemNomagiDoor extends ItemBlock {
         boolean flag1 = state.getBlock() == door || stateUp.getBlock() == door;
         boolean flag = state1.getBlock() == door || state1Up.getBlock() == door;
 
-        if ((!flag || flag1) && j <= i) {
-            if (flag1 && !flag || j < i) {
-                isRightHinge = false;
-            }
-        } else {
-            isRightHinge = true;
-        }
+        if ((!flag || flag1) && j <= i)
+            isRightHinge = !(flag1 && !flag || j < i);
 
         boolean powered = world.isBlockPowered(pos) || world.isBlockPowered(pos.up());
         IBlockState placeSate = door.getDefaultState().withProperty(BlockDoor.FACING, facing).withProperty(BlockDoor.HINGE, isRightHinge ? BlockDoor.EnumHingePosition.RIGHT : BlockDoor.EnumHingePosition.LEFT).withProperty(BlockDoor.POWERED, powered).withProperty(BlockDoor.OPEN, powered);

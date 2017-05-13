@@ -39,6 +39,7 @@ public class BlockTent extends Block {
 
     public BlockTent() {
         super(Material.CLOTH);
+        setCreativeTab(Nomagi.TAB_NOMAGI);
         setUnlocalizedName(Nomagi.MODID + ".tent");
         setSoundType(SoundType.CLOTH);
 
