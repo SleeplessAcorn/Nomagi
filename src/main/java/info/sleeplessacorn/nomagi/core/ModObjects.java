@@ -44,6 +44,7 @@ public class ModObjects {
     public static final Block DOOR = new BlockNomagiDoor();
     public static final Block DOOR_CONTROLLER = new BlockDoorController();
     public static final Block TAPESTRY = new BlockTapestry();
+    public static final Block UPSETTI = new BlockUpsetti();
 
     public static final DimensionType TENT_DIMENSION = DimensionType.register(Nomagi.MODID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
 
@@ -66,6 +67,8 @@ public class ModObjects {
                 return damage;
             }
         }.setHasSubtypes(true), "door_controller");
+        RegistryHelper.register(UPSETTI, "upsetti");
+        RegistryHelper.register(new ItemBlock(UPSETTI), "upsetti");
 
         GameRegistry.registerTileEntity(TileBarrel.class, BARREL.getRegistryName().toString());
         GameRegistry.registerTileEntity(TileEntityTent.class, TENT.getRegistryName().toString());

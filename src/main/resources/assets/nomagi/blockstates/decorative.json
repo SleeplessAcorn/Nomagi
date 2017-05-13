@@ -24,9 +24,6 @@
       },
       "ebonstone_inset": {
         "model": "nomagi:ebonstone_brick_inset"
-      },
-      "something_special": {
-        "model": "nomagi:barrel/metal_barrel_nswe"
       }
     }
   }

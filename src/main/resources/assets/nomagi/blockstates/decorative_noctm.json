@@ -32,9 +32,6 @@
         "textures": {
           "all": "nomagi:blocks/ctm/ebonstone_brick_inset/normal_alt"
         }
-      },
-      "something_special": {
-        "model": "nomagi:barrel/metal_barrel_nswe"
       }
     }
   }
