@@ -9,14 +9,14 @@ import net.minecraftforge.fml.common.Loader;
 /**
  * Used for blocks that implement the Chisel CTM format
  *
- * When Chisel is not loaded, a secondary blockstate file, with {@code _noctm} appended, is used instead.
+ * When neither Chisel nor ConnectedTexturesMod are loaded, a secondary blockstate file, with {@code _noctm} appended, is used instead.
  */
 public class StateMapperNoCTM extends StateMapperBase {
 
     @Override
     protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
         ResourceLocation location = state.getBlock().getRegistryName();
-        if (!Loader.isModLoaded("chisel"))
+        if (!Loader.isModLoaded("chisel") || !Loader.isModLoaded("ctm"))
             location = new ResourceLocation(location.getResourceDomain(), location.getResourcePath() + "_noctm");
 
         return new ModelResourceLocation(location, getPropertyString(state.getProperties()));
