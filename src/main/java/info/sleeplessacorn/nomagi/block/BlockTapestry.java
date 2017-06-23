@@ -104,13 +104,27 @@ public class BlockTapestry extends Block implements IModeled {
     }
 
     @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (!state.getValue(TOP))
+            return;
+
+        BlockPos reversePos = pos.offset(state.getValue(FACING).getOpposite());
+        IBlockState reverseState = world.getBlockState(reversePos);
+        if (!reverseState.isSideSolid(world, reversePos, state.getValue(FACING))) {
+            world.setBlockToAir(pos.down());
+            world.setBlockToAir(pos);
+            dropBlockAsItem(world, pos, state, 0);
+        }
+    }
+
+    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer.Builder(this).add(FACING, TOP).build();
     }
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(TOP, meta == 1);
+        return getDefaultState().withProperty(FACING, facing).withProperty(TOP, meta == 1);
     }
 
     @Override
