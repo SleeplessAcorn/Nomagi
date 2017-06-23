@@ -16,7 +16,7 @@ public class StateMapperNoCTM extends StateMapperBase {
     @Override
     protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
         ResourceLocation location = state.getBlock().getRegistryName();
-        if (!Loader.isModLoaded("chisel") || !Loader.isModLoaded("ctm"))
+        if (!Loader.isModLoaded("ctm"))
             location = new ResourceLocation(location.getResourceDomain(), location.getResourcePath() + "_noctm");
 
         return new ModelResourceLocation(location, getPropertyString(state.getProperties()));
