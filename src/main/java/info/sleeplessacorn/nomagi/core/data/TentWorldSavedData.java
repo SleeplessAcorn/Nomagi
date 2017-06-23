@@ -100,7 +100,7 @@ public class TentWorldSavedData extends WorldSavedData {
         for (Tent tent : tents.values()) {
             Set<Chunk> usedChunks = tent.getUsedChunks();
             for (Chunk chunk : usedChunks)
-                if (chunk.xPosition == chunkX && chunk.zPosition == chunkZ)
+                if (chunk.x == chunkX && chunk.z == chunkZ)
                     return tent;
         }
 

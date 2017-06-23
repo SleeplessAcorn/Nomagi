@@ -37,7 +37,7 @@ public class CommandReset extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        WorldServer world = server.worldServerForDimension(ModObjects.TENT_DIMENSION.getId());
+        WorldServer world = server.getWorld(ModObjects.TENT_DIMENSION.getId());
         UUID playerId = args.length == 0 ? getCommandSenderAsPlayer(sender).getGameProfile().getId() : UUID.fromString(args[0]);
         Tent tent = TentWorldSavedData.getData(world).getTent(playerId);
         if (tent == null)
@@ -61,11 +61,11 @@ public class CommandReset extends CommandBase {
                 }
             }
 
-            long chunkId = ChunkPos.asLong(chunk.xPosition, chunk.zPosition);
-            Chunk newChunk = world.getChunkProvider().chunkGenerator.provideChunk(chunk.xPosition, chunk.zPosition);
+            long chunkId = ChunkPos.asLong(chunk.x, chunk.z);
+            Chunk newChunk = world.getChunkProvider().chunkGenerator.generateChunk(chunk.x, chunk.z);
             world.getChunkProvider().id2ChunkMap.put(chunkId, newChunk);
-            newChunk.onChunkLoad();
-            newChunk.populateChunk(world.getChunkProvider(), world.getChunkProvider().chunkGenerator);
+            newChunk.onLoad();
+            newChunk.populate(world.getChunkProvider(), world.getChunkProvider().chunkGenerator);
 
             for (EntityPlayerMP player : server.getPlayerList().getPlayers())
                 if (tent.isInside(player))

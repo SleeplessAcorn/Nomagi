@@ -23,7 +23,7 @@ public class ChunkProviderTent extends ChunkProviderFlat {
     }
 
     @Override
-    public Chunk provideChunk(int x, int z) {
+    public Chunk generateChunk(int x, int z) {
         Chunk ret = new Chunk(world, new ChunkPrimer(), x, z);
         Biome[] biomes = world.getBiomeProvider().getBiomes(null, x * 16, z * 16, 16, 16);
         byte[] ids = ret.getBiomeArray();

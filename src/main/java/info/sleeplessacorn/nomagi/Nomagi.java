@@ -4,6 +4,8 @@ import info.sleeplessacorn.nomagi.command.CommandNomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.network.MessageCreateRoom;
 import info.sleeplessacorn.nomagi.network.MessageOpenCreateRoomGui;
+import info.sleeplessacorn.nomagi.network.MessageOpenPrivacyGui;
+import info.sleeplessacorn.nomagi.network.MessageUpdateUsernames;
 import info.sleeplessacorn.nomagi.proxy.ProxyCommon;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -42,6 +44,8 @@ public class Nomagi {
 
         NETWORK_WRAPPER.registerMessage(MessageCreateRoom.Handler.class, MessageCreateRoom.class, 0, Side.SERVER);
         NETWORK_WRAPPER.registerMessage(MessageOpenCreateRoomGui.Handler.class, MessageOpenCreateRoomGui.class, 1, Side.CLIENT);
+        NETWORK_WRAPPER.registerMessage(MessageOpenPrivacyGui.Handler.class, MessageOpenPrivacyGui.class, 2, Side.CLIENT);
+        NETWORK_WRAPPER.registerMessage(MessageUpdateUsernames.Handler.class, MessageUpdateUsernames.class, 3, Side.CLIENT);
     }
 
     @Mod.EventHandler

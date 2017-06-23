@@ -48,3 +48,7 @@ room.nomagi.empty_room.desc=It's empty. Or is it?
 
 # Waila
 info.nomagi.owner=Home Owner: %s
+
+# toy
+perk.nomagi.speed.name=Speed
+perk.nomagi.jump.name=Jump Assist

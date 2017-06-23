@@ -45,7 +45,7 @@ public class TeleporterTent extends Teleporter {
         int oldDimension = player.getEntityWorld().provider.getDimension();
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
         MinecraftServer server = ((EntityPlayerMP) player).getEntityWorld().getMinecraftServer();
-        WorldServer worldServer = server.worldServerForDimension(dimension);
+        WorldServer worldServer = server.getWorld(dimension);
         player.addExperienceLevel(0);
 
         if (worldServer == null || worldServer.getMinecraftServer() == null) //Dimension doesn't exist

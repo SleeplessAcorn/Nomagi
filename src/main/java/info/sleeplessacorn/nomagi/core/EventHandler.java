@@ -6,9 +6,16 @@ import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
+
+    @SubscribeEvent
+    public static void onJoin(FMLNetworkEvent.ServerConnectionFromClientEvent event) {
+
+
+    }
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.PlaceEvent event) {

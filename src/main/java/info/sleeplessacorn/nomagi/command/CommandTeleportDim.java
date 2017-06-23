@@ -38,7 +38,7 @@ public class CommandTeleportDim extends CommandBase {
             throw new CommandException("Not enough args.\n" + TextFormatting.RED + getUsage(sender));
 
         int dimension = Integer.parseInt(args[0]);
-        World world = server.worldServerForDimension(dimension);
+        World world = server.getWorld(dimension);
 
         EntityPlayer player = getCommandSenderAsPlayer(sender);
         if (args.length == 2 || args.length == 5)

@@ -37,6 +37,7 @@ public class ModObjects {
     public static final Block BARREL = new BlockBarrel();
     public static final Block DOOR = new BlockNomagiDoor();
     public static final Block DOOR_CONTROLLER = new BlockControllerRoom();
+    public static final Block PRIVACY_CONTROLLER = new BlockControllerPrivacy();
     public static final Block TAPESTRY = new BlockTapestry();
     public static final Block UPSETTI = new BlockUpsetti();
 
@@ -58,6 +59,8 @@ public class ModObjects {
         RegistryHelper.register(TAPESTRY, "tapestry");
         RegistryHelper.register(new ItemBlockMulti(DOOR_CONTROLLER), "door_controller");
         RegistryHelper.register(DOOR_CONTROLLER, "door_controller");
+        RegistryHelper.register(new ItemBlock(PRIVACY_CONTROLLER), "privacy_controller");
+        RegistryHelper.register(PRIVACY_CONTROLLER, "privacy_controller");
         RegistryHelper.register(new ItemBlock(UPSETTI), "upsetti");
         RegistryHelper.register(UPSETTI, "upsetti");
 
