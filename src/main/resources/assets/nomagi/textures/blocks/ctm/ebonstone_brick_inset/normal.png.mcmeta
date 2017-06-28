@@ -1,0 +1,10 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTM",
+    "layer": "SOLID",
+    "textures": [
+        "nomagi:blocks/ctm/ebonstone_brick_inset/ctm_map"
+    ]
+  }
+}

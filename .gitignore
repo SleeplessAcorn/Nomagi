@@ -10,8 +10,8 @@
 /libs/*
 /out/*
 /psd/*
-/screenshots/*
 /run/*
+/docs/*
 
 #File Extensions
 *.classpath
