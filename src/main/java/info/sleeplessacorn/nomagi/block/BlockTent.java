@@ -7,6 +7,7 @@ import info.sleeplessacorn.nomagi.core.data.Privacy;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
 import info.sleeplessacorn.nomagi.tile.TileEntityTent;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -16,9 +17,11 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -38,7 +41,7 @@ import java.util.Locale;
 public class BlockTent extends BlockAxisY implements IModeled {
 
     public static final IProperty<TentType> TENT_TYPE = PropertyEnum.create("tent_type", TentType.class);
-    public static final IProperty<Boolean> PADDING = PropertyBool.create("padding");
+    public static final IProperty<Boolean> MULTI = PropertyBool.create("multi");
 
     public BlockTent() {
         super(Material.CLOTH);
@@ -46,7 +49,16 @@ public class BlockTent extends BlockAxisY implements IModeled {
         setUnlocalizedName(Nomagi.MODID + ".tent");
         setSoundType(SoundType.CLOTH);
 
-        setDefaultState(getBlockState().getBaseState().withProperty(getProperty(), EnumFacing.NORTH).withProperty(TENT_TYPE, TentType.BASIC));
+        setDefaultState(getBlockState().getBaseState()
+                .withProperty(getProperty(), EnumFacing.NORTH)
+                .withProperty(TENT_TYPE, TentType.BASIC)
+                .withProperty(MULTI, false));
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return state.getValue(MULTI) ?
+                EnumBlockRenderType.INVISIBLE : EnumBlockRenderType.MODEL;
     }
 
     @Override
@@ -98,8 +110,12 @@ public class BlockTent extends BlockAxisY implements IModeled {
 
         tent.setTentType(TentType.valueOf(stack.getTagCompound().getString("tentType").toUpperCase(Locale.ENGLISH)));
 
-        for (BlockPos pos1 : BlockPos.getAllInBoxMutable(pos.subtract(new Vec3i(1, 0, 1)), pos.add(new Vec3i(1, 1, 1)))) {
-            world.setBlockState(pos1, state.withProperty(PADDING, false));
+        for (BlockPos pos1 : BlockPos.getAllInBoxMutable(
+                pos.subtract(new Vec3i(1, 0, 1)),
+                pos.add(new Vec3i(1, 1, 1)))) {
+            Block block = world.getBlockState(pos1).getBlock();
+            if (block != this && block == Blocks.AIR)
+            world.setBlockState(pos1, state.withProperty(MULTI, true));
         }
     }
 
@@ -123,7 +139,7 @@ public class BlockTent extends BlockAxisY implements IModeled {
     }
 
     protected BlockStateContainer createStateContainer() {
-        return new BlockStateContainer.Builder(this).add(getProperty(), TENT_TYPE).build();
+        return new BlockStateContainer.Builder(this).add(getProperty(), TENT_TYPE).add(getProperty(), MULTI).build();
     }
 
     @Override
@@ -145,11 +161,14 @@ public class BlockTent extends BlockAxisY implements IModeled {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         EnumFacing facing = state.getValue(getProperty());
 
-        double minX = -0.5, maxX = 1.5;
-        double minY = 0, maxY = 1.75;
-        double minZ = -0, maxZ = 2;
+        AxisAlignedBB aabbCore = new AxisAlignedBB(-0.5, 0, 0, 1.5, 1.75, 2);
+
+        double minX = aabbCore.minX, maxX = aabbCore.maxX;
+        double minY = aabbCore.minY, maxY = aabbCore.maxY;
+        double minZ = aabbCore.minZ, maxZ = aabbCore.maxZ;
         double offset = (maxZ - minZ) / 2;
 
+        if (!state.getValue(MULTI))
         switch (facing) {
             case NORTH:
                 return new AxisAlignedBB(

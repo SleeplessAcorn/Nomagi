@@ -11,6 +11,10 @@
       "basic": {
         "model": "nomagi:tent_multi"
       }
+    },
+    "multi": {
+      "true": {},
+      "false": {}
     }
   }
 }
