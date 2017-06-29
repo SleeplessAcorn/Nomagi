@@ -16,7 +16,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -26,13 +25,13 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tehnut.lib.mc.block.BlockAxisY;
 import tehnut.lib.mc.model.IModeled;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -99,21 +98,8 @@ public class BlockTent extends BlockAxisY implements IModeled {
 
         tent.setTentType(TentType.valueOf(stack.getTagCompound().getString("tentType").toUpperCase(Locale.ENGLISH)));
 
-        for (int i = 0; i < 2; ++i) {
-            List<BlockPos> area = new ArrayList<>();
-            area.add(new BlockPos(pos.getX() - 1, pos.getY() + i, pos.getZ() - 1));
-            area.add(new BlockPos(pos.getX() - 1, pos.getY() + i, pos.getZ() + 1));
-            area.add(new BlockPos(pos.getX() - 1, pos.getY() + i, pos.getZ()));
-            area.add(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ() - 1));
-            area.add(new BlockPos(pos.getX() + 1, pos.getY() + i, pos.getZ() + 1));
-            area.add(new BlockPos(pos.getX() + 1, pos.getY() + i, pos.getZ() - 1));
-            area.add(new BlockPos(pos.getX() + 1, pos.getY() + i, pos.getZ()));
-            area.add(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ() + 1));
-            for (BlockPos blockPos : area) {
-                if (world.getBlockState(blockPos).getBlock() == Blocks.AIR)
-                world.setBlockState(blockPos, state.withProperty(PADDING, true));
-                else return;
-            }
+        for (BlockPos pos1 : BlockPos.getAllInBoxMutable(pos.subtract(new Vec3i(1, 0, 1)), pos.add(new Vec3i(1, 1, 1)))) {
+            world.setBlockState(pos, state.withProperty(PADDING, false));
         }
     }
 
