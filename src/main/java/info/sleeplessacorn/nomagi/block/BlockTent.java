@@ -99,7 +99,7 @@ public class BlockTent extends BlockAxisY implements IModeled {
         tent.setTentType(TentType.valueOf(stack.getTagCompound().getString("tentType").toUpperCase(Locale.ENGLISH)));
 
         for (BlockPos pos1 : BlockPos.getAllInBoxMutable(pos.subtract(new Vec3i(1, 0, 1)), pos.add(new Vec3i(1, 1, 1)))) {
-            world.setBlockState(pos, state.withProperty(PADDING, false));
+            world.setBlockState(pos1, state.withProperty(PADDING, false));
         }
     }
 
