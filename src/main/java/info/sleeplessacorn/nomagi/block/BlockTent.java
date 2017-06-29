@@ -28,15 +28,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import tehnut.lib.mc.block.BlockAxisY;
 import tehnut.lib.mc.model.IModeled;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 
-public class BlockTent extends Block implements IModeled {
+public class BlockTent extends BlockAxisY implements IModeled {
 
-    public static final IProperty<EnumFacing> FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     public static final IProperty<TentType> TENT_TYPE = PropertyEnum.create("tent_type", TentType.class);
 
     public BlockTent() {
@@ -45,9 +45,7 @@ public class BlockTent extends Block implements IModeled {
         setUnlocalizedName(Nomagi.MODID + ".tent");
         setSoundType(SoundType.CLOTH);
 
-        setDefaultState(getBlockState().getBaseState()
-                .withProperty(FACING, EnumFacing.NORTH)
-                .withProperty(TENT_TYPE, TentType.BASIC));
+        setDefaultState(getBlockState().getBaseState().withProperty(getProperty(), EnumFacing.NORTH).withProperty(TENT_TYPE, TentType.BASIC));
     }
 
     @Override
@@ -94,11 +92,15 @@ public class BlockTent extends Block implements IModeled {
         TileEntityTent tent = (TileEntityTent) world.getTileEntity(pos);
 
         tent.setOwnerId(((EntityPlayer) placer).getGameProfile().getId());
-        tent.setFacing(placer.getHorizontalFacing());
         if (!stack.hasTagCompound())
             return;
 
         tent.setTentType(TentType.valueOf(stack.getTagCompound().getString("tentType").toUpperCase(Locale.ENGLISH)));
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        return getDefaultState().withProperty(getProperty(), placer.getHorizontalFacing().getOpposite());
     }
 
     @Override
@@ -112,25 +114,11 @@ public class BlockTent extends Block implements IModeled {
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         TileEntityTent tent = (TileEntityTent) world.getTileEntity(pos);
-        return getDefaultState()
-                .withProperty(FACING, tent.getFacing())
-                .withProperty(TENT_TYPE, tent.getTentType())
-                ;
+        return state.withProperty(TENT_TYPE, tent.getTentType());
     }
 
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer.Builder(this).add(FACING, TENT_TYPE).build();
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState();
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return 0;
+    protected BlockStateContainer createStateContainer() {
+        return new BlockStateContainer.Builder(this).add(getProperty(), TENT_TYPE).build();
     }
 
     @Override

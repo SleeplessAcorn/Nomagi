@@ -1,7 +1,6 @@
 package info.sleeplessacorn.nomagi.tile;
 
 import info.sleeplessacorn.nomagi.block.BlockTent;
-import net.minecraft.util.EnumFacing;
 import tehnut.lib.mc.tile.sync.TileSyncBase;
 import tehnut.lib.mc.tile.sync.adapters.NBT;
 import tehnut.lib.mc.tile.sync.adapters.NBTAdapterUUID;
@@ -18,8 +17,6 @@ public class TileEntityTent extends TileSyncBase {
     @NBT
     private UUID ownerId = UUID.randomUUID();
     @NBT
-    private EnumFacing facing = EnumFacing.NORTH;
-    @NBT
     private BlockTent.TentType tentType = BlockTent.TentType.BASIC;
 
     public UUID getOwnerId() {
@@ -28,15 +25,6 @@ public class TileEntityTent extends TileSyncBase {
 
     public void setOwnerId(UUID ownerId) {
         this.ownerId = ownerId;
-        markDirty();
-    }
-
-    public EnumFacing getFacing() {
-        return facing;
-    }
-
-    public void setFacing(EnumFacing facing) {
-        this.facing = facing;
         markDirty();
     }
 
