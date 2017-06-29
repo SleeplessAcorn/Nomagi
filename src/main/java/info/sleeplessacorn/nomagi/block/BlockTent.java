@@ -7,11 +7,9 @@ import info.sleeplessacorn.nomagi.core.data.Privacy;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
 import info.sleeplessacorn.nomagi.tile.TileEntityTent;
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -137,8 +135,34 @@ public class BlockTent extends BlockAxisY implements IModeled {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return new AxisAlignedBB(-0.5D, 0D, 0D, 1.5D, 1.75D, 2D);
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        EnumFacing facing = state.getValue(getProperty());
+
+        double minX = -0.5, maxX = 1.5;
+        double minY = 0, maxY = 1.75;
+        double minZ = -0, maxZ = 2;
+        double offset = (maxZ - minZ) / 2;
+
+        switch (facing) {
+            case NORTH:
+                return new AxisAlignedBB(
+                        maxX, minY, minZ,
+                        minX, maxY, maxZ);
+            case SOUTH:
+                return new AxisAlignedBB(
+                        minX, minY, minZ + offset,
+                        maxX, maxY, -maxZ + offset);
+            case WEST:
+                return new AxisAlignedBB(
+                        minZ, minY, minX,
+                        maxZ, maxY, maxX);
+            case EAST:
+                return new AxisAlignedBB(
+                        minZ + offset, minY, minX,
+                        -maxZ + offset, maxY, maxX);
+
+        }
+        return FULL_BLOCK_AABB;
     }
 
     @Override
