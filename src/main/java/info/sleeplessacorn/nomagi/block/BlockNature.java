@@ -6,14 +6,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.Pair;
 import tehnut.lib.mc.block.BlockEnum;
 import tehnut.lib.mc.model.IModeled;
@@ -33,28 +30,15 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-        IBlockState iblockstate = world.getBlockState(pos.offset(side));
-        return state != iblockstate || state.getValue(getProperty()) != Nature.ANCIENT_LEAVES;
+    public int getLightOpacity(IBlockState state) {
+        return state.getValue(getProperty()) == Nature.ANCIENT_LEAVES ? 1 : 255;
     }
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         if (getProperty() == null)
-            return super.isOpaqueCube(state); // Fuck you Mojang
-
-        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
-    }
-
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
-    }
-
-    @Override
-    public boolean isFullBlock(IBlockState state) {
-        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES && state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
+            return super.isOpaqueCube(state);
+        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES;
     }
 
     @Override
