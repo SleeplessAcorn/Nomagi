@@ -44,16 +44,14 @@ repositories {
 }
 
 dependencies {
-    // TehNut Maven
-    deobfCompile "mcp.mobius.waila:Hwyla:1.8.13-B26_1.11"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.11-2.1.0-51"
-    shade "tehnut.lib:LendingLibrary:1.11.2-2.0.0-23"
-
-    // tterrag maven
+    // tehnut
+    deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}_1.11"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.11.2-${gapi_version}"
+    shade "tehnut.lib:LendingLibrary:1.11.2-${llib_version}"
+    //tterrag
     deobfCompile "team.chisel.ctm:CTM:MC1.11.2-${ctm_version}"
-
-    // Prog Maven
-    deobfCompile "mezz.jei:jei_1.11.2:4.2.10.248"
+    //progwm16
+    deobfCompile "mezz.jei:jei_1.11.2:${jei_version}"
 }
 
 minecraft {
