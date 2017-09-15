@@ -1,8 +1,8 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url = 'http://files.minecraftforge.net/maven' }
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
@@ -11,86 +11,67 @@ buildscript {
 }
 
 plugins {
-    id 'com.matthewprenger.cursegradle' version '1.0.7'
-	id "net.minecraftforge.gradle.forge" version "2.0.2"
+    id 'com.matthewprenger.cursegradle' version '1.0.9'
+    id 'net.minecraftforge.gradle.forge' version '2.0.2'
+    id 'maven-publish'
 }
-
-apply plugin: 'maven-publish'
 
 configurations {
     shade
     compile.extendsFrom shade
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-def username = "${mod_name}"
-if (project.hasProperty('dev_username'))
-    username = "${dev_username}"
+def buildVersion = System.getenv('BUILD_NUMBER') ?: 'CUSTOM'
+def userName = project.findProperty('devUsername') ?: modName
 
-def build_number = 'CUSTOM'
-if (System.getenv('BUILD_NUMBER') != null)
-    build_number = System.getenv('BUILD_NUMBER')
+archivesBaseName = modName
+group = modGroup
+version = "${mcVersion}-${modVersion}-${buildVersion}"
 
-group = package_group
-archivesBaseName = mod_name
-version = "${mc_version}-${mod_version}-${build_number}"
+tasks.build.dependsOn sourceJar
+
+minecraft {
+    version = "${mcVersion}-${mcfVersion}"
+    runDir = 'run'
+    replaceIn 'Nomagi.java'
+    replace '@VERSION@', project.version
+    clientRunArgs += "--username=${userName}"
+    mappings = project.mcpMappings
+}
 
 repositories {
-    maven { url "http://tehnut.info/maven" }
-    maven { url "http://maven.tterrag.com" }
-    maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven { name 'tehnut';   url 'http://tehnut.info/maven' }
+    maven { name 'tterrag';  url 'http://maven.tterrag.com' }
+    maven { name 'progwm16'; url 'http://dvs1.progwml6.com/files/maven' }
 }
 
 dependencies {
-    // tehnut
-    deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}_1.11"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.11.2-${gapi_version}"
-    shade "tehnut.lib:LendingLibrary:1.11.2-${llib_version}"
-    //tterrag
-    deobfCompile "team.chisel.ctm:CTM:MC1.11.2-${ctm_version}"
-    //progwm16
-    deobfCompile "mezz.jei:jei_1.11.2:${jei_version}"
-}
-
-minecraft {
-    version = "${mc_version}-${forge_version}"
-    runDir = "run"
-
-    replaceIn "Nomagi.java"
-    replace "@VERSION@", project.version
-
-    clientRunArgs += "--username=${username}"
-
-    if (project.hasProperty('mappings_version'))
-        mappings = project.mappings_version
+    shade        "tehnut.lib:LendingLibrary:${llibVersion}"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${gapiVersion}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${hwylaVersion}"
+    deobfCompile "mezz.jei:jei_${jeiVersion}"
+    deobfCompile "team.chisel.ctm:CTM:${ctmVersion}"
 }
 
 processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
     from(sourceSets.main.resources.srcDirs) {
-        include '**/*.info'
-        include '**/*.properties'
-
-        expand 'version': project.version, 'mcversion': project.minecraft.version
+        include '**/*.info', '**/*.properties'
+        expand  'version':   project.version,
+                'mcversion': minecraft.version
     }
     from(sourceSets.main.resources.srcDirs) {
-        exclude '**/*.info'
-        exclude '**/*.properties'
+        exclude '**/*.info', '**/*.properties'
     }
 }
 
 reobf {
-    jar {
-        extraLines "PK: tehnut/lib info/sleeplessacorn/nomagi/lib"
-    }
+    jar { extraLines 'PK: tehnut/lib info/sleeplessacorn/nomagi/lib' }
 }
 
 jar {
-    classifier = ''
     configurations.shade.each { dep ->
         from(project.zipTree(dep)) {
             exclude 'META-INF', 'META-INF/**'
@@ -101,11 +82,9 @@ jar {
             "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
             "Implementation-Title": project.name,
             "Implementation-Version": project.version,
-            "Built-on": "${mc_version}-${forge_version}"
+            "Built-on": minecraft.version
     )
 }
-
-tasks.build.dependsOn sourceJar
 
 publishing {
     tasks.publish.dependsOn 'build'
@@ -116,50 +95,47 @@ publishing {
         }
     }
     repositories {
-        if (project.hasProperty('maven_repo')) {
-            maven { url maven_repo }
+        if (project.hasProperty('mavenRepo')) {
+            maven { url project.mavenRepo }
         } else {
             mavenLocal()
         }
     }
 }
 
-static String getChangelogText() {
-    def changelogFile = new File('changelog.txt')
-    if (!changelogFile.exists())
-        return ""
-    String str = ''
-    String separator = '---'
-    int lineCount = 0
-    boolean done = false
-    changelogFile.eachLine {
-        if (done || it == null) {
-            return
-        }
-        if (lineCount < 3) {
-            lineCount++
-            if (it.startsWith(separator)) {
-                return
-            }
-        }
-        if (!it.startsWith(separator)) {
-            str += "$it" + (lineCount < 3 ? ':\n\n' : '\n')
-            return
-        }
-        done = true // once we go past the first version block, parse no more
-    }
-    return str
-}
-
 curseforge {
-    if (project.hasProperty('curse_key_TehNut'))
-        apiKey = project.curse_key_TehNut
-
+    apiKey = project.findProperty('curseKeyTehNut') ?: ''
     project {
-        id = "${curse_id}"
-		changelog = getChangelogText()
+        id = project.curseId
+        changelog = getChangelogText()
         releaseType = 'beta'
-
         addArtifact sourceJar
     }
 }
+
+static String getChangelogText() {
+    def changelog = new File('changelog.txt')
+    String entry = '', separator = '---'
+    if (changelog.exists()) {
+        int lineCount = 0
+        boolean done = false
+        changelog.eachLine {
+            if (done || it == null) {
+                return
+            }
+            if (lineCount < 3) {
+                lineCount++
+                if (it.startsWith(separator)) {
+                    return
+                }
+            }
+            if (!it.startsWith(separator)) {
+                entry += "$it" + (lineCount < 3 ? ':\n\n' : '\n')
+                return
+            }
+            done = true // once we go past the first version block, parse no more
+        }
+    }
+    return entry
+}
+
