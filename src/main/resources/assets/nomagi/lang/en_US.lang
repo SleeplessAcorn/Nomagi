@@ -1,6 +1,12 @@
 # Creative tab
 itemGroup.nomagi=Nomagi
 
+# Config
+config.nomagi=Nomagi Config
+config.nomagi.tentDimensionId=Tent Dimension ID
+config.nomagi.tentSpacing=Tent Spacing
+config.nomagi.tentRadius=Tent Radius
+
 # Decorative Blocks
 tile.nomagi.decor.umberstone.name=Umberstone
 tile.nomagi.decor.ebonstone.name=Ebonstone Bricks
