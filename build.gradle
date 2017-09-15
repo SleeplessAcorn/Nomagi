@@ -58,12 +58,12 @@ dependencies {
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
-        include '**/*.info', '**/*.properties'
+        include '**/*.info', '**/*.properties', 'pack.mcmeta'
         expand  'version':   project.version,
                 'mcversion': minecraft.version
     }
     from(sourceSets.main.resources.srcDirs) {
-        exclude '**/*.info', '**/*.properties'
+        exclude '**/*.info', '**/*.properties', 'pack.mcmeta'
     }
 }
 

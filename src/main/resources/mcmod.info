@@ -5,11 +5,11 @@
   "description": "",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "http://tehnut.info/",
-  "updateUrl": "http://tehnut.info/",
+  "url": "http://tehnut.info",
+  "updateUrl": "http://tehnut.info",
   "authorList": [ "TehNut", "InsomniaKitten" ],
   "credits": "",
-  "logoFile": "/nomagi_icon.png",
+  "logoFile": "nomagi_icon.png",
   "screenshots": [],
   "dependencies": []
 }
