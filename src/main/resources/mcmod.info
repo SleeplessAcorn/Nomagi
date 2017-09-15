@@ -1,16 +1,16 @@
 [
-{
-  "modid": "nomagi",
-  "name": "Nomagi",
-  "description": "",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "http://tehnut.info",
-  "updateUrl": "http://tehnut.info",
-  "authorList": [ "TehNut", "InsomniaKitten" ],
-  "credits": "",
-  "logoFile": "nomagi_icon.png",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "nomagi",
+    "name": "Nomagi",
+    "description": "Dimensionally transcendental tents.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "http://tehnut.info",
+    "updateUrl": "http://tehnut.info",
+    "authorList": [ "TehNut", "InsomniaKitten" ],
+    "credits": "",
+    "logoFile": "nomagi_icon.png",
+    "screenshots": [ ],
+    "dependencies": [ ]
+  }
 ]
