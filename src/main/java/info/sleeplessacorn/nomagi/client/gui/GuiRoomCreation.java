@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GuiRoomCreation extends GuiScreen {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.MODID, "textures/gui/room_creation.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.MOD_ID, "textures/gui/room_creation.png");
 
     public static final SubTexture BACKGROUND = new SubTexture(TEXTURE, 0, 0, 176, 166);
 
@@ -89,7 +89,8 @@ public class GuiRoomCreation extends GuiScreen {
         List<String> cutString = ProxyClient.fontRenderer.listFormattedStringToWidth(I18n.format(room.getDescription()), 100);
         int offsetY = 0;
         for (String string : cutString) {
-            ProxyClient.fontRenderer.drawString(TextFormatting.WHITE + string, left + 68, top + 10 + offsetY, 0); // TODO - Figure out why this is always black
+            ProxyClient.fontRenderer.drawString(TextFormatting.WHITE + string, left + 68, top + 10 + offsetY, 0);
+            // TODO - Figure out why this is always black
             offsetY += 9;
         }
 
@@ -101,11 +102,12 @@ public class GuiRoomCreation extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         switch (button.id) {
             case 0: {
-                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(ROOMS.get(roomIndex)), currentChunkX, currentChunkZ, direction));
+                Nomagi.NET_WRAPPER.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(
+                        ROOMS.get(roomIndex)), currentChunkX, currentChunkZ, direction));
                 break;
             }
             case 1: {
-                Nomagi.NETWORK_WRAPPER.sendToServer(new MessageCreateRoom(currentChunkX, currentChunkZ, direction));
+                Nomagi.NET_WRAPPER.sendToServer(new MessageCreateRoom(currentChunkX, currentChunkZ, direction));
                 break;
             }
             case 2: {
@@ -126,7 +128,6 @@ public class GuiRoomCreation extends GuiScreen {
             nextRoom();
         else if (mouseWheel > 0)
             prevRoom();
-
         super.handleMouseInput();
     }
 
@@ -146,4 +147,5 @@ public class GuiRoomCreation extends GuiScreen {
         if (roomIndex < 0)
             roomIndex = ROOMS.size() - 1;
     }
+
 }

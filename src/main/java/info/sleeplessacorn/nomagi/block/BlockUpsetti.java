@@ -27,7 +27,7 @@ public class BlockUpsetti extends BlockAxisY implements IModeled {
         super(Material.IRON);
 
         setCreativeTab(Nomagi.TAB_NOMAGI);
-        setUnlocalizedName(Nomagi.MODID + ".upsetti");
+        setUnlocalizedName(Nomagi.MOD_ID + ".upsetti");
         setHardness(1.0F);
         setHarvestLevel("pickaxe", 1);
         setSoundType(SoundType.METAL);

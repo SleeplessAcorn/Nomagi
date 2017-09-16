@@ -7,7 +7,6 @@ public class ItemBlockMulti extends ItemBlock {
 
     public ItemBlockMulti(Block block) {
         super(block);
-
         setHasSubtypes(true);
     }
 
@@ -15,4 +14,5 @@ public class ItemBlockMulti extends ItemBlock {
     public int getMetadata(int damage) {
         return damage;
     }
+
 }

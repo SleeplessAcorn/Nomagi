@@ -24,4 +24,5 @@ public class WorldProviderTent extends WorldProvider {
     public IChunkGenerator createChunkGenerator() {
         return new ChunkProviderTent(world);
     }
+
 }

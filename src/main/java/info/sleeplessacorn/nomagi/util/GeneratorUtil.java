@@ -20,15 +20,16 @@ import java.io.InputStream;
 public class GeneratorUtil {
 
     public static void generateInitialRoom(World world, int chunkX, int chunkZ) {
+        BlockPos pos = new BlockPos(chunkX * 16, Tent.BASE_HEIGHT, chunkZ * 16);
         //noinspection ConstantConditions - STARTER always exists.
-        ModObjects.EMPTY_ROOM.getTemplate().addBlocksToWorld(world, new BlockPos(chunkX * 16, Tent.BASE_HEIGHT, chunkZ * 16), new PlacementSettings());
+        ModObjects.EMPTY_ROOM.getTemplate().addBlocksToWorld(world, pos, new PlacementSettings());
     }
 
     /**
      * @param world    - Current world
      * @param tent     - Tent to add room to
-     * @param roomPosX - Current room's internal grid x coord
-     * @param roomPosZ - Current room's internal grid z coord
+     * @param roomPosX - Current room's internal grid x co-ordinates
+     * @param roomPosZ - Current room's internal grid z co-ordinates
      * @param room     - Room to generate
      * @param facing   - Side of current room to generate on
      */
@@ -76,7 +77,9 @@ public class GeneratorUtil {
 
     @Nullable
     public static Template readFromId(ResourceLocation id) {
-        InputStream stream = Nomagi.class.getResourceAsStream("/assets/" + id.getResourceDomain() + "/rooms/" + id.getResourcePath() + ".nbt");
+        String domain = id.getResourceDomain();
+        String path = id.getResourcePath();
+        InputStream stream = Nomagi.class.getResourceAsStream("/assets/" + domain + "/rooms/" + path + ".nbt");
         return readFromStream(stream);
     }
 
@@ -91,4 +94,5 @@ public class GeneratorUtil {
             return null;
         }
     }
+
 }

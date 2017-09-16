@@ -5,7 +5,14 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
 import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.Nomagi;
-import info.sleeplessacorn.nomagi.block.*;
+import info.sleeplessacorn.nomagi.block.BlockControllerPrivacy;
+import info.sleeplessacorn.nomagi.block.BlockControllerRoom;
+import info.sleeplessacorn.nomagi.block.BlockDecorative;
+import info.sleeplessacorn.nomagi.block.BlockNature;
+import info.sleeplessacorn.nomagi.block.BlockNomagiDoor;
+import info.sleeplessacorn.nomagi.block.BlockTapestry;
+import info.sleeplessacorn.nomagi.block.BlockTent;
+import info.sleeplessacorn.nomagi.block.BlockUpsetti;
 import info.sleeplessacorn.nomagi.block.barrel.BlockBarrel;
 import info.sleeplessacorn.nomagi.block.barrel.TileBarrel;
 import info.sleeplessacorn.nomagi.core.data.Room;
@@ -41,16 +48,17 @@ public class ModObjects {
     public static final Block TAPESTRY = new BlockTapestry();
     public static final Block UPSETTI = new BlockUpsetti();
 
-    public static final DimensionType TENT_DIMENSION = DimensionType.register(Nomagi.MODID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
+    public static final DimensionType TENT_DIMENSION = DimensionType.register(
+            Nomagi.MOD_ID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
 
-    private static final ResourceLocation ROOM_PREVIEWS = new ResourceLocation(Nomagi.MODID, "textures/gui/room_previews.png");
+    private static final ResourceLocation ROOM_PREVIEWS = new ResourceLocation(
+            Nomagi.MOD_ID, "textures/gui/room_previews.png");
 
-    public static final Room EMPTY_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "empty_room"), new SubTexture(ROOM_PREVIEWS, 0, 0, 52, 52));
-    public static final Room NATURE_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "nature_room"), new SubTexture(ROOM_PREVIEWS, 52, 0, 52, 52));
-    public static final Room CELLAR_ROOM = new Room(new ResourceLocation(Nomagi.MODID, "cellar_room"), new SubTexture(ROOM_PREVIEWS, 104, 0, 52, 52));
-    private static int roomId;
+    public static final Room EMPTY_ROOM = new Room("empty_room", new SubTexture(ROOM_PREVIEWS, 0, 0, 52, 52));
+    public static final Room NATURE_ROOM = new Room("nature_room", new SubTexture(ROOM_PREVIEWS, 52, 0, 52, 52));
+    public static final Room CELLAR_ROOM = new Room("cellar_room", new SubTexture(ROOM_PREVIEWS, 104, 0, 52, 52));
 
-    public static void preInit() {
+    public static void registerObjects() {
         RegistryHelper.register(new ItemBlockTent(), "tent");
         RegistryHelper.register(TENT, "tent");
         RegistryHelper.register(new ItemNomagiDoor(DOOR), "door");
@@ -73,14 +81,14 @@ public class ModObjects {
 
         DimensionManager.registerDimension(TENT_DIMENSION.getId(), TENT_DIMENSION);
 
-        addRoom(EMPTY_ROOM);
-        addRoom(NATURE_ROOM);
-        addRoom(CELLAR_ROOM);
+        ModObjects.addRoom(EMPTY_ROOM);
+        ModObjects.addRoom(NATURE_ROOM);
+        ModObjects.addRoom(CELLAR_ROOM);
     }
 
     private static void addRoom(Room room) {
-        ROOMS.put(room.getSchematic(), room);
-        ROOM_IDS.put(room.getSchematic(), roomId);
-        roomId++;
+        ROOMS.putIfAbsent(room.getSchematic(), room);
+        ROOM_IDS.putIfAbsent(room.getSchematic(), ROOM_IDS.size());
     }
+
 }

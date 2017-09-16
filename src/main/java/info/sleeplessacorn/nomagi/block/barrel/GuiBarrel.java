@@ -13,7 +13,7 @@ import net.minecraftforge.items.IItemHandler;
 public class GuiBarrel extends GuiContainer {
 
 
-    private static final ResourceLocation CABINET_TEXTURE = new ResourceLocation(Nomagi.MODID, "textures/gui/barrel.png");
+    private static final ResourceLocation CABINET_TEXTURE = new ResourceLocation(Nomagi.MOD_ID, "textures/gui/barrel.png");
 
 
     private TileEntity barrel;
@@ -32,7 +32,7 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(I18n.format("tile." + Nomagi.MODID + ".barrel"), 8, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("tile." + Nomagi.MOD_ID + ".barrel"), 8, 6, 4210752);
         this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 1, 4210752);
 
     }

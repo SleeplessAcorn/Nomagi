@@ -10,14 +10,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SubTexture {
 
-    private final ResourceLocation textureLocation;
+    private final ResourceLocation texture;
     private final int xPos;
     private final int yPos;
     private final int width;
     private final int height;
 
-    public SubTexture(ResourceLocation textureLocation, int xPos, int yPos, int width, int height) {
-        this.textureLocation = textureLocation;
+    public SubTexture(ResourceLocation texture, int xPos, int yPos, int width, int height) {
+        this.texture = texture;
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
@@ -26,14 +26,23 @@ public class SubTexture {
 
     @SideOnly(Side.CLIENT)
     public void draw(int drawX, int drawY, double zLevel) {
-        RenderHelper.bindTexture(textureLocation);
+        RenderHelper.bindTexture(texture);
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer vertexbuffer = tessellator.getBuffer();
+        float offset = 0.00390625F;
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        vertexbuffer.pos((double) (drawX), (double) (drawY + height), zLevel).tex((double) ((float) (xPos) * 0.00390625F), (double) ((float) (yPos + height) * 0.00390625F)).endVertex();
-        vertexbuffer.pos((double) (drawX + width), (double) (drawY + height), zLevel).tex((double) ((float) (xPos + width) * 0.00390625F), (double) ((float) (yPos + height) * 0.00390625F)).endVertex();
-        vertexbuffer.pos((double) (drawX + width), (double) (drawY), zLevel).tex((double) ((float) (xPos + width) * 0.00390625F), (double) ((float) (yPos) * 0.00390625F)).endVertex();
-        vertexbuffer.pos((double) (drawX), (double) (drawY), zLevel).tex((double) ((float) (xPos) * 0.00390625F), (double) ((float) (yPos) * 0.00390625F)).endVertex();
+        vertexbuffer.pos(drawX, drawY + height, zLevel)
+                .tex(xPos * offset, (yPos + height) * offset)
+                .endVertex();
+        vertexbuffer.pos(drawX + width, drawY + height, zLevel)
+                .tex((xPos + width) * offset, (yPos + height) * offset)
+                .endVertex();
+        vertexbuffer.pos(drawX + width, drawY, zLevel)
+                .tex((xPos + width) * offset, yPos * offset)
+                .endVertex();
+        vertexbuffer.pos(drawX, drawY, zLevel)
+                .tex(xPos * offset, yPos * offset)
+                .endVertex();
         tessellator.draw();
     }
 
@@ -43,7 +52,7 @@ public class SubTexture {
     }
 
     public ResourceLocation getTextureLocation() {
-        return textureLocation;
+        return texture;
     }
 
     public int getDrawX() {
@@ -61,4 +70,5 @@ public class SubTexture {
     public int getHeight() {
         return height;
     }
+
 }

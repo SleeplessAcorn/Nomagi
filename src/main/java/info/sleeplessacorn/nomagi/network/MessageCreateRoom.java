@@ -14,6 +14,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageCreateRoom implements IMessage {
 
@@ -22,9 +24,7 @@ public class MessageCreateRoom implements IMessage {
     private int currentChunkZ;
     private EnumFacing direction;
 
-    public MessageCreateRoom() {
-
-    }
+    public MessageCreateRoom() {}
 
     public MessageCreateRoom(Room room, int currentChunkX, int currentChunkZ, EnumFacing direction) {
         this.room = room;
@@ -59,22 +59,29 @@ public class MessageCreateRoom implements IMessage {
     public static class Handler implements IMessageHandler<MessageCreateRoom, IMessage> {
 
         @Override
+        @SideOnly(Side.SERVER)
         public IMessage onMessage(MessageCreateRoom message, MessageContext ctx) {
             TentWorldSavedData savedData = TentWorldSavedData.getData(ctx.getServerHandler().player.getEntityWorld());
             Tent tent = savedData.getTent(ctx.getServerHandler().player);
+
             if (tent == null) {
-                Nomagi.LOGGER.error("Tried to set a room for a Tent that didn't exist. (Owner: {})", ctx.getServerHandler().player.getGameProfile().getId());
+                Nomagi.LOGGER.error("Tried to set a room for a Tent that didn't exist. (Owner: {})",
+                        ctx.getServerHandler().player.getGameProfile().getId());
                 return null;
             }
 
-            if (!ctx.getServerHandler().player.getEntityWorld().isBlockLoaded(new ChunkPos(message.currentChunkX, message.currentChunkZ).getBlock(0, 0, 0)))
+            if (!ctx.getServerHandler().player.getEntityWorld().isBlockLoaded(
+                    new ChunkPos(message.currentChunkX, message.currentChunkZ).getBlock(0, 0, 0)))
                 return null; // Client has requested an unloaded chunk
 
             Room room = message.room == null ? tent.getRoom(ctx.getServerHandler().player) : message.room;
 
-            GeneratorUtil.generateRoom(ctx.getServerHandler().player.getEntityWorld(), tent, message.currentChunkX, message.currentChunkZ, room, message.direction.getOpposite());
+            GeneratorUtil.generateRoom(ctx.getServerHandler().player.getEntityWorld(), tent,
+                    message.currentChunkX, message.currentChunkZ, room, message.direction.getOpposite());
             savedData.markDirty();
             return null;
         }
+
     }
+
 }

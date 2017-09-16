@@ -16,6 +16,7 @@ public class TileEntityTent extends TileSyncBase {
 
     @NBT
     private UUID ownerId = UUID.randomUUID();
+
     @NBT
     private BlockTent.TentType tentType = BlockTent.TentType.BASIC;
 
@@ -36,4 +37,5 @@ public class TileEntityTent extends TileSyncBase {
         this.tentType = tentType;
         markDirty();
     }
+
 }

@@ -23,8 +23,7 @@ public class MessageOpenCreateRoomGui implements IMessage {
         this.facing = facing;
     }
 
-    public MessageOpenCreateRoomGui() {
-    }
+    public MessageOpenCreateRoomGui() {}
 
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -42,11 +41,14 @@ public class MessageOpenCreateRoomGui implements IMessage {
 
     public static class Handler implements IMessageHandler<MessageOpenCreateRoomGui, IMessage> {
 
-        @SideOnly(Side.CLIENT)
         @Override
+        @SideOnly(Side.CLIENT)
         public IMessage onMessage(MessageOpenCreateRoomGui message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(new GuiRoomCreation(message.chunkX, message.chunkZ, message.facing)));
+            Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(
+                    new GuiRoomCreation(message.chunkX, message.chunkZ, message.facing)));
             return null;
         }
+
     }
+
 }

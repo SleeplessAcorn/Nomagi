@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 import java.util.UUID;
@@ -28,8 +30,10 @@ public class MessageUpdateUsernames implements IMessage {
     public void fromBytes(ByteBuf buf) {
         cache = Maps.newHashMap();
         int size = buf.readInt();
-        for (int i = 0; i < size; i++)
-            cache.put(UUID.fromString(ByteBufUtils.readUTF8String(buf)), ByteBufUtils.readUTF8String(buf));
+        for (int i = 0; i < size; i++) {
+            String uuidString = ByteBufUtils.readUTF8String(buf);
+            cache.put(UUID.fromString(uuidString), uuidString);
+        }
     }
 
     @Override
@@ -48,10 +52,14 @@ public class MessageUpdateUsernames implements IMessage {
     }
 
     public static class Handler implements IMessageHandler<MessageUpdateUsernames, IMessage> {
+
         @Override
+        @SideOnly(Side.CLIENT)
         public IMessage onMessage(MessageUpdateUsernames message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> GuiTentPrivacy.usernameCache = message.cache);
             return null;
         }
+
     }
+
 }

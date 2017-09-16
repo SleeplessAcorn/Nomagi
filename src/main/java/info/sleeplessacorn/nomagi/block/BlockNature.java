@@ -24,7 +24,7 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
     public BlockNature() {
         super(Material.ROCK, Nature.class);
 
-        setUnlocalizedName(Nomagi.MODID + ".nature");
+        setUnlocalizedName(Nomagi.MOD_ID + ".nature");
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setSoundType(SoundType.WOOD);
     }

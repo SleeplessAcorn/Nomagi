@@ -39,7 +39,7 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
         super(Material.WOOD, PlacementStyle.FACE_AWAY);
 
         setCreativeTab(Nomagi.TAB_NOMAGI);
-        setUnlocalizedName(Nomagi.MODID + ".door_controller");
+        setUnlocalizedName(Nomagi.MOD_ID + ".door_controller");
         setSoundType(SoundType.WOOD);
     }
 
@@ -108,7 +108,7 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
         if (room == null)
             return false;
 
-        Nomagi.NETWORK_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(), player.chunkCoordZ - tent.getChunkZ(), state.getValue(getProperty())), (EntityPlayerMP) player);
+        Nomagi.NET_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(), player.chunkCoordZ - tent.getChunkZ(), state.getValue(getProperty())), (EntityPlayerMP) player);
         return true;
     }
 

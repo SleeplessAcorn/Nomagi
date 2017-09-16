@@ -15,4 +15,5 @@ public class WailaPluginNomagi implements IWailaPlugin {
         registrar.registerBodyProvider(DataProviderNomagi.INSTANCE, BlockTent.class);
         registrar.registerNBTProvider(DataProviderNomagi.INSTANCE, TileEntityTent.class);
     }
+
 }

@@ -19,34 +19,44 @@ public class ItemBlockTapestry extends ItemBlock {
         super(block);
     }
 
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        IBlockState topState = world.getBlockState(pos);
-        if (!topState.getBlock().isReplaceable(world, pos))
+    public EnumActionResult onItemUse(
+            EntityPlayer player, World world, BlockPos pos, EnumHand hand,
+            EnumFacing facing, float hitX, float hitY, float hitZ) {
+        IBlockState stateAt = world.getBlockState(pos);
+
+        if (!stateAt.getBlock().isReplaceable(world, pos)) {
             pos = pos.offset(facing);
+        }
 
-        if (!topState.isSideSolid(world, pos, facing))
+        if (!stateAt.isSideSolid(world, pos, facing) || !canPlaceAt(world, pos, facing, player, hand)) {
             return EnumActionResult.FAIL;
+        }
 
-        ItemStack heldItem = player.getHeldItem(hand);
-
-        if (heldItem.isEmpty())
-            return EnumActionResult.FAIL;
-
-        if (!player.canPlayerEdit(pos, facing, heldItem) || !player.canPlayerEdit(pos.down(), facing, heldItem))
-            return EnumActionResult.FAIL;
-
-        if (!world.mayPlace(block, pos, false, facing, player) || !world.mayPlace(block, pos.down(), false, facing, player))
-            return EnumActionResult.FAIL;
-
-        IBlockState topPlace = block.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, 1, player, hand);
-        IBlockState bottomPlace = block.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, 0, player, hand);
-
-        if (placeBlockAt(heldItem, player, world, pos, facing, hitX, hitY, hitZ, topPlace) && placeBlockAt(heldItem, player, world, pos.down(), facing, hitX, hitY, hitZ, bottomPlace)) {
-            SoundType soundtype = topPlace.getBlock().getSoundType(topPlace, world, pos, player);
-            world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-            heldItem.shrink(1);
+        if (placeTapestryAt(player, hand, world, pos, facing, hitX, hitY, hitZ)) {
+            world.playSound(player, pos, SoundType.WOOD.getPlaceSound(), SoundCategory.BLOCKS,
+                    (SoundType.WOOD.getVolume() + 1.0F) / 2.0F, SoundType.WOOD.getPitch() * 0.8F);
+            player.getHeldItem(hand).shrink(1);
         }
 
         return EnumActionResult.SUCCESS;
     }
+
+    private boolean placeTapestryAt(
+            EntityPlayer player, EnumHand hand, World world, BlockPos pos,
+            EnumFacing facing, float hitX, float hitY, float hitZ) {
+        IBlockState topPlace = block.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, 1, player, hand);
+        IBlockState bottomPlace = block.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, 0, player, hand);
+        ItemStack heldItem = player.getHeldItem(hand);
+        return  placeBlockAt(heldItem, player, world, pos, facing, hitX, hitY, hitZ, topPlace)
+                && placeBlockAt(heldItem, player, world, pos.down(), facing, hitX, hitY, hitZ, bottomPlace);
+    }
+
+    private boolean canPlaceAt(World world, BlockPos pos, EnumFacing facing, EntityPlayer player, EnumHand hand) {
+        return  !player.getHeldItem(hand).isEmpty()
+                && player.canPlayerEdit(pos, facing, player.getHeldItem(hand))
+                && player.canPlayerEdit(pos.down(), facing, player.getHeldItem(hand))
+                && world.mayPlace(block, pos, false, facing, player)
+                && world.mayPlace(block, pos.down(), false, facing, player);
+    }
+
 }

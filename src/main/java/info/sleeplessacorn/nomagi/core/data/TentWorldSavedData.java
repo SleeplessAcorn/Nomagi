@@ -14,6 +14,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.storage.MapStorage;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -94,16 +95,17 @@ public class TentWorldSavedData extends WorldSavedData {
     @Nullable
     public Tent getTent(int chunkX, int chunkZ) {
         UUID playerId = chunkPos.get(Pair.of(chunkX, chunkZ));
-        if (playerId != null)
+        if (playerId != null) {
             return tents.get(playerId);
-
+        }
         for (Tent tent : tents.values()) {
             Set<Chunk> usedChunks = tent.getUsedChunks();
-            for (Chunk chunk : usedChunks)
-                if (chunk.x == chunkX && chunk.z == chunkZ)
+            for (Chunk chunk : usedChunks) {
+                if (chunk.x == chunkX && chunk.z == chunkZ) {
                     return tent;
+                }
+            }
         }
-
         return null;
     }
 
@@ -112,15 +114,15 @@ public class TentWorldSavedData extends WorldSavedData {
     }
 
     public void setTent(UUID uuid, @Nullable Tent tent) {
-        if (tent == null) {
+        if (tent != null) {
+            tents.put(uuid, tent);
+            chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
+            markDirty();
+        } else {
             tents.remove(uuid);
             chunkPos.inverse().remove(uuid);
             markDirty();
-            return;
         }
-        tents.put(uuid, tent);
-        chunkPos.put(Pair.of(tent.getChunkX(), tent.getChunkZ()), uuid);
-        markDirty();
     }
 
     public ImmutableSet<Tent> getTents() {
@@ -128,21 +130,16 @@ public class TentWorldSavedData extends WorldSavedData {
     }
 
     public boolean sendBack(EntityPlayer player) {
-//        TeleporterTent.teleportToDimension(player, 0, new BlockPos(0, 10, 0));
-//        if (true)
-//            return;
         Pair<Integer, BlockPos> backPos = back.remove(player.getGameProfile().getId());
-        if (backPos == null)
-            return false;
-
-        TeleporterTent.teleportToDimension(player, backPos.getLeft(), backPos.getRight());
-        return true;
+        return TeleporterTent.teleportToDimension(player, backPos);
     }
 
-    public void sendTo(EntityPlayer player, Tent tent) {
-        back.put(player.getGameProfile().getId(), Pair.of(player.getEntityWorld().provider.getDimension(), new BlockPos(player.posX, player.posY, player.posZ)));
+    public boolean sendTo(EntityPlayer player, Tent tent) {
+        back.put(player.getGameProfile().getId(),
+                Pair.of(player.getEntityWorld().provider.getDimension(),
+                new BlockPos(player.posX, player.posY, player.posZ)));
         BlockPos tele = new ChunkPos(tent.getChunkX(), tent.getChunkZ()).getBlock(8, Tent.BASE_HEIGHT + 3, 8);
-        TeleporterTent.teleportToDimension(player, ModObjects.TENT_DIMENSION.getId(), tele);
+        return TeleporterTent.teleportToDimension(player, ModObjects.TENT_DIMENSION.getId(), tele);
     }
 
     public int getCount() {
@@ -150,11 +147,16 @@ public class TentWorldSavedData extends WorldSavedData {
     }
 
     public static TentWorldSavedData getData(World world) {
-        TentWorldSavedData savedData = (TentWorldSavedData) world.getMapStorage().getOrLoadData(TentWorldSavedData.class, ID);
+        MapStorage worldData = world.getMapStorage();
+        TentWorldSavedData savedData = null;
+        if (worldData != null) {
+            savedData = (TentWorldSavedData) worldData.getOrLoadData(TentWorldSavedData.class, ID);
+        }
         if (savedData == null) {
             savedData = new TentWorldSavedData();
             world.getMapStorage().setData(ID, savedData);
         }
         return savedData;
     }
+
 }

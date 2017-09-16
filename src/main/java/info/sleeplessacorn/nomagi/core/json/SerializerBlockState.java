@@ -16,32 +16,32 @@ import java.lang.reflect.Type;
 public class SerializerBlockState extends SerializerBase<IBlockState> {
 
     @Override
-    public IBlockState deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public IBlockState deserialize(
+            JsonElement json, Type genericType, JsonDeserializationContext ctx) throws JsonParseException {
         String[] split = json.getAsString().split("\\[");
         split[1] = split[1].substring(0, split[1].lastIndexOf("]")); // Make sure brackets are removed from state
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(split[0]));
-        if (block == Blocks.AIR)
-            return Blocks.AIR.getDefaultState();
+        if (block != Blocks.AIR) {
+            assert block != null; // getValue is marked as nullable, but it isn't for Blocks
+            BlockStateContainer blockState = block.getBlockState();
+            IBlockState returnState = blockState.getBaseState();
 
-        assert block != null; // getValue is marked as nullable, but it isn't for Blocks
-        BlockStateContainer blockState = block.getBlockState();
-        IBlockState returnState = blockState.getBaseState();
-
-        // Force our values into the state
-        String[] stateValues = split[1].split(","); // Splits up each value
-        for (String value : stateValues) {
-            String[] valueSplit = value.split("=");
-            IProperty property = blockState.getProperty(valueSplit[0]);
-            if (property != null)
-                returnState = returnState.withProperty(property, (Comparable) property.parseValue(valueSplit[1]).get());
+            // Force our values into the state
+            String[] stateValues = split[ 1 ].split(","); // Splits up each value
+            for (String value : stateValues) {
+                String[] valueSplit = value.split("=");
+                IProperty property = blockState.getProperty(valueSplit[ 0 ]);
+                if (property != null) returnState = returnState.withProperty(property,
+                        (Comparable) property.parseValue(valueSplit[ 1 ]).get());
+            }
+            return returnState;
         }
-
-        return returnState;
+        return Blocks.AIR.getDefaultState();
     }
 
     @Override
-    public JsonElement serialize(IBlockState src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(IBlockState src, Type srcType, JsonSerializationContext ctx) {
         return new JsonPrimitive(src.toString());
     }
 
@@ -49,4 +49,5 @@ public class SerializerBlockState extends SerializerBase<IBlockState> {
     public Class<?> getType() {
         return IBlockState.class;
     }
+
 }

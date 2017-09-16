@@ -12,7 +12,6 @@ public class ChunkProviderTent extends ChunkProviderFlat {
 
     public ChunkProviderTent(World world) {
         super(world, world.getSeed(), false, null);
-
         this.world = world;
         this.world.setSeaLevel(0);
     }
@@ -34,4 +33,5 @@ public class ChunkProviderTent extends ChunkProviderFlat {
         ret.generateSkylightMap();
         return ret;
     }
+
 }

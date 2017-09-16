@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import info.sleeplessacorn.nomagi.core.data.Room;
+import info.sleeplessacorn.nomagi.core.data.Room.CustomizationJson.Matches;
 import net.minecraft.util.math.BlockPos;
 import tehnut.lib.forge.json.serialization.SerializerBase;
 
@@ -13,23 +14,27 @@ import java.util.Map;
 public class SerializerCustomization extends SerializerBase<Room.CustomizationJson> {
 
     @Override
-    public Room.CustomizationJson deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Map<String, Room.CustomizationJson.Matches> stringMatches = context.deserialize(json.getAsJsonObject().get("matches"), new TypeToken<Map<String, Room.CustomizationJson.Matches>>() {}.getType());
-        Map<BlockPos, Room.CustomizationJson.Matches> matches = Maps.newHashMap();
-        for (Map.Entry<String, Room.CustomizationJson.Matches> match : stringMatches.entrySet())
-            matches.put(stringToPos(match.getKey()), match.getValue());
+    public Room.CustomizationJson deserialize(
+            JsonElement json, Type genericType, JsonDeserializationContext ctx) throws JsonParseException {
+
+        Map<String, Matches> stringMatches = ctx.deserialize(json.getAsJsonObject().get("matches"),
+                new TypeToken<Map<String, Matches>>() {}.getType());
+
+        Map<BlockPos, Matches> matches = Maps.newHashMap();
+
+        stringMatches.forEach((key, value) -> matches.put(stringToPos(key), value));
 
         return new Room.CustomizationJson(matches);
     }
 
     @Override
-    public JsonElement serialize(Room.CustomizationJson src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(Room.CustomizationJson src, Type srcType, JsonSerializationContext ctx) {
         JsonObject jsonObject = new JsonObject();
-        Map<String, Room.CustomizationJson.Matches> matches = Maps.newHashMap();
-        for (Map.Entry<BlockPos, Room.CustomizationJson.Matches> match : src.getMatches().entrySet())
-            matches.put(posToString(match.getKey()), match.getValue());
+        Map<String, Matches> matches = Maps.newHashMap();
 
-        jsonObject.add("matches", context.serialize(matches, new TypeToken<Map<String, Room.CustomizationJson.Matches>>() {}.getType()));
+        src.getMatches().forEach((key, value) -> matches.put(posToString(key), value));
+
+        jsonObject.add("matches", ctx.serialize(matches, new TypeToken<Map<String, Matches>>() {}.getType()));
 
         return jsonObject;
     }
@@ -40,11 +45,15 @@ public class SerializerCustomization extends SerializerBase<Room.CustomizationJs
     }
 
     private static String posToString(BlockPos pos) {
-        return String.format("%d,%d,%d", pos.getX(), pos.getY(), pos.getZ());
+        return pos.getX() + "," + pos.getY() + "," + pos.getZ();
     }
 
-    private static BlockPos stringToPos(String value) {
-        String[] split = value.split(",");
-        return new BlockPos(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+    private static BlockPos stringToPos(String posString) {
+        String[] split = posString.split(",");
+        int x = Integer.parseInt(split[0]);
+        int y = Integer.parseInt(split[1]);
+        int z = Integer.parseInt(split[2]);
+        return new BlockPos(x, y, z);
     }
+
 }

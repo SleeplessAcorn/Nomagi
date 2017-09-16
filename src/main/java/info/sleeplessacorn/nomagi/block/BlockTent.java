@@ -46,7 +46,7 @@ public class BlockTent extends BlockAxisY implements IModeled {
     public BlockTent() {
         super(Material.CLOTH);
         setCreativeTab(Nomagi.TAB_NOMAGI);
-        setUnlocalizedName(Nomagi.MODID + ".tent");
+        setUnlocalizedName(Nomagi.MOD_ID + ".tent");
         setSoundType(SoundType.CLOTH);
 
         setDefaultState(getBlockState().getBaseState()

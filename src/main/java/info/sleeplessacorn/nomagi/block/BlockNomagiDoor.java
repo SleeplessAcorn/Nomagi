@@ -21,7 +21,7 @@ public class BlockNomagiDoor extends BlockDoor implements IModeled {
     public BlockNomagiDoor() {
         super(Material.WOOD);
 
-        setUnlocalizedName(Nomagi.MODID + ".door");
+        setUnlocalizedName(Nomagi.MOD_ID + ".door");
         setSoundType(SoundType.WOOD);
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setHardness(3.0F);

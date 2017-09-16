@@ -24,7 +24,7 @@ public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements
     public BlockDecorative() {
         super(Material.ROCK, Decor.class);
 
-        setUnlocalizedName(Nomagi.MODID + ".decor");
+        setUnlocalizedName(Nomagi.MOD_ID + ".decor");
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setSoundType(SoundType.STONE);
     }

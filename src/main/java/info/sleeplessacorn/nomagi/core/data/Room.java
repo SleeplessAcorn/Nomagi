@@ -49,6 +49,10 @@ public class Room {
         this.previewImage = previewImage;
     }
 
+    public Room(String schematic, SubTexture previewImage) {
+        this(new ResourceLocation(Nomagi.MOD_ID, schematic), previewImage);
+    }
+
     public String getName() {
         return name;
     }

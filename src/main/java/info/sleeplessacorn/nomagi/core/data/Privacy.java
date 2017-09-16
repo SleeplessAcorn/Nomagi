@@ -20,7 +20,9 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
     private Map<ListType, Boolean> checks;
     private Multimap<ListType, UUID> lists;
 
-    public Privacy(UUID ownerId, boolean allowKnocking, AccessMode accessMode, Map<ListType, Boolean> checks, Multimap<ListType, UUID> lists) {
+    public Privacy(
+            UUID ownerId, boolean allowKnocking, AccessMode accessMode,
+            Map<ListType, Boolean> checks, Multimap<ListType, UUID> lists) {
         this.ownerId = ownerId;
         this.allowKnocking = allowKnocking;
         this.accessMode = accessMode;
@@ -34,33 +36,27 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
 
     public boolean canEnter(EntityPlayer player) {
         UUID playerId = player.getGameProfile().getId();
-        if (playerId.equals(ownerId))
-            return true;
-
-        switch (accessMode) {
-            case CLOSED: {
-                return false;
-            }
-            case OPEN: {
-                if (shouldCheck(ListType.BLACKLIST) && checkPlayer(ListType.BLACKLIST, playerId))
+        if (!playerId.equals(ownerId)) {
+            switch (accessMode) {
+                case OPEN: {
+                    return  !shouldCheck(ListType.BLACKLIST)
+                            || !checkPlayer(ListType.BLACKLIST, playerId);
+                }
+                case RESTRICTED: {
+                    return  shouldCheck(ListType.WHITELIST)
+                            && checkPlayer(ListType.WHITELIST, playerId);
+                }
+                default:
                     return false;
-                return true;
             }
-            case RESTRICTED: {
-                if (shouldCheck(ListType.WHITELIST) && checkPlayer(ListType.WHITELIST, playerId))
-                    return true;
-                return false;
-            }
-            default:
-                return false;
         }
+        return true;
     }
 
     public void listPlayer(ListType listType, UUID uuid) {
-        if (lists.get(listType).contains(uuid))
-            return;
-
-        lists.put(listType, uuid);
+        if (!lists.get(listType).contains(uuid)) {
+            lists.put(listType, uuid);
+        }
     }
 
     public boolean checkPlayer(ListType listType, UUID uuid) {
@@ -169,25 +165,25 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
     }
 
     public enum ListType {
-        WHITELIST,
-        BLACKLIST,
-        ;
+        WHITELIST, BLACKLIST
     }
 
     public enum AccessMode {
+
         OPEN,
         CLOSED,
-        RESTRICTED,
-        ;
+        RESTRICTED;
 
         private final String desc;
 
         AccessMode() {
-            this.desc = "privacy.nomagi." + name().toLowerCase(Locale.ENGLISH);
+            this.desc = "privacy.nomagi." + name().toLowerCase(Locale.ROOT);
         }
 
         public String getDescription() {
             return desc;
         }
+
     }
+
 }

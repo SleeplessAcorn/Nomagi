@@ -280,4 +280,5 @@ public class GuiTentPrivacy extends GuiScreen {
             return width;
         }
     }
+
 }

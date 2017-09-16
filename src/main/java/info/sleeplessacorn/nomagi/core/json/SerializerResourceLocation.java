@@ -23,4 +23,5 @@ public class SerializerResourceLocation extends SerializerBase<ResourceLocation>
     public Class<?> getType() {
         return ResourceLocation.class;
     }
+
 }

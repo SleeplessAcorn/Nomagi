@@ -28,7 +28,7 @@ public class BlockTapestry extends Block implements IModeled {
     public BlockTapestry() {
         super(Material.CLOTH);
 
-        setUnlocalizedName(Nomagi.MODID + ".tapestry");
+        setUnlocalizedName(Nomagi.MOD_ID + ".tapestry");
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setSoundType(SoundType.CLOTH);
         setHardness(0.2F);

@@ -34,7 +34,7 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
     public BlockBarrel() {
         super(Material.ROCK, BlockBarrel.Barrel.class);
 
-        setUnlocalizedName(Nomagi.MODID + ".barrel");
+        setUnlocalizedName(Nomagi.MOD_ID + ".barrel");
         setCreativeTab(Nomagi.TAB_NOMAGI);
         setSoundType(SoundType.STONE);
     }

@@ -30,7 +30,7 @@ public class BlockControllerPrivacy extends BlockAxisY implements IModeled {
         super(Material.WOOD);
 
         setCreativeTab(Nomagi.TAB_NOMAGI);
-        setUnlocalizedName(Nomagi.MODID + ".privacy_controller");
+        setUnlocalizedName(Nomagi.MOD_ID + ".privacy_controller");
         setSoundType(SoundType.WOOD);
     }
 
@@ -74,8 +74,8 @@ public class BlockControllerPrivacy extends BlockAxisY implements IModeled {
         for (EntityPlayerMP onlinePlayer : server.getPlayerList().getPlayers())
             online.add(onlinePlayer.getGameProfile().getId());
 
-        Nomagi.NETWORK_WRAPPER.sendTo(new MessageUpdateUsernames(), (EntityPlayerMP) player);
-        Nomagi.NETWORK_WRAPPER.sendTo(new MessageOpenPrivacyGui(tent.getPrivacy(), online), (EntityPlayerMP) player);
+        Nomagi.NET_WRAPPER.sendTo(new MessageUpdateUsernames(), (EntityPlayerMP) player);
+        Nomagi.NET_WRAPPER.sendTo(new MessageOpenPrivacyGui(tent.getPrivacy(), online), (EntityPlayerMP) player);
         return true;
     }
 

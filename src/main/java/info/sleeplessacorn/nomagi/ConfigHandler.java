@@ -2,7 +2,7 @@ package info.sleeplessacorn.nomagi;
 
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = Nomagi.MODID, name = Nomagi.MODID + "/" + Nomagi.MODID)
+@Config(modid = Nomagi.MOD_ID, name = Nomagi.MOD_ID + "/" + Nomagi.MOD_ID)
 @Config.LangKey("config.nomagi")
 public class ConfigHandler {
 
