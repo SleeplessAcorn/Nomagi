@@ -1,18 +1,18 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "inventory": {"model": "nomagi:tapestry"}
+    "inventory": { "model": "nomagi:tapestry" }
   },
   "variants": {
-    "top": {
-      "true": {"model": "nomagi:tapestry_upper"},
-      "false": {"model": "nomagi:tapestry_lower"}
-    },
     "facing": {
-      "north": {},
+      "north": { "y": 0 },
       "east": { "y": 90 },
       "south": { "y": 180 },
       "west": { "y": 270 }
+    },
+    "top": {
+      "true": { "model": "nomagi:tapestry_upper" },
+      "false": { "model": "nomagi:tapestry_lower" }
     }
   }
 }
