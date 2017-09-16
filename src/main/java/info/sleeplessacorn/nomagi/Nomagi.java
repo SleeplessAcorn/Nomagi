@@ -3,6 +3,7 @@ package info.sleeplessacorn.nomagi;
 import info.sleeplessacorn.nomagi.command.CommandNomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
 import info.sleeplessacorn.nomagi.network.MessageCreateRoom;
+import info.sleeplessacorn.nomagi.network.MessageOpenBarrelGui;
 import info.sleeplessacorn.nomagi.network.MessageOpenCreateRoomGui;
 import info.sleeplessacorn.nomagi.network.MessageOpenPrivacyGui;
 import info.sleeplessacorn.nomagi.network.MessageUpdateUsernames;
@@ -47,6 +48,7 @@ public class Nomagi {
         NET_WRAPPER.registerMessage(MessageOpenCreateRoomGui.Handler.class, MessageOpenCreateRoomGui.class, 1, Side.CLIENT);
         NET_WRAPPER.registerMessage(MessageOpenPrivacyGui.Handler.class, MessageOpenPrivacyGui.class, 2, Side.CLIENT);
         NET_WRAPPER.registerMessage(MessageUpdateUsernames.Handler.class, MessageUpdateUsernames.class, 3, Side.CLIENT);
+        NET_WRAPPER.registerMessage(MessageOpenBarrelGui.Handler.class, MessageOpenBarrelGui.class, 4, Side.CLIENT);
     }
 
     @Mod.EventHandler

@@ -25,8 +25,8 @@ tile.nomagi.nature.ancient_leaves.name=Ancient Leaves
 tile.nomagi.nature.radiant_grass.name=Radiant Grass
 
 # Barrels
-tile.nomagi.barrel.wooden_barrel.name=Wooden Barrel
-tile.nomagi.barrel.metal_barrel.name=Metal Barrel
+tile.nomagi.barrel.wooden.name=Wooden Barrel
+tile.nomagi.barrel.metal.name=Metal Barrel
 
 # Technical Blocks
 tile.nomagi.door.name=Room Door

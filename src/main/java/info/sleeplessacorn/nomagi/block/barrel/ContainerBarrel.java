@@ -5,7 +5,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -13,57 +14,72 @@ import javax.annotation.Nonnull;
 
 public class ContainerBarrel extends Container {
 
-    private TileEntity cabinet;
+    @CapabilityInject(IItemHandler.class)
+    private static final Capability<IItemHandler> CAPABILITY = null;
+
+    private TileEntity tile;
 
     public ContainerBarrel(TileEntity tile, EntityPlayer player) {
-        cabinet = tile;
-        IItemHandler inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int xs = 8;
-        int ys = 8 + 9;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 9; j++)
-                addSlotToContainer(new SlotItemHandler(inventory, j + i * 9, xs + j * 18, ys + i * 18));
-        }
-
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 9; j++)
-                addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, xs + j * 18, ys + i * 18 + 67));
-        for (int k = 0; k < 9; k++)
-            addSlotToContainer(new Slot(player.inventory, k, xs + k * 18, ys + 58 + 67));
-
+        this.tile = tile;
+        createContainerSlots(tile.getCapability(CAPABILITY, null));
+        createPlayerSlots(player);
     }
 
-    @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
-        BlockBarrel.playOpeningSound(cabinet.getWorld(), cabinet.getPos());
-        super.onContainerClosed(playerIn);
+    private void createContainerSlots(IItemHandler inventory) {
+        for (int row = 0; row < 3; ++row) {
+            for (int column = 0; column < 9; ++column) {
+                int index = column + (row * 9);
+                int x = 8 + (column * 18);
+                int y = 18 + (row * 18);
+                addSlotToContainer(new SlotItemHandler(inventory, index, x, y));
+            }
+        }
+    }
+
+    private void createPlayerSlots(EntityPlayer player) {
+        for (int row = 0; row < 3; ++row) {
+            for (int column = 0; column < 9; ++column) {
+                int index = column + row * 9 + 9;
+                int x = 8 + (column * 18);
+                int y = 84 + (row * 18);
+                addSlotToContainer(new Slot(player.inventory, index, x, y));
+            }
+        }
+        for (int column = 0; column < 9; ++column) {
+            int x = 8 + (column * 18);
+            int y = 142;
+            addSlotToContainer(new Slot(player.inventory, column, x, y));
+        }
     }
 
     @Override
     @Nonnull
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         Slot slot = inventorySlots.get(index);
-        ItemStack stack = slot.getStack();
-
+        ItemStack stack = slot.getStack().copy();
         if (slot.getHasStack()) {
-            int invStart = 26;
-            int hotbarStart = invStart + 28;
-            int invEnd = hotbarStart + 9;
-
-            if (index > invStart) {
-                if (!this.mergeItemStack(stack, 0, invStart, false))
-                    return ItemStack.EMPTY; // Inventory -> Slot
-            } else if (!mergeItemStack(stack, invStart, invEnd, true))
-                return ItemStack.EMPTY; // Slot -> Inventory
-
+            int containerSlots = 27;
+            if (index >= containerSlots) {
+                if (!mergeItemStack(stack, 0, containerSlots, false)) return ItemStack.EMPTY;
+            } else if (!mergeItemStack(stack, containerSlots, containerSlots + 36, true)) {
+                return ItemStack.EMPTY;
+            }
+            slot.onSlotChanged();
+            if (stack.isEmpty()) slot.putStack(ItemStack.EMPTY);
+            slot.onTake(player, stack);
             return stack;
         }
-
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public void onContainerClosed(EntityPlayer player) {
+        BlockBarrel.playOpeningSound(player.world, tile.getPos());
+        super.onContainerClosed(player);
+    }
+
+    @Override
+    public boolean canInteractWith(@Nonnull EntityPlayer player) {
         return true;
     }
 

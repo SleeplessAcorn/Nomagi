@@ -1,10 +1,6 @@
 {
-  "forge_marker": 1,
-  "defaults": {},
   "variants": {
-    "type": {
-      "wooden_barrel": {"model": "nomagi:barrel/wooden_barrel_up"},
-      "metal_barrel": {"model": "nomagi:barrel/metal_barrel_up"}
-    }
+    "type=wooden": { "model": "nomagi:barrel/wooden_barrel_up" },
+    "type=metal": { "model": "nomagi:barrel/metal_barrel_up" }
   }
 }

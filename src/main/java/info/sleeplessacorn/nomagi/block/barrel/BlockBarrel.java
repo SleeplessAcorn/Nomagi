@@ -14,147 +14,129 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
 import tehnut.lib.mc.block.BlockEnum;
 import tehnut.lib.mc.model.IModeled;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 
 public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModeled {
 
-    private static final AxisAlignedBB BARREL_AABB = new AxisAlignedBB(0.125D, 0D, 0.125D, 0.875D, 0.9375D, 0.875D);
+    private static final AxisAlignedBB BARREL_AABB = new AxisAlignedBB(
+            0.1250D, 0.0000D, 0.1250D, 0.8750D, 0.9375D, 0.8750D);
 
     public BlockBarrel() {
         super(Material.ROCK, BlockBarrel.Barrel.class);
-
         setUnlocalizedName(Nomagi.MOD_ID + ".barrel");
         setCreativeTab(Nomagi.TAB_NOMAGI);
-        setSoundType(SoundType.STONE);
+    }
+
+    public static void playOpeningSound(World world, BlockPos pos) {
+        if (!world.isRemote) {
+            SoundEvent sound = SoundEvents.ENTITY_ITEMFRAME_PLACE;
+            world.playSound(null, pos, sound, SoundCategory.BLOCKS, 0.6f, 0.3f);
+        }
     }
 
     @Override
+    @Deprecated
     public boolean isFullBlock(IBlockState state) {
         return false;
     }
 
     @Override
+    @Deprecated
+    public Material getMaterial(IBlockState state) {
+        return state.getValue(getProperty()).getMaterial();
+    }
+
+    @Override
+    @Deprecated
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
+    @Deprecated
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return BARREL_AABB;
+    }
+
+    @Override
+    @Deprecated
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return state.getValue(getProperty()).getHitBox();
+    public boolean onBlockActivated(
+            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side,
+            float hitX, float hitY, float hitZ) {
+        // Nomagi.NET_WRAPPER.sendTo(new MessageOpenBarrelGui(world.getTileEntity(pos), player), (EntityPlayerMP) player);
+        // FIXME : Crash from casting EntityPlayerSP to EntityPlayerMP.
+        // FIXME : Nut, do stuff pls bcuz I don't understand your system
+        playOpeningSound(world, pos);
+        return true;
     }
 
     @Override
-    public Material getMaterial(IBlockState state) {
-        return state.getValue(getProperty()).getBlockType().getLeft();
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
     }
 
-    @Override
-    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
-        return state.getValue(getProperty()).getBlockType().getRight();
-    }
-
-    @Override
-    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        return willHarvest || super.removedByPlayer(state, world, pos, player, false);
-    }
-
-    @Override
-    public void harvestBlock(
-            World worldIn, EntityPlayer player,
-            BlockPos pos, IBlockState state,
-            @Nullable TileEntity te, @Nullable ItemStack stack) {
-        super.harvestBlock(worldIn, player, pos, state, te, stack);
-        worldIn.setBlockToAir(pos);
-        if (te instanceof TileBarrel)
-            te.invalidate();
-    }
-
-    @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileBarrel();
     }
 
     @Override
-    @Nonnull
-    public java.util.List<ItemStack> getDrops(
-            IBlockAccess world, BlockPos pos,
-            @Nonnull IBlockState state, int fortune) {
-        ItemStack stack = new ItemStack(
-                this, 1, getMetaFromState(state) & 3);
-        return Lists.newArrayList(stack);
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        return Lists.newArrayList(new ItemStack(this, 1, getMetaFromState(state) & 3));
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state,
-                                    EntityPlayer player, EnumHand hand, EnumFacing heldItem,
-                                    float side, float hitX, float hitY) {
-        if (!world.isRemote) {
-            playOpeningSound(world, pos);
-//            player.openGui(Nomagi.INSTANCE, 0, world, pos.getX(), pos.getY(), pos.getZ());
-        }
-        return true;
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, Entity entity) {
+        return state.getValue(getProperty()).getSound();
     }
 
     @Override
     public void getVariants(List<String> variants) {
-        for (BlockBarrel.Barrel barrels : BlockBarrel.Barrel.values())
+        for (BlockBarrel.Barrel barrels : BlockBarrel.Barrel.values()) {
             variants.add("type=" + barrels.getName());
-    }
-
-    public static void playOpeningSound(World world, BlockPos pos) {
-        if (!world.isRemote)
-            world.playSound(
-                    null, pos, SoundEvents.ENTITY_ITEMFRAME_PLACE,
-                    SoundCategory.BLOCKS, 0.6f, 0.3f
-            );
+        }
     }
 
     public enum Barrel implements IStringSerializable {
-        WOODEN_BARREL(BARREL_AABB, Material.WOOD, SoundType.WOOD),
-        METAL_BARREL(BARREL_AABB, Material.IRON, SoundType.METAL),
-        ;
 
-        private final AxisAlignedBB hitBox;
-        private final Pair<Material, SoundType> blockType;
+        WOODEN(Material.WOOD, SoundType.WOOD),
+        METAL(Material.IRON, SoundType.METAL);
 
-        Barrel(Material material, SoundType soundType) {
-            this(BARREL_AABB, material, soundType);
+        private final Material material;
+        private final SoundType sound;
+
+        Barrel(Material material, SoundType sound) {
+            this.material = material;
+            this.sound = sound;
         }
 
-        Barrel(AxisAlignedBB bounds, Material material, SoundType soundType) {
-            this.hitBox = bounds;
-            this.blockType = Pair.of(material, soundType);
+        public Material getMaterial() {
+            return material;
         }
 
-        public AxisAlignedBB getHitBox() {
-            return hitBox;
-        }
-
-        public Pair<Material, SoundType> getBlockType() {
-            return blockType;
+        public SoundType getSound() {
+            return sound;
         }
 
         @Override
         public String getName() {
-            return name().toLowerCase(Locale.ENGLISH);
+            return name().toLowerCase(Locale.ROOT);
         }
+
     }
 
 }

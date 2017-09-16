@@ -7,44 +7,33 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class GuiBarrel extends GuiContainer {
 
-
-    private static final ResourceLocation CABINET_TEXTURE = new ResourceLocation(Nomagi.MOD_ID, "textures/gui/barrel.png");
-
-
-    private TileEntity barrel;
-    private EntityPlayer accessor;
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.MOD_ID, "textures/gui/barrel.png");
 
     public GuiBarrel(TileEntity tile, EntityPlayer player) {
         super(new ContainerBarrel(tile, player));
-        barrel = tile;
-        accessor = player;
-        IItemHandler inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int inventoryRows = inventory.getSlots() / 9;
-        xSize = 176;
-        ySize = 114 + inventoryRows * 18;
+    }
 
+    @Override
+    public void initGui() {
+        super.initGui();
+        xSize = 176;
+        ySize = 166;
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(I18n.format("tile." + Nomagi.MOD_ID + ".barrel"), 8, 6, 4210752);
-        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 1, 4210752);
-
+        fontRenderer.drawString(I18n.format("tile." + Nomagi.MOD_ID + ".barrel"), 8, 6, 0x404040);
+        fontRenderer.drawString(I18n.format("container.inventory"), 8, 71, 0x404040);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1f, 1f, 1f);
-        mc.getTextureManager().bindTexture(CABINET_TEXTURE);
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
-        drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-
+        mc.getTextureManager().bindTexture(TEXTURE);
+        drawTexturedModalRect((width - xSize) >> 1, (height - ySize) >> 1, 0, 0, xSize, ySize);
     }
 
 }
