@@ -1,14 +1,5 @@
 package info.sleeplessacorn.nomagi.network;
 
-/*
- * This file was created at 13:16 on 16 Sep 2017 by InsomniaKitten
- *
- * It is distributed as part of the Nomagi mod.
- * Source code is visible at: https://github.com/InsomniaKitten/Nomagi
- *
- * Copyright (c) InsomniaKitten 2017. All Rights Reserved.
- */
-
 import info.sleeplessacorn.nomagi.block.barrel.GuiBarrel;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
