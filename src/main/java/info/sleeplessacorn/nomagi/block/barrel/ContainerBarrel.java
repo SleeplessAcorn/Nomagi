@@ -5,8 +5,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -14,14 +12,11 @@ import javax.annotation.Nonnull;
 
 public class ContainerBarrel extends Container {
 
-    @CapabilityInject(IItemHandler.class)
-    private static final Capability<IItemHandler> CAPABILITY = null;
-
     private TileEntity tile;
 
     public ContainerBarrel(TileEntity tile, EntityPlayer player) {
         this.tile = tile;
-        createContainerSlots(tile.getCapability(CAPABILITY, null));
+        createContainerSlots(tile.getCapability(TileBarrel.CAPABILITY, null));
         createPlayerSlots(player);
     }
 

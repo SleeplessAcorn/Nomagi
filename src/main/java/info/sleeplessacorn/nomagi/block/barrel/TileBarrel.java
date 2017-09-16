@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 public class TileBarrel extends TileEntity {
 
     @CapabilityInject(IItemHandler.class)
-    private static final Capability<IItemHandler> CAPABILITY = null;
+    protected static final Capability<IItemHandler> CAPABILITY = null;
 
     private ItemStackHandler inventory = new ItemStackHandler(27);
 

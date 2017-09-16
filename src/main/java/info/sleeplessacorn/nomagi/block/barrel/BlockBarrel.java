@@ -2,11 +2,13 @@ package info.sleeplessacorn.nomagi.block.barrel;
 
 import com.google.common.collect.Lists;
 import info.sleeplessacorn.nomagi.Nomagi;
+import info.sleeplessacorn.nomagi.network.MessageOpenBarrelGui;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -77,10 +79,12 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
     public boolean onBlockActivated(
             World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side,
             float hitX, float hitY, float hitZ) {
-        // Nomagi.NET_WRAPPER.sendTo(new MessageOpenBarrelGui(world.getTileEntity(pos), player), (EntityPlayerMP) player);
-        // FIXME : Crash from casting EntityPlayerSP to EntityPlayerMP.
-        // FIXME : Nut, do stuff pls bcuz I don't understand your system
         playOpeningSound(world, pos);
+        if (!world.isRemote) {
+            TileEntity tile = world.getTileEntity(pos);
+            MessageOpenBarrelGui gui = new MessageOpenBarrelGui(tile, player);
+            Nomagi.NET_WRAPPER.sendTo(gui, (EntityPlayerMP) player);
+        }
         return true;
     }
 
