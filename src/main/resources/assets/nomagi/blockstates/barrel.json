@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "type=wooden": { "model": "nomagi:barrel/wooden_barrel_up" },
-    "type=metal": { "model": "nomagi:barrel/metal_barrel_up" }
-  }
-}

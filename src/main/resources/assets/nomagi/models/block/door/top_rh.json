@@ -1,7 +1,0 @@
-{
-  "parent": "block/door_top_rh",
-  "textures": {
-    "bottom": "nomagi:blocks/room_door_lower",
-    "top": "nomagi:blocks/room_door_upper"
-  }
-}

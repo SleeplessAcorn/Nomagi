@@ -1,27 +1,21 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven { url = 'http://files.minecraftforge.net/maven' }
-        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'http://files.minecraftforge.net/maven' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
 plugins {
+    id 'net.minecraftforge.gradle.forge' version '2.0.2'
     id 'com.matthewprenger.cursegradle' version '1.0.9'
-    id 'net.minecraftforge.gradle.forge'
     id 'maven-publish'
 }
 
-configurations {
-    shade
-    compile.extendsFrom shade
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 def buildVersion = System.getenv('BUILD_NUMBER') ?: 'CUSTOM'
 def userName = project.findProperty('devUsername') ?: modName
@@ -42,13 +36,12 @@ minecraft {
 }
 
 repositories {
-    maven { name 'tehnut';   url 'http://tehnut.info/maven' }
-    maven { name 'tterrag';  url 'http://maven.tterrag.com' }
-    maven { name 'progwm16'; url 'http://dvs1.progwml6.com/files/maven' }
+    maven { url 'http://tehnut.info/maven' }
+    maven { url 'http://maven.tterrag.com' }
+    maven { url 'http://dvs1.progwml6.com/files/maven' }
 }
 
 dependencies {
-    shade        "tehnut.lib:LendingLibrary:${llibVersion}"
     deobfCompile "info.amerifrance.guideapi:Guide-API:${gapiVersion}"
     deobfCompile "mcp.mobius.waila:Hwyla:${hwylaVersion}"
     deobfCompile "mezz.jei:jei_${jeiVersion}"
@@ -66,22 +59,14 @@ processResources {
     }
 }
 
-reobf {
-    jar { extraLines 'PK: tehnut/lib info/sleeplessacorn/nomagi/lib' }
-}
-
 jar {
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
-    }
     manifest.mainAttributes(
-            "Built-By": System.getProperty('user.name'),
-            "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
-            "Implementation-Title": project.name,
-            "Implementation-Version": project.version,
-            "Built-on": minecraft.version
+            'Built-By': System.getProperty('user.name'),
+            'Created-By': "${System.getProperty('java.vm.version')}"
+                        + "(${System.getProperty('java.vm.vendor')})",
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Built-On': minecraft.version
     )
 }
 
@@ -96,9 +81,7 @@ publishing {
     repositories {
         if (project.hasProperty('mavenRepo')) {
             maven { url project.mavenRepo }
-        } else {
-            mavenLocal()
-        }
+        } else mavenLocal()
     }
 }
 

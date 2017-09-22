@@ -1,7 +1,0 @@
-{
-    "parent": "nomagi:block/barrel/barrel_up",
-    "textures": {
-        "side": "nomagi:blocks/barrel/metal_barrel_side",
-        "top": "nomagi:blocks/barrel/metal_barrel_top"
-    }
-}

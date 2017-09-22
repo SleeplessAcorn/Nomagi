@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "nomagi:blocks/radiant_grass_top",
-    "side": "nomagi:blocks/radiant_grass_side"
-  }
-}
-
