@@ -33,8 +33,8 @@ public class BlockTapestry extends BlockAxisY implements IModeled {
 
     public BlockTapestry() {
         super(Material.CLOTH);
-        setUnlocalizedName(Nomagi.MOD_ID + ".tapestry");
-        setCreativeTab(Nomagi.TAB_NOMAGI);
+        setUnlocalizedName(Nomagi.ID + ".tapestry");
+        setCreativeTab(Nomagi.CTAB);
         setSoundType(SoundType.CLOTH);
         setHardness(0.8F);
         setResistance(4.0F);

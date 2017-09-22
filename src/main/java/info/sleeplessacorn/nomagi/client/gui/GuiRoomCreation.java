@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GuiRoomCreation extends GuiScreen {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.MOD_ID, "textures/gui/room_creation.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.ID, "textures/gui/room_creation.png");
 
     public static final SubTexture BACKGROUND = new SubTexture(TEXTURE, 0, 0, 176, 166);
 

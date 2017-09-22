@@ -2,7 +2,6 @@ package info.sleeplessacorn.nomagi.block;
 
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
-import info.sleeplessacorn.nomagi.core.data.Room;
 import info.sleeplessacorn.nomagi.core.data.Tent;
 import info.sleeplessacorn.nomagi.core.data.TentWorldSavedData;
 import info.sleeplessacorn.nomagi.network.MessageOpenCreateRoomGui;
@@ -37,10 +36,49 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
 
     public BlockControllerRoom() {
         super(Material.WOOD, PlacementStyle.FACE_AWAY);
-
-        setCreativeTab(Nomagi.TAB_NOMAGI);
-        setUnlocalizedName(Nomagi.MOD_ID + ".door_controller");
+        setCreativeTab(Nomagi.CTAB);
+        setUnlocalizedName(Nomagi.ID + ".door_controller");
         setSoundType(SoundType.WOOD);
+    }
+
+    @Override
+    @Deprecated
+    public IBlockState getStateFromMeta(int meta) {
+        EnumFacing facing = EnumFacing.getHorizontal(meta % 4);
+        Type type = Type.values()[(meta >> 2) % Type.values().length];
+        return getDefaultState().withProperty(getProperty(), facing).withProperty(TYPE, type);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        int facing = state.getValue(getProperty()).getHorizontalIndex();
+        int type = state.getValue(TYPE).ordinal() << 2;
+        return facing | type;
+    }
+
+    @Override
+    public boolean onBlockActivated(
+            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing heldItem,
+            float side, float hitX, float hitY) {
+        if (world.isRemote || hand != EnumHand.MAIN_HAND) return true;
+
+        TentWorldSavedData tentData = TentWorldSavedData.getData(world);
+        Tent tent = tentData.getTent(player.chunkCoordX, player.chunkCoordZ);
+
+        if (tent == null || !tent.isInside(player)
+                || !tent.getOwnerId().equals(player.getGameProfile().getId())
+                || tent.getRoom(player) == null) {
+            return false;
+        }
+
+        if (player.isSneaking() && world.provider.getDimension() == ModObjects.TENT_DIMENSION.getId()) {
+            tentData.sendBack(player);
+            return false;
+        }
+
+        Nomagi.NET_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(),
+                player.chunkCoordZ - tent.getChunkZ(), state.getValue(getProperty())), (EntityPlayerMP) player);
+        return true;
     }
 
     @Override
@@ -50,26 +88,8 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        EnumFacing facing = EnumFacing.getHorizontal(meta % 4);
-        Type type = Type.TENT;
-        if (meta >= 4)
-            type = Type.BRICK;
-
-        return getDefaultState().withProperty(getProperty(), facing).withProperty(TYPE, type);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        int meta = state.getValue(getProperty()).getHorizontalIndex();
-        if (state.getValue(TYPE) == Type.BRICK)
-            meta += 4;
-
-        return meta;
-    }
-
-    @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(
+            IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this, 1, state.getValue(TYPE).ordinal());
     }
 
@@ -79,53 +99,29 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand).withProperty(TYPE, Type.values()[meta]);
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
-        if (world.isRemote || hand != EnumHand.MAIN_HAND)
-            return true;
-
-        TentWorldSavedData tentData = TentWorldSavedData.getData(world);
-        Tent tent = tentData.getTent(player.chunkCoordX, player.chunkCoordZ);
-        if (tent == null)
-            return false;
-
-        if (!tent.isInside(player))
-            return false;
-
-        if (!tent.getOwnerId().equals(player.getGameProfile().getId()))
-            return false;
-
-        if (player.isSneaking() && world.provider.getDimension() == ModObjects.TENT_DIMENSION.getId()) {
-            tentData.sendBack(player);
-            return false;
-        }
-
-        Room room = tent.getRoom(player);
-        if (room == null)
-            return false;
-
-        Nomagi.NET_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(), player.chunkCoordZ - tent.getChunkZ(), state.getValue(getProperty())), (EntityPlayerMP) player);
-        return true;
+    public IBlockState getStateForPlacement(
+            World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
+            EntityLivingBase placer, EnumHand hand) {
+        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand)
+                .withProperty(TYPE, Type.values()[ meta ]);
     }
 
     @Override
     public void getVariants(List<String> variants) {
-        variants.add("facing=east,type=tent");
-        variants.add("facing=east,type=brick");
+        variants.add("facing=north,type=tent");
+        variants.add("facing=north,type=brick");
     }
 
     public enum Type implements IStringSerializable {
+
         TENT,
-        BRICK,
-        ;
+        BRICK;
 
         @Override
         public String getName() {
             return name().toLowerCase(Locale.ENGLISH);
         }
+
     }
+
 }

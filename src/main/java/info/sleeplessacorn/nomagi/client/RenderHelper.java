@@ -10,10 +10,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderHelper {
 
     public static final ResourceLocation GUI_CREATION = new ResourceLocation(
-            Nomagi.MOD_ID, "textures/gui/room_creation.png");
+            Nomagi.ID, "textures/gui/room_creation.png");
 
     public static final ResourceLocation GUI_PRIVACY = new ResourceLocation(
-            Nomagi.MOD_ID, "textures/gui/privacy.png");
+            Nomagi.ID, "textures/gui/privacy.png");
 
     public static void bindTexture(ResourceLocation texture) {
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);

@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiBarrel extends GuiContainer {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.MOD_ID, "textures/gui/barrel.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.ID, "textures/gui/barrel.png");
 
     public GuiBarrel(TileEntity tile, EntityPlayer player) {
         super(new ContainerBarrel(tile, player));
@@ -25,7 +25,7 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        fontRenderer.drawString(I18n.format("tile." + Nomagi.MOD_ID + ".barrel"), 8, 6, 0x404040);
+        fontRenderer.drawString(I18n.format("tile." + Nomagi.ID + ".barrel"), 8, 6, 0x404040);
         fontRenderer.drawString(I18n.format("container.inventory"), 8, 71, 0x404040);
     }
 

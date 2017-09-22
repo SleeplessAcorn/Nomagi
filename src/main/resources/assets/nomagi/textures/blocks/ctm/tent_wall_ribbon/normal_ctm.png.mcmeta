@@ -5,6 +5,9 @@
     "layer": "SOLID",
     "textures": [
         "nomagi:blocks/ctm/tent_wall_ribbon/ctm_map"
-    ]
+    ],
+    "extra": {
+        "connectInside": true
+    }
   }
 }

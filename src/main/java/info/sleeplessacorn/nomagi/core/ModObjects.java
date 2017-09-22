@@ -49,10 +49,10 @@ public class ModObjects {
     public static final Block UPSETTI = new BlockUpsetti();
 
     public static final DimensionType TENT_DIMENSION = DimensionType.register(
-            Nomagi.MOD_ID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
+            Nomagi.ID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
 
     private static final ResourceLocation ROOM_PREVIEWS = new ResourceLocation(
-            Nomagi.MOD_ID, "textures/gui/room_previews.png");
+            Nomagi.ID, "textures/gui/room_previews.png");
 
     public static final Room EMPTY_ROOM = new Room("empty_room", new SubTexture(ROOM_PREVIEWS, 0, 0, 52, 52));
     public static final Room NATURE_ROOM = new Room("nature_room", new SubTexture(ROOM_PREVIEWS, 52, 0, 52, 52));

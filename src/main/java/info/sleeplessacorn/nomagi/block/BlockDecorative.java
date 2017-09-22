@@ -9,7 +9,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
 import tehnut.lib.mc.block.BlockEnum;
 import tehnut.lib.mc.model.IModeled;
 
@@ -19,83 +18,93 @@ import java.util.Locale;
 
 public class BlockDecorative extends BlockEnum<BlockDecorative.Decor> implements IModeled {
 
-    private static final AxisAlignedBB PILLAR_AABB = new AxisAlignedBB(-0.5D, 0D, -0.5D, 1.5D, 1.0D, 1.5D);
-
     public BlockDecorative() {
         super(Material.ROCK, Decor.class);
-
-        setUnlocalizedName(Nomagi.MOD_ID + ".decor");
-        setCreativeTab(Nomagi.TAB_NOMAGI);
+        setUnlocalizedName(Nomagi.ID + ".decor");
+        setCreativeTab(Nomagi.CTAB);
         setSoundType(SoundType.STONE);
     }
 
     @Override
+    @Deprecated
+    public boolean isFullBlock(IBlockState state) {
+        return state.getValue(getProperty()).isFullCube();
+    }
+
+    @Override
+    @Deprecated
     public Material getMaterial(IBlockState state) {
-        return state.getValue(getProperty()).getBlockType().getLeft();
+        return state.getValue(getProperty()).getMaterial();
+    }
+
+    @Override
+    @Deprecated
+    public boolean isFullCube(IBlockState state) {
+        return state.getValue(getProperty()).isFullCube();
+    }
+
+    @Override
+    @Deprecated
+    public boolean isOpaqueCube(IBlockState state) {
+        return getProperty() != null ? state.getValue(getProperty()).isFullCube() : super.isOpaqueCube(state);
     }
 
     @Override
     public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
-        return state.getValue(getProperty()).getBlockType().getRight();
+        return state.getValue(getProperty()).getSound();
     }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        if (getProperty() == null)
-            return super.isOpaqueCube(state); // Fuck you Mojang
-        return state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
-    }
-
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
-    }
-
-    @Override
-    public boolean isFullBlock(IBlockState state) {
-        return state.getValue(getProperty()).getHitBox() == FULL_BLOCK_AABB;
-    }
-
-    // IModeled
 
     @Override
     public void getVariants(List<String> variants) {
-        for (Decor decor : Decor.values())
+        for (Decor decor : Decor.values()) {
             variants.add("type=" + decor.getName());
+        }
     }
 
     public enum Decor implements IStringSerializable {
+
         UMBERSTONE(Material.ROCK, SoundType.STONE),
         EBONSTONE(Material.ROCK, SoundType.STONE),
         TENT_WALL(Material.CLOTH, SoundType.CLOTH),
         TENT_WALL_RIBBON(Material.CLOTH, SoundType.CLOTH),
         TENT_WALL_INSET(Material.CLOTH, SoundType.CLOTH),
-        EBONSTONE_INSET(Material.ROCK, SoundType.STONE),
-        ;
+        EBONSTONE_INSET(Material.ROCK, SoundType.STONE);
 
-        private final AxisAlignedBB hitBox;
-        private final Pair<Material, SoundType> blockType;
+        private final AxisAlignedBB aabb;
+        private final Material material;
+        private final SoundType sound;
 
-        Decor(Material material, SoundType soundType) {
-            this(FULL_BLOCK_AABB, material, soundType);
+        Decor(Material material, SoundType sound) {
+            this(FULL_BLOCK_AABB, material, sound);
         }
 
-        Decor(AxisAlignedBB bounds, Material material, SoundType soundType) {
-            this.hitBox = bounds;
-            this.blockType = Pair.of(material, soundType);
+        Decor(AxisAlignedBB aabb, Material material, SoundType sound) {
+            this.aabb = aabb;
+            this.material = material;
+            this.sound = sound;
         }
 
-        public AxisAlignedBB getHitBox() {
-            return hitBox;
+        public AxisAlignedBB getBoundingBox() {
+            return aabb;
         }
 
-        public Pair<Material, SoundType> getBlockType() {
-            return blockType;
+        public Material getMaterial() {
+            return material;
+        }
+
+        public SoundType getSound() {
+            return sound;
+        }
+
+        public boolean isFullCube() {
+            return aabb == FULL_BLOCK_AABB;
         }
 
         @Override
         public String getName() {
             return name().toLowerCase(Locale.ENGLISH);
         }
+
     }
+
 }

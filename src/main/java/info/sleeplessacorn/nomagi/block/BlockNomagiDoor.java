@@ -20,10 +20,9 @@ public class BlockNomagiDoor extends BlockDoor implements IModeled {
 
     public BlockNomagiDoor() {
         super(Material.WOOD);
-
-        setUnlocalizedName(Nomagi.MOD_ID + ".door");
+        setUnlocalizedName(Nomagi.ID + ".door");
         setSoundType(SoundType.WOOD);
-        setCreativeTab(Nomagi.TAB_NOMAGI);
+        setCreativeTab(Nomagi.CTAB);
         setHardness(3.0F);
         setHarvestLevel("axe", 0);
     }
@@ -34,7 +33,7 @@ public class BlockNomagiDoor extends BlockDoor implements IModeled {
     }
 
     @Override
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+    public ItemStack getItem(World world, BlockPos pos, IBlockState state) {
         return getDoorItem();
     }
 
@@ -46,4 +45,5 @@ public class BlockNomagiDoor extends BlockDoor implements IModeled {
     public void getVariants(List<String> variants) {
         variants.add("inventory");
     }
+
 }

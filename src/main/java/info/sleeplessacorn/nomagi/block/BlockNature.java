@@ -11,7 +11,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.Pair;
 import tehnut.lib.mc.block.BlockEnum;
 import tehnut.lib.mc.model.IModeled;
 
@@ -23,37 +22,44 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
 
     public BlockNature() {
         super(Material.ROCK, Nature.class);
-
-        setUnlocalizedName(Nomagi.MOD_ID + ".nature");
-        setCreativeTab(Nomagi.TAB_NOMAGI);
+        setUnlocalizedName(Nomagi.ID + ".nature");
+        setCreativeTab(Nomagi.CTAB);
         setSoundType(SoundType.WOOD);
     }
 
     @Override
+    @Deprecated
+    public boolean isFullBlock(IBlockState state) {
+        return state.getValue(getProperty()).isFullCube();
+    }
+
+    @Override
     public int getLightOpacity(IBlockState state) {
-        return state.getValue(getProperty()) == Nature.ANCIENT_LEAVES ? 1 : 255;
+        return state.getValue(getProperty()).getLightOpacity();
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        if (getProperty() == null)
-            return super.isOpaqueCube(state);
-        return state.getValue(getProperty()) != Nature.ANCIENT_LEAVES;
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return state.getValue(getProperty()).getHitBox();
-    }
-
-    @Override
+    @Deprecated
     public Material getMaterial(IBlockState state) {
-        return state.getValue(getProperty()).getBlockType().getLeft();
+        return state.getValue(getProperty()).getMaterial();
     }
 
     @Override
-    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
-        return state.getValue(getProperty()).getBlockType().getRight();
+    @Deprecated
+    public boolean isFullCube(IBlockState state) {
+        return state.getValue(getProperty()).isFullCube();
+    }
+
+    @Override
+    @Deprecated
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return state.getValue(getProperty()).getBoundingBox();
+    }
+
+    @Override
+    @Deprecated
+    public boolean isOpaqueCube(IBlockState state) {
+        return getProperty() != null ? state.getValue(getProperty()).isFullCube() : super.isOpaqueCube(state);
     }
 
     @Override
@@ -62,41 +68,68 @@ public class BlockNature extends BlockEnum<BlockNature.Nature> implements IModel
     }
 
     @Override
+    public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+        return state.getValue(getProperty()).getSound();
+    }
+
+    @Override
     public void getVariants(List<String> variants) {
-        for (BlockNature.Nature nature : BlockNature.Nature.values())
+        for (BlockNature.Nature nature : BlockNature.Nature.values()) {
             variants.add("type=" + nature.getName());
+        }
     }
 
     public enum Nature implements IStringSerializable {
+
         RADIANT_GRASS(Material.GROUND, SoundType.GROUND),
         ANCIENT_BARK(Material.WOOD, SoundType.WOOD),
         ANCIENT_PLANKS(Material.WOOD, SoundType.WOOD),
-        ANCIENT_LEAVES(Material.LEAVES, SoundType.PLANT),
-        ;
+        ANCIENT_LEAVES(Material.LEAVES, SoundType.PLANT) {
+            @Override
+            public boolean isFullCube() {
+                return false;
+            }
+        };
 
-        private final AxisAlignedBB hitBox;
-        private final Pair<Material, SoundType> blockType;
+        private final AxisAlignedBB aabb;
+        private final Material material;
+        private final SoundType sound;
 
-        Nature(Material material, SoundType soundType) {
-            this(FULL_BLOCK_AABB, material, soundType);
+        Nature(Material material, SoundType sound) {
+            this(FULL_BLOCK_AABB, material, sound);
         }
 
-        Nature(AxisAlignedBB bounds, Material material, SoundType soundType) {
-            this.hitBox = bounds;
-            this.blockType = Pair.of(material, soundType);
+        Nature(AxisAlignedBB aabb, Material material, SoundType sound) {
+            this.aabb = aabb;
+            this.material = material;
+            this.sound = sound;
         }
 
-        public AxisAlignedBB getHitBox() {
-            return hitBox;
+        public AxisAlignedBB getBoundingBox() {
+            return aabb;
         }
 
-        public Pair<Material, SoundType> getBlockType() {
-            return blockType;
+        public Material getMaterial() {
+            return material;
+        }
+
+        public SoundType getSound() {
+            return sound;
+        }
+
+        public boolean isFullCube() {
+            return aabb == FULL_BLOCK_AABB;
+        }
+
+        public int getLightOpacity() {
+            return equals(ANCIENT_LEAVES) ? 1 : 255;
         }
 
         @Override
         public String getName() {
             return name().toLowerCase(Locale.ENGLISH);
         }
+
     }
+
 }

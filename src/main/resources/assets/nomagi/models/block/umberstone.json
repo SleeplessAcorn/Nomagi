@@ -1,4 +1,5 @@
 {
+    "ctm_version" : 1,
     "parent": "block/cube_all",
     "textures": {
         "all": "nomagi:blocks/ctm/umberstone/normal"

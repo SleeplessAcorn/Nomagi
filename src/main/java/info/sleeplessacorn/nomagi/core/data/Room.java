@@ -42,15 +42,17 @@ public class Room {
     private transient Customization customization;
 
     public Room(ResourceLocation schematic, SubTexture previewImage) {
-        this.name = "room." + schematic.getResourceDomain() + "." + schematic.getResourcePath() + ".name";
-        this.description = "room." + schematic.getResourceDomain() + "." + schematic.getResourcePath() + ".desc";
+        String domain = schematic.getResourceDomain();
+        String path = schematic.getResourcePath();
+        this.name = "room." + domain + "." + path + ".name";
+        this.description = "room." + domain + "." + path + ".desc";
         this.customization = CustomizationJson.fromFile(schematic);
         this.schematic = schematic;
         this.previewImage = previewImage;
     }
 
     public Room(String schematic, SubTexture previewImage) {
-        this(new ResourceLocation(Nomagi.MOD_ID, schematic), previewImage);
+        this(new ResourceLocation(Nomagi.ID, schematic), previewImage);
     }
 
     public String getName() {
@@ -83,6 +85,7 @@ public class Room {
         public boolean canModify(World world, BlockPos roomOffset, IBlockState state) {
             return true;
         }
+
     }
 
     public static class CustomizationJson extends Customization {
@@ -99,11 +102,10 @@ public class Room {
             if (posMatches == null)
                 return false;
 
-            if (posMatches.getStateMatches().contains(state))
+            if (posMatches.getStateMatches().contains(state)
+                    || posMatches.getBlockMatches().contains(state.getBlock().getRegistryName())) {
                 return true;
-
-            if (posMatches.getBlockMatches().contains(state.getBlock().getRegistryName()))
-                return true;
+            }
 
             for (Class<? extends Block> blockClass : posMatches.getInstanceMatches())
                 if (blockClass.isAssignableFrom(state.getBlock().getClass()))
@@ -117,19 +119,24 @@ public class Room {
         }
 
         public static Customization fromFile(ResourceLocation id) {
-            InputStream stream = Nomagi.class.getResourceAsStream("/assets/" + id.getResourceDomain() + "/rooms/" + id.getResourcePath() + ".json");
-            if (stream == null)
-                return new Customization();
-
-            return GSON.fromJson(new InputStreamReader(stream), CustomizationJson.class);
+            String domain = id.getResourceDomain();
+            String path = id.getResourcePath();
+            InputStream stream = Nomagi.class.getResourceAsStream("/assets/" + domain + "/rooms/" + path + ".json");
+            return stream != null
+                   ? GSON.fromJson(new InputStreamReader(stream), CustomizationJson.class)
+                   : new Customization();
         }
 
         public static class Matches {
+
             private final Set<IBlockState> stateMatches;
             private final Set<ResourceLocation> blockMatches;
             private final Set<Class<? extends Block>> instanceMatches;
 
-            public Matches(Set<IBlockState> stateMatches, Set<ResourceLocation> blockMatches, Set<Class<? extends Block>> instanceMatches) {
+            public Matches(
+                    Set<IBlockState> stateMatches,
+                    Set<ResourceLocation> blockMatches,
+                    Set<Class<? extends Block>> instanceMatches) {
                 this.stateMatches = stateMatches;
                 this.blockMatches = blockMatches;
                 this.instanceMatches = instanceMatches;
@@ -152,6 +159,9 @@ public class Room {
             public Set<Class<? extends Block>> getInstanceMatches() {
                 return instanceMatches;
             }
+
         }
+
     }
+
 }

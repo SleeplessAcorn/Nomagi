@@ -20,18 +20,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Nomagi.MOD_ID, name = Nomagi.MOD_NAME, version = Nomagi.MOD_VERSION)
+@Mod(modid = Nomagi.ID, name = Nomagi.NAME, version = Nomagi.VERSION)
 public class Nomagi {
 
-    @Mod.Instance(Nomagi.MOD_ID)
+    @Mod.Instance(Nomagi.ID)
     public static Nomagi instance;
 
-    public static final String MOD_ID = "nomagi";
-    public static final String MOD_NAME = "Nomagi";
-    public static final String MOD_VERSION = "@VERSION@";
-    public static final Logger LOGGER = LogManager.getLogger(Nomagi.MOD_NAME);
-    public static final SimpleNetworkWrapper NET_WRAPPER = new SimpleNetworkWrapper(Nomagi.MOD_ID);
-    public static final CreativeTabs TAB_NOMAGI = new CreativeTabs(Nomagi.MOD_ID) {
+    public static final String ID = "nomagi";
+    public static final String NAME = "Nomagi";
+    public static final String VERSION = "@VERSION@";
+
+    public static final Logger LOGGER = LogManager.getLogger(Nomagi.NAME);
+    public static final SimpleNetworkWrapper NET_WRAPPER = new SimpleNetworkWrapper(Nomagi.ID);
+
+    public static final CreativeTabs CTAB = new CreativeTabs(Nomagi.ID) {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(ModObjects.DOOR);
