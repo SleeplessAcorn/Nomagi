@@ -14,12 +14,8 @@ import java.util.Map;
 public class SerializerCustomization extends SerializerBase<Room.CustomizationJson> {
 
     @Override
-    public Room.CustomizationJson deserialize(
-            JsonElement json, Type genericType, JsonDeserializationContext ctx) throws JsonParseException {
-
-        Map<String, Matches> stringMatches = ctx.deserialize(json.getAsJsonObject().get("matches"),
-                new TypeToken<Map<String, Matches>>() {}.getType());
-
+    public Room.CustomizationJson deserialize(JsonElement json, Type genericType, JsonDeserializationContext ctx) throws JsonParseException {
+        Map<String, Matches> stringMatches = ctx.deserialize(json.getAsJsonObject().get("matches"), new TypeToken<Map<String, Matches>>() {}.getType());
         Map<BlockPos, Matches> matches = Maps.newHashMap();
 
         stringMatches.forEach((key, value) -> matches.put(stringToPos(key), value));
@@ -55,5 +51,4 @@ public class SerializerCustomization extends SerializerBase<Room.CustomizationJs
         int z = Integer.parseInt(split[2]);
         return new BlockPos(x, y, z);
     }
-
 }

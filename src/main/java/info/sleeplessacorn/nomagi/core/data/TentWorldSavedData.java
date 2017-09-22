@@ -95,16 +95,15 @@ public class TentWorldSavedData extends WorldSavedData {
     @Nullable
     public Tent getTent(int chunkX, int chunkZ) {
         UUID playerId = chunkPos.get(Pair.of(chunkX, chunkZ));
-        if (playerId != null) {
+        if (playerId != null)
             return tents.get(playerId);
-        }
+
         for (Tent tent : tents.values()) {
             Set<Chunk> usedChunks = tent.getUsedChunks();
-            for (Chunk chunk : usedChunks) {
-                if (chunk.x == chunkX && chunk.z == chunkZ) {
+
+            for (Chunk chunk : usedChunks)
+                if (chunk.x == chunkX && chunk.z == chunkZ)
                     return tent;
-                }
-            }
         }
         return null;
     }
@@ -135,9 +134,7 @@ public class TentWorldSavedData extends WorldSavedData {
     }
 
     public boolean sendTo(EntityPlayer player, Tent tent) {
-        back.put(player.getGameProfile().getId(),
-                Pair.of(player.getEntityWorld().provider.getDimension(),
-                new BlockPos(player.posX, player.posY, player.posZ)));
+        back.put(player.getGameProfile().getId(), Pair.of(player.getEntityWorld().provider.getDimension(), new BlockPos(player.posX, player.posY, player.posZ)));
         BlockPos tele = new ChunkPos(tent.getChunkX(), tent.getChunkZ()).getBlock(8, Tent.BASE_HEIGHT + 3, 8);
         return TeleporterTent.teleportToDimension(player, ModObjects.TENT_DIMENSION.getId(), tele);
     }
@@ -149,14 +146,14 @@ public class TentWorldSavedData extends WorldSavedData {
     public static TentWorldSavedData getData(World world) {
         MapStorage worldData = world.getMapStorage();
         TentWorldSavedData savedData = null;
-        if (worldData != null) {
+
+        if (worldData != null)
             savedData = (TentWorldSavedData) worldData.getOrLoadData(TentWorldSavedData.class, ID);
-        }
+
         if (savedData == null) {
             savedData = new TentWorldSavedData();
             world.getMapStorage().setData(ID, savedData);
         }
         return savedData;
     }
-
 }

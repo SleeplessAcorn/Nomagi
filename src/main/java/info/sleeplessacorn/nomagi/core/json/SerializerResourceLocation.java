@@ -6,7 +6,6 @@ import tehnut.lib.forge.json.serialization.SerializerBase;
 
 import java.lang.reflect.Type;
 
-// TODO - Add to LendingLibrary
 public class SerializerResourceLocation extends SerializerBase<ResourceLocation> {
 
     @Override
@@ -23,5 +22,4 @@ public class SerializerResourceLocation extends SerializerBase<ResourceLocation>
     public Class<?> getType() {
         return ResourceLocation.class;
     }
-
 }

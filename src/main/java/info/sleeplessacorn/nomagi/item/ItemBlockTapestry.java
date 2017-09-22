@@ -19,9 +19,7 @@ public class ItemBlockTapestry extends ItemBlock {
     }
 
     @Override
-    public EnumActionResult onItemUse(
-            EntityPlayer player, World world, BlockPos pos, EnumHand hand,
-            EnumFacing facing, float x, float y, float z) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float x, float y, float z) {
         pos = isReplaceable(world, pos) ? pos : pos.offset(facing);
         boolean placeLower = !isReplaceable(world, pos.down());
         boolean isYAxis = facing.getAxis().equals(EnumFacing.Axis.Y);
@@ -31,8 +29,7 @@ public class ItemBlockTapestry extends ItemBlock {
         if (canPlace(world, pos, placeLower, actualFacing)) {
             if (placeTapestry(world, pos, pos1, actualFacing, x, y, z, player, hand, placeLower)) {
                 SoundType sound = getBlock().getSoundType(getBlock().getDefaultState(), world, pos, player);
-                world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS,
-                        (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
+                world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
                 player.getHeldItem(hand).shrink(1);
                 return EnumActionResult.SUCCESS;
             }
@@ -50,15 +47,11 @@ public class ItemBlockTapestry extends ItemBlock {
         return world.isSideSolid(isLower ? posAt.up() : posAt, facing);
     }
 
-    private boolean placeTapestry(
-            World world, BlockPos pos, BlockPos pos1, EnumFacing facing, float x, float y,
-            float z, EntityPlayer player, EnumHand hand, boolean placeLower) {
+    private boolean placeTapestry(World world, BlockPos pos, BlockPos pos1, EnumFacing facing, float x, float y, float z, EntityPlayer player, EnumHand hand, boolean placeLower) {
         int meta0 = placeLower ? 0 : 1;
         int meta1 = placeLower ? 1 : 0;
         IBlockState state0 = getBlock().getStateForPlacement(world, pos, facing, x, y, z, meta0, player, hand);
         IBlockState state1 = getBlock().getStateForPlacement(world, pos, facing, x, y, z, meta1, player, hand);
-        return  placeBlockAt(player.getHeldItem(hand), player, world, pos, facing, x, y, z, state0)
-                && placeBlockAt(player.getHeldItem(hand), player, world, pos1, facing, x, y, z, state1);
+        return placeBlockAt(player.getHeldItem(hand), player, world, pos, facing, x, y, z, state0) && placeBlockAt(player.getHeldItem(hand), player, world, pos1, facing, x, y, z, state1);
     }
-
 }

@@ -102,12 +102,12 @@ public class GuiRoomCreation extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         switch (button.id) {
             case 0: {
-                Nomagi.NET_WRAPPER.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(
+                Nomagi.NETWORK.sendToServer(new MessageCreateRoom(ModObjects.ROOMS.get(
                         ROOMS.get(roomIndex)), currentChunkX, currentChunkZ, direction));
                 break;
             }
             case 1: {
-                Nomagi.NET_WRAPPER.sendToServer(new MessageCreateRoom(currentChunkX, currentChunkZ, direction));
+                Nomagi.NETWORK.sendToServer(new MessageCreateRoom(currentChunkX, currentChunkZ, direction));
                 break;
             }
             case 2: {

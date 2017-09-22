@@ -1,10 +1,6 @@
 package info.sleeplessacorn.nomagi.core.json;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.core.data.Room.CustomizationJson.Matches;
@@ -25,18 +21,15 @@ public class SerializerCustomizationMatches extends SerializerBase<Matches> {
         Matches matches = new Matches();
 
         // Block matches
-        Set<ResourceLocation> blockMatches = ctx.deserialize(json.getAsJsonObject().get("block"),
-                new TypeToken<Set<ResourceLocation>>() {}.getType());
+        Set<ResourceLocation> blockMatches = ctx.deserialize(json.getAsJsonObject().get("block"), new TypeToken<Set<ResourceLocation>>() {}.getType());
         matches.getBlockMatches().addAll(blockMatches);
 
         // State matches
-        Set<IBlockState> stateMatches = ctx.deserialize(json.getAsJsonObject().getAsJsonArray("state"),
-                new TypeToken<Set<IBlockState>>() {}.getType());
+        Set<IBlockState> stateMatches = ctx.deserialize(json.getAsJsonObject().getAsJsonArray("state"), new TypeToken<Set<IBlockState>>() {}.getType());
         matches.getStateMatches().addAll(stateMatches);
 
         // Instance matches
-        Set<String> instanceMatches = ctx.deserialize(json.getAsJsonObject().getAsJsonArray("instance"),
-                new TypeToken<Set<String>>() {}.getType());
+        Set<String> instanceMatches = ctx.deserialize(json.getAsJsonObject().getAsJsonArray("instance"), new TypeToken<Set<String>>() {}.getType());
 
         String className = "";
         try {
@@ -62,21 +55,16 @@ public class SerializerCustomizationMatches extends SerializerBase<Matches> {
     public JsonElement serialize(Matches src, Type srcType, JsonSerializationContext ctx) {
         JsonObject jsonObject = new JsonObject();
 
-        jsonObject.add("block", ctx.serialize(src.getBlockMatches(),
-                new TypeToken<Set<ResourceLocation>>() {}.getType()));
-
-        jsonObject.add("state", ctx.serialize(src.getStateMatches(),
-                new TypeToken<Set<IBlockState>>() {}.getType()));
+        jsonObject.add("block", ctx.serialize(src.getBlockMatches(), new TypeToken<Set<ResourceLocation>>() {}.getType()));
+        jsonObject.add("state", ctx.serialize(src.getStateMatches(), new TypeToken<Set<IBlockState>>() {}.getType()));
 
         Set<String> instanceMatches = new HashSet<>();
-
         for (Class<? extends Block> aClass : src.getInstanceMatches()) {
             String canonicalName = aClass.getCanonicalName();
             instanceMatches.add(canonicalName);
         }
 
-        jsonObject.add("instance", ctx.serialize(instanceMatches,
-                new TypeToken<Set<String>>() {}.getType()));
+        jsonObject.add("instance", ctx.serialize(instanceMatches, new TypeToken<Set<String>>() {}.getType()));
 
         return jsonObject;
     }
@@ -85,5 +73,4 @@ public class SerializerCustomizationMatches extends SerializerBase<Matches> {
     public Class<?> getType() {
         return Matches.class;
     }
-
 }

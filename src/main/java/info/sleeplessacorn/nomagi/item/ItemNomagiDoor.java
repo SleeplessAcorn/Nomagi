@@ -14,7 +14,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-// TODO - Move to LendingLibrary
 public class ItemNomagiDoor extends ItemBlock {
 
     public ItemNomagiDoor(Block block) {
@@ -22,12 +21,9 @@ public class ItemNomagiDoor extends ItemBlock {
     }
 
     @Override
-    public EnumActionResult onItemUse(
-            EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
-        if (facing != EnumFacing.UP) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (facing != EnumFacing.UP)
             return EnumActionResult.FAIL;
-        }
 
         IBlockState state = world.getBlockState(pos);
         ItemStack held = player.getHeldItem(hand);
@@ -41,16 +37,11 @@ public class ItemNomagiDoor extends ItemBlock {
             EnumFacing enumfacing = EnumFacing.fromAngle((double) player.rotationYaw);
             int frontOffsetX = enumfacing.getFrontOffsetX();
             int frontOffsetZ = enumfacing.getFrontOffsetZ();
-            boolean isRightHinge =
-                       frontOffsetX < 0 && hitZ < 0.5F
-                    || frontOffsetX > 0 && hitZ > 0.5F
-                    || frontOffsetZ < 0 && hitX > 0.5F
-                    || frontOffsetZ > 0 && hitX < 0.5F;
+            boolean isRightHinge = frontOffsetX < 0 && hitZ < 0.5F || frontOffsetX > 0 && hitZ > 0.5F || frontOffsetZ < 0 && hitX > 0.5F || frontOffsetZ > 0 && hitX < 0.5F;
 
             ItemDoor.placeDoor(world, pos, enumfacing, block, isRightHinge);
             SoundType soundtype = state.getBlock().getSoundType(state, world, pos, player);
-            world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS,
-                    (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+            world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
             held.shrink(1);
             return EnumActionResult.SUCCESS;
         }

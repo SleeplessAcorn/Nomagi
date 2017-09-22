@@ -22,25 +22,25 @@ public class MessageOpenBarrelGui implements IMessage {
         this.player = player;
     }
 
-    public MessageOpenBarrelGui() {}
+    public MessageOpenBarrelGui() {
+    }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void fromBytes(ByteBuf buf) {}
+    public void fromBytes(ByteBuf buf) {
+    }
 
     @Override
-    public void toBytes(ByteBuf buf) {}
+    public void toBytes(ByteBuf buf) {
+    }
 
     public static class Handler implements IMessageHandler<MessageOpenBarrelGui, IMessage> {
 
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(MessageOpenBarrelGui message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(
-                    new GuiBarrel(message.tile, message.player)));
+            Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(new GuiBarrel(message.tile, message.player)));
             return null;
         }
-
     }
-
 }

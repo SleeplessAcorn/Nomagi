@@ -77,5 +77,4 @@ public class ContainerBarrel extends Container {
     public boolean canInteractWith(@Nonnull EntityPlayer player) {
         return true;
     }
-
 }

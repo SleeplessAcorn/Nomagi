@@ -6,11 +6,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ProxyCommon {
 
-    public void onPreInit(FMLPreInitializationEvent event) {
+    public void preInit(FMLPreInitializationEvent event) {
         ModObjects.registerObjects();
     }
 
-    public void onPostInit(FMLPostInitializationEvent event) {
+    public void postInit(FMLPostInitializationEvent event) {
     }
-
 }

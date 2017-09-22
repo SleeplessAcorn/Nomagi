@@ -23,13 +23,12 @@ import java.util.List;
 
 public class BlockTapestry extends BlockAxisY implements IModeled {
 
+    public static final IProperty<Boolean> TOP = PropertyBool.create("top");
     private static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TAPESTRY = ImmutableMap.of(
             EnumFacing.NORTH, new AxisAlignedBB(0.00D, 0.00D, 0.75D, 1.00D, 1.00D, 1.00D),
-            EnumFacing.EAST,  new AxisAlignedBB(0.00D, 0.00D, 0.00D, 0.25D, 1.00D, 1.00D),
+            EnumFacing.EAST, new AxisAlignedBB(0.00D, 0.00D, 0.00D, 0.25D, 1.00D, 1.00D),
             EnumFacing.SOUTH, new AxisAlignedBB(0.00D, 0.00D, 0.00D, 1.00D, 1.00D, 0.25D),
-            EnumFacing.WEST,  new AxisAlignedBB(0.75D, 0.00D, 0.00D, 1.00D, 1.00D, 1.00D));
-
-    public static final IProperty<Boolean> TOP = PropertyBool.create("top");
+            EnumFacing.WEST, new AxisAlignedBB(0.75D, 0.00D, 0.00D, 1.00D, 1.00D, 1.00D));
 
     public BlockTapestry() {
         super(Material.CLOTH);

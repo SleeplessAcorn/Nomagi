@@ -33,5 +33,4 @@ public class ChunkProviderTent extends ChunkProviderFlat {
         ret.generateSkylightMap();
         return ret;
     }
-
 }

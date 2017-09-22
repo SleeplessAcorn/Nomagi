@@ -76,7 +76,7 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
             return false;
         }
 
-        Nomagi.NET_WRAPPER.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(),
+        Nomagi.NETWORK.sendTo(new MessageOpenCreateRoomGui(player.chunkCoordX - tent.getChunkX(),
                 player.chunkCoordZ - tent.getChunkZ(), state.getValue(getProperty())), (EntityPlayerMP) player);
         return true;
     }
@@ -103,7 +103,7 @@ public class BlockControllerRoom extends BlockAxisY implements IModeled {
             World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
             EntityLivingBase placer, EnumHand hand) {
         return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand)
-                .withProperty(TYPE, Type.values()[ meta ]);
+                .withProperty(TYPE, Type.values()[meta]);
     }
 
     @Override

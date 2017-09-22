@@ -2,11 +2,7 @@ package info.sleeplessacorn.nomagi;
 
 import info.sleeplessacorn.nomagi.command.CommandNomagi;
 import info.sleeplessacorn.nomagi.core.ModObjects;
-import info.sleeplessacorn.nomagi.network.MessageCreateRoom;
-import info.sleeplessacorn.nomagi.network.MessageOpenBarrelGui;
-import info.sleeplessacorn.nomagi.network.MessageOpenCreateRoomGui;
-import info.sleeplessacorn.nomagi.network.MessageOpenPrivacyGui;
-import info.sleeplessacorn.nomagi.network.MessageUpdateUsernames;
+import info.sleeplessacorn.nomagi.network.*;
 import info.sleeplessacorn.nomagi.proxy.ProxyCommon;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -23,16 +19,11 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = Nomagi.ID, name = Nomagi.NAME, version = Nomagi.VERSION)
 public class Nomagi {
 
-    @Mod.Instance(Nomagi.ID)
-    public static Nomagi instance;
-
     public static final String ID = "nomagi";
     public static final String NAME = "Nomagi";
     public static final String VERSION = "@VERSION@";
-
     public static final Logger LOGGER = LogManager.getLogger(Nomagi.NAME);
-    public static final SimpleNetworkWrapper NET_WRAPPER = new SimpleNetworkWrapper(Nomagi.ID);
-
+    public static final SimpleNetworkWrapper NETWORK = new SimpleNetworkWrapper(Nomagi.ID);
     public static final CreativeTabs CTAB = new CreativeTabs(Nomagi.ID) {
         @Override
         public ItemStack getTabIconItem() {
@@ -40,22 +31,24 @@ public class Nomagi {
         }
     };
 
+    @Mod.Instance(Nomagi.ID)
+    public static Nomagi INSTANCE;
     @SidedProxy(clientSide = "info.sleeplessacorn.nomagi.proxy.ProxyClient")
-    public static ProxyCommon proxy;
+    public static ProxyCommon PROXY;
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        proxy.onPreInit(event);
-        NET_WRAPPER.registerMessage(MessageCreateRoom.Handler.class, MessageCreateRoom.class, 0, Side.SERVER);
-        NET_WRAPPER.registerMessage(MessageOpenCreateRoomGui.Handler.class, MessageOpenCreateRoomGui.class, 1, Side.CLIENT);
-        NET_WRAPPER.registerMessage(MessageOpenPrivacyGui.Handler.class, MessageOpenPrivacyGui.class, 2, Side.CLIENT);
-        NET_WRAPPER.registerMessage(MessageUpdateUsernames.Handler.class, MessageUpdateUsernames.class, 3, Side.CLIENT);
-        NET_WRAPPER.registerMessage(MessageOpenBarrelGui.Handler.class, MessageOpenBarrelGui.class, 4, Side.CLIENT);
+        PROXY.preInit(event);
+        NETWORK.registerMessage(MessageCreateRoom.Handler.class, MessageCreateRoom.class, 0, Side.SERVER);
+        NETWORK.registerMessage(MessageOpenCreateRoomGui.Handler.class, MessageOpenCreateRoomGui.class, 1, Side.CLIENT);
+        NETWORK.registerMessage(MessageOpenPrivacyGui.Handler.class, MessageOpenPrivacyGui.class, 2, Side.CLIENT);
+        NETWORK.registerMessage(MessageUpdateUsernames.Handler.class, MessageUpdateUsernames.class, 3, Side.CLIENT);
+        NETWORK.registerMessage(MessageOpenBarrelGui.Handler.class, MessageOpenBarrelGui.class, 4, Side.CLIENT);
     }
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
-        proxy.onPostInit(event);
+        PROXY.postInit(event);
     }
 
     @Mod.EventHandler

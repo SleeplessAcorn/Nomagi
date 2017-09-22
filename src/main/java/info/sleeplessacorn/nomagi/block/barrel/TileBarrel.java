@@ -27,8 +27,6 @@ public class TileBarrel extends TileEntity {
 
     private ItemStackHandler inventory = new ItemStackHandler(27);
 
-    public TileBarrel() {}
-
     @Override
     public final void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
@@ -86,5 +84,4 @@ public class TileBarrel extends TileEntity {
     public <T> T getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing facing) {
         return cap.equals(CAPABILITY) ? CAPABILITY.cast(inventory) : super.getCapability(cap, facing);
     }
-
 }

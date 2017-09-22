@@ -61,8 +61,8 @@ public class BlockControllerPrivacy extends BlockAxisY implements IModeled {
             for (EntityPlayerMP onlinePlayer : world.getMinecraftServer().getPlayerList().getPlayers()) {
                 online.add(onlinePlayer.getGameProfile().getId());
             }
-            Nomagi.NET_WRAPPER.sendTo(new MessageUpdateUsernames(), (EntityPlayerMP) player);
-            Nomagi.NET_WRAPPER.sendTo(new MessageOpenPrivacyGui(tent.getPrivacy(), online), (EntityPlayerMP) player);
+            Nomagi.NETWORK.sendTo(new MessageUpdateUsernames(), (EntityPlayerMP) player);
+            Nomagi.NETWORK.sendTo(new MessageOpenPrivacyGui(tent.getPrivacy(), online), (EntityPlayerMP) player);
             return true;
         }
         return false;

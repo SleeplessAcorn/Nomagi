@@ -24,7 +24,8 @@ public class MessageCreateRoom implements IMessage {
     private int currentChunkZ;
     private EnumFacing direction;
 
-    public MessageCreateRoom() {}
+    public MessageCreateRoom() {
+    }
 
     public MessageCreateRoom(Room room, int currentChunkX, int currentChunkZ, EnumFacing direction) {
         this.room = room;
@@ -81,7 +82,5 @@ public class MessageCreateRoom implements IMessage {
             savedData.markDirty();
             return null;
         }
-
     }
-
 }

@@ -52,19 +52,6 @@ public class BlockTent extends BlockAxisY implements IModeled {
                 .withProperty(TENT_TYPE, TentType.BASIC));
     }
 
-    private static Map<EnumFacing, AxisAlignedBB> createTentAABBs() {
-        AxisAlignedBB aabb = new AxisAlignedBB(-0.50D, 0.00D, 0.00D, 1.50D, 1.75D, 2.00D);
-        double minX = aabb.minX, minY = aabb.minY, minZ = aabb.minZ;
-        double maxX = aabb.maxX, maxY = aabb.maxY, maxZ = aabb.maxZ;
-        return ImmutableMap.<EnumFacing, AxisAlignedBB>builder()
-                .put(EnumFacing.DOWN,  new AxisAlignedBB(1 - maxX, minZ, 1 - maxY, 1 - minX, 1, 1 - minY))
-                .put(EnumFacing.UP,    new AxisAlignedBB(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY))
-                .put(EnumFacing.SOUTH, new AxisAlignedBB(1 - maxX, minY, 1 - maxZ, 1 - minX, maxY, 1 - minZ))
-                .put(EnumFacing.WEST,  new AxisAlignedBB(minZ, minY, minX, maxZ, maxY, maxX))
-                .put(EnumFacing.EAST,  new AxisAlignedBB(1 - maxZ, minY, 1 - maxX, 1 - minZ, maxY, 1 - minX))
-                .build();
-    }
-
     @Override
     public IBlockState getStateForPlacement(
             World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
@@ -180,6 +167,19 @@ public class BlockTent extends BlockAxisY implements IModeled {
     @Override
     public void getVariants(List<String> variants) {
         variants.add("inventory");
+    }
+
+    private static Map<EnumFacing, AxisAlignedBB> createTentAABBs() {
+        AxisAlignedBB aabb = new AxisAlignedBB(-0.50D, 0.00D, 0.00D, 1.50D, 1.75D, 2.00D);
+        double minX = aabb.minX, minY = aabb.minY, minZ = aabb.minZ;
+        double maxX = aabb.maxX, maxY = aabb.maxY, maxZ = aabb.maxZ;
+        return ImmutableMap.<EnumFacing, AxisAlignedBB>builder()
+                .put(EnumFacing.DOWN, new AxisAlignedBB(1 - maxX, minZ, 1 - maxY, 1 - minX, 1, 1 - minY))
+                .put(EnumFacing.UP, new AxisAlignedBB(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY))
+                .put(EnumFacing.SOUTH, new AxisAlignedBB(1 - maxX, minY, 1 - maxZ, 1 - minX, maxY, 1 - minZ))
+                .put(EnumFacing.WEST, new AxisAlignedBB(minZ, minY, minX, maxZ, maxY, maxX))
+                .put(EnumFacing.EAST, new AxisAlignedBB(1 - maxZ, minY, 1 - maxX, 1 - minZ, maxY, 1 - minX))
+                .build();
     }
 
     public enum TentType implements IStringSerializable {

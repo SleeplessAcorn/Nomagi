@@ -14,5 +14,4 @@ public class ItemBlockMulti extends ItemBlock {
     public int getMetadata(int damage) {
         return damage;
     }
-
 }

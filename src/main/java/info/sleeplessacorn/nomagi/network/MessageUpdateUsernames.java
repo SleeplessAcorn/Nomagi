@@ -59,7 +59,5 @@ public class MessageUpdateUsernames implements IMessage {
             Minecraft.getMinecraft().addScheduledTask(() -> GuiTentPrivacy.usernameCache = message.cache);
             return null;
         }
-
     }
-
 }

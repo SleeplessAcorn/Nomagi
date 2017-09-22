@@ -55,13 +55,11 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     @Nonnull
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> tentChunks = Sets.newHashSet();
-        for (int x = -ConfigHandler.tentRadius; x <= ConfigHandler.tentRadius; x++) {
-            for (int z = -ConfigHandler.tentRadius; z <= ConfigHandler.tentRadius; z++) {
-                if (rooms.containsKey(Pair.of(x, z))) {
+        for (int x = -ConfigHandler.tentRadius; x <= ConfigHandler.tentRadius; x++)
+            for (int z = -ConfigHandler.tentRadius; z <= ConfigHandler.tentRadius; z++)
+                if (rooms.containsKey(Pair.of(x, z)))
                     tentChunks.add(getWorld().getChunkFromChunkCoords(chunkX + x, chunkZ + z));
-                }
-            }
-        }
+
         return tentChunks;
     }
 
@@ -121,10 +119,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
     }
 
     public boolean canExtendTo(int x, int z) {
-        return  x <= ConfigHandler.tentRadius
-                && x >= -ConfigHandler.tentRadius
-                && z <= ConfigHandler.tentRadius
-                && z >= -ConfigHandler.tentRadius;
+        return x <= ConfigHandler.tentRadius && x >= -ConfigHandler.tentRadius && z <= ConfigHandler.tentRadius && z >= -ConfigHandler.tentRadius;
     }
 
     // TODO - Remove when moving to own dimension
@@ -148,7 +143,7 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         NBTTagCompound roomArray = new NBTTagCompound();
         rooms.forEach((key, value) ->
                 roomArray.setString(key.getLeft() + "," + key.getRight(),
-                value == null ? "null" : value.getSchematic().toString()));
+                        value == null ? "null" : value.getSchematic().toString()));
         data.setTag("roomArray", roomArray);
         return data;
     }
@@ -158,23 +153,18 @@ public class Tent implements INBTSerializable<NBTTagCompound> {
         ownerId = NBTUtil.getUUIDFromTag(nbt.getCompoundTag("uuid"));
         chunkX = nbt.getInteger("chunkX");
         chunkZ = nbt.getInteger("chunkZ");
-        privacy = nbt.hasKey("privacy")
-                  ? Privacy.fromNBT(nbt.getCompoundTag("privacy"), ownerId)
-                  : new Privacy(ownerId);
+        privacy = nbt.hasKey("privacy") ? Privacy.fromNBT(nbt.getCompoundTag("privacy"), ownerId) : new Privacy(ownerId);
 
         NBTTagCompound roomArray = nbt.getCompoundTag("roomArray");
         for (String key : roomArray.getKeySet()) {
-            Pair<Integer, Integer> location = Pair.of(
-                    Integer.parseInt(key.split(",")[0]),
-                    Integer.parseInt(key.split(",")[1]));
+            Pair<Integer, Integer> location = Pair.of(Integer.parseInt(key.split(",")[0]), Integer.parseInt(key.split(",")[1]));
             ResourceLocation roomId = new ResourceLocation(roomArray.getString(key));
             Room room = null;
-            if (!roomId.toString().equalsIgnoreCase("null")) {
+            if (!roomId.toString().equalsIgnoreCase("null"))
                 room = ModObjects.ROOMS.get(roomId);
-            }
-            if (room != null) {
+
+            if (room != null)
                 setRoom(room, location);
-            }
         }
     }
 }

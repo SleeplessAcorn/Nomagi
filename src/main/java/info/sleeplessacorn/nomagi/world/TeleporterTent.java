@@ -41,11 +41,7 @@ public class TeleporterTent extends Teleporter {
     }
 
     public static boolean teleportToDimension(EntityPlayer player, Pair<Integer, BlockPos> dimPos) {
-        return dimPos != null && teleportToDimension(
-                player, dimPos.getKey(),
-                dimPos.getValue().getX() + 0.5,
-                dimPos.getValue().getY(),
-                dimPos.getValue().getZ() + 0.5);
+        return dimPos != null && teleportToDimension(player, dimPos.getKey(), dimPos.getValue().getX() + 0.5, dimPos.getValue().getY(), dimPos.getValue().getZ() + 0.5);
     }
 
     public static boolean teleportToDimension(EntityPlayer player, int dimension, double x, double y, double z) {
@@ -61,9 +57,7 @@ public class TeleporterTent extends Teleporter {
         player.addExperienceLevel(0);
 
         //noinspection ConstantConditions - null checked above
-        worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension(
-                (EntityPlayerMP) player, dimension, new TeleporterTent(worldServer, x, y, z));
-
+        worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, dimension, new TeleporterTent(worldServer, x, y, z));
         player.setPositionAndUpdate(x, y, z);
 
         if (oldDimension == 1) {
@@ -76,5 +70,4 @@ public class TeleporterTent extends Teleporter {
         player.setSneaking(false);
         return true;
     }
-
 }

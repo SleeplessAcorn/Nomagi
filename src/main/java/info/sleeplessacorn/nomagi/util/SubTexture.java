@@ -31,6 +31,7 @@ public class SubTexture {
         VertexBuffer vertexbuffer = tessellator.getBuffer();
         float offset = 0.00390625F;
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+
         vertexbuffer.pos(drawX, drawY + height, zLevel)
                 .tex(xPos * offset, (yPos + height) * offset)
                 .endVertex();
@@ -43,6 +44,7 @@ public class SubTexture {
         vertexbuffer.pos(drawX, drawY, zLevel)
                 .tex(xPos * offset, yPos * offset)
                 .endVertex();
+
         tessellator.draw();
     }
 

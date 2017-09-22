@@ -27,9 +27,9 @@ import java.util.*;
 public class FontRendererSmall implements IResourceManagerReloadListener {
 
     private static final ResourceLocation[] UNICODE_PAGE_LOCS = new ResourceLocation[256];
-    
+
     private static final String CHARS =
-                    "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da" + 
+            "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da" +
                     "\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174" +
                     "\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000" +
                     " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
@@ -52,7 +52,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
     private int FONT_HEIGHT = 9;
 
     private Random rand = new Random();
-    
+
     private int[] charWidth = new int[256];
     private byte[] glyphWidth = new byte[65536];
     private int[] colorCode = new int[32];
@@ -110,7 +110,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
                     i1 /= 4;
                 }
 
-                colorCode[ i ] = (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
+                colorCode[i] = (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
             }
         }
 
@@ -125,8 +125,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
         BufferedImage bufferedimage;
 
         try {
-            bufferedimage = ImageIO.read(Minecraft.getMinecraft().getResourceManager()
-                    .getResource(locationFontTexture).getInputStream());
+            bufferedimage = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(locationFontTexture).getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -180,8 +179,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
 
     private void readGlyphSizes() {
         try {
-            InputStream inputstream = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("font/glyph_sizes.bin")).getInputStream();
+            InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("font/glyph_sizes.bin")).getInputStream();
             inputstream.read(glyphWidth);
         } catch (IOException ioexception) {
             throw new RuntimeException(ioexception);
@@ -212,8 +210,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
 
     private ResourceLocation getUnicodePageLocation(int glyphIndex) {
         if (UNICODE_PAGE_LOCS[glyphIndex] == null) {
-            UNICODE_PAGE_LOCS[glyphIndex] = new ResourceLocation("minecraft",
-                    String.format("textures/font/unicode_page_%02x.png", glyphIndex));
+            UNICODE_PAGE_LOCS[glyphIndex] = new ResourceLocation("minecraft", String.format("textures/font/unicode_page_%02x.png", glyphIndex));
         }
         return UNICODE_PAGE_LOCS[glyphIndex];
     }
@@ -248,15 +245,15 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
             return (f1 - j) / 2.0F + 1.0F;
         }
     }
-    
+
     public int drawStringWithShadow(String str, int x, int y, int color) {
         return drawString(str, x, y, color, true);
     }
-    
+
     public int drawString(String str, int x, int y, int color) {
         return drawString(str, x, y, color, false);
     }
-    
+
     public int drawString(String str, int x, int y, int color, boolean hasDropShadow) {
         resetStyles();
 
@@ -349,8 +346,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
             char c0 = str.charAt(i);
 
             if (c0 == 167 && i + 1 < str.length()) {
-                int i1 = "0123456789abcdefklmnor".indexOf(String.valueOf(str.charAt(i + 1))
-                        .toLowerCase(Locale.ROOT).charAt(0));
+                int i1 = "0123456789abcdefklmnor".indexOf(String.valueOf(str.charAt(i + 1)).toLowerCase(Locale.ROOT).charAt(0));
 
                 if (i1 < 16) {
                     resetStyles();
@@ -382,7 +378,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
                 }
 
                 ++i;
-            } else {                
+            } else {
                 int j = CHARS.indexOf(c0);
 
                 if (hasObfuscation && j != -1) {
@@ -521,7 +517,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
             return (int) posX;
         }
     }
-    
+
     public int getStringWidth(String str) {
         if (str == null) {
             return 0;
@@ -558,7 +554,7 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
             return i;
         }
     }
-    
+
     public int getCharWidth(char chr) {
         if (chr == 167) {
             return -1;
@@ -825,5 +821,4 @@ public class FontRendererSmall implements IResourceManagerReloadListener {
 
         return s1;
     }
-
 }

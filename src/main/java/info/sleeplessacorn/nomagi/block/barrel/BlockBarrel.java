@@ -12,11 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -36,13 +32,6 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
         super(Material.ROCK, BlockBarrel.Barrel.class);
         setUnlocalizedName(Nomagi.ID + ".barrel");
         setCreativeTab(Nomagi.CTAB);
-    }
-
-    public static void playOpeningSound(World world, BlockPos pos) {
-        if (!world.isRemote) {
-            SoundEvent sound = SoundEvents.ENTITY_ITEMFRAME_PLACE;
-            world.playSound(null, pos, sound, SoundCategory.BLOCKS, 0.6f, 0.3f);
-        }
     }
 
     @Override
@@ -83,7 +72,7 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             MessageOpenBarrelGui gui = new MessageOpenBarrelGui(tile, player);
-            Nomagi.NET_WRAPPER.sendTo(gui, (EntityPlayerMP) player);
+            Nomagi.NETWORK.sendTo(gui, (EntityPlayerMP) player);
         }
         return true;
     }
@@ -112,6 +101,13 @@ public class BlockBarrel extends BlockEnum<BlockBarrel.Barrel> implements IModel
     public void getVariants(List<String> variants) {
         for (BlockBarrel.Barrel barrels : BlockBarrel.Barrel.values()) {
             variants.add("type=" + barrels.getName());
+        }
+    }
+
+    public static void playOpeningSound(World world, BlockPos pos) {
+        if (!world.isRemote) {
+            SoundEvent sound = SoundEvents.ENTITY_ITEMFRAME_PLACE;
+            world.playSound(null, pos, sound, SoundCategory.BLOCKS, 0.6f, 0.3f);
         }
     }
 

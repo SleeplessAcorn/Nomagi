@@ -28,9 +28,8 @@ public class GuiButtonListing extends GuiButtonNomagiSmall {
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         getDefault().draw(x, y, 0.0D);
-        if (hovered) {
+        if (hovered)
             drawRect(x - 1, y - 1, x + width - 1, y + height - 1, 0xF0CA94);
-        }
     }
 
     @Override

@@ -20,9 +20,7 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
     private Map<ListType, Boolean> checks;
     private Multimap<ListType, UUID> lists;
 
-    public Privacy(
-            UUID ownerId, boolean allowKnocking, AccessMode accessMode,
-            Map<ListType, Boolean> checks, Multimap<ListType, UUID> lists) {
+    public Privacy(UUID ownerId, boolean allowKnocking, AccessMode accessMode, Map<ListType, Boolean> checks, Multimap<ListType, UUID> lists) {
         this.ownerId = ownerId;
         this.allowKnocking = allowKnocking;
         this.accessMode = accessMode;
@@ -39,11 +37,11 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
         if (!playerId.equals(ownerId)) {
             switch (accessMode) {
                 case OPEN: {
-                    return  !shouldCheck(ListType.BLACKLIST)
+                    return !shouldCheck(ListType.BLACKLIST)
                             || !checkPlayer(ListType.BLACKLIST, playerId);
                 }
                 case RESTRICTED: {
-                    return  shouldCheck(ListType.WHITELIST)
+                    return shouldCheck(ListType.WHITELIST)
                             && checkPlayer(ListType.WHITELIST, playerId);
                 }
                 default:
@@ -54,9 +52,8 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
     }
 
     public void listPlayer(ListType listType, UUID uuid) {
-        if (!lists.get(listType).contains(uuid)) {
+        if (!lists.get(listType).contains(uuid))
             lists.put(listType, uuid);
-        }
     }
 
     public boolean checkPlayer(ListType listType, UUID uuid) {
@@ -183,7 +180,5 @@ public class Privacy implements INBTSerializable<NBTTagCompound> {
         public String getDescription() {
             return desc;
         }
-
     }
-
 }

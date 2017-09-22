@@ -12,9 +12,14 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.PlaceEvent event) {
-        if (true) return; // FIXME
+        if (true)
+            return; // FIXME
+
         TentWorldSavedData savedData = TentWorldSavedData.getData(event.getWorld());
         Tent tent = savedData.getTent(event.getPos().getX() / 16, event.getPos().getZ() / 16);
+
+        if (tent == null)
+
         if (tent != null) {
             Room room = tent.getRoom(event.getPlayer());
             if (room != null) {
@@ -29,19 +34,22 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
-        if (true) return; // FIXME
+        if (true)
+            return; // FIXME
+
         TentWorldSavedData savedData = TentWorldSavedData.getData(event.getWorld());
         Tent tent = savedData.getTent(event.getPos().getX() / 16, event.getPos().getZ() / 16);
-        if (tent != null) {
-            Room room = tent.getRoom(event.getPlayer());
-            if (room != null) {
-                boolean canPlace = room.getCustomization().canModify(
-                        event.getWorld(), event.getPos(), event.getState());
-                if (!canPlace) {
-                    event.setCanceled(true);
-                }
+
+        if (tent == null)
+            return;
+
+        Room room = tent.getRoom(event.getPlayer());
+        if (room != null) {
+            boolean canPlace = room.getCustomization().canModify(
+                    event.getWorld(), event.getPos(), event.getState());
+            if (!canPlace) {
+                event.setCanceled(true);
             }
         }
     }
-
 }

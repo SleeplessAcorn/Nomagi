@@ -18,17 +18,16 @@ public class ProxyClient extends ProxyCommon {
     public static FontRendererSmall fontRenderer;
 
     @Override
-    public void onPreInit(FMLPreInitializationEvent event) {
-        super.onPreInit(event);
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
         ModelLoader.setCustomStateMapper(ModObjects.DOOR, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
     }
 
     @Override
-    public void onPostInit(FMLPostInitializationEvent event) {
-        super.onPostInit(event);
+    public void postInit(FMLPostInitializationEvent event) {
+        super.postInit(event);
         Minecraft mc = Minecraft.getMinecraft();
         ResourceLocation asciiSprite = new ResourceLocation("minecraft:textures/font/ascii.png");
         fontRenderer = new FontRendererSmall(mc.gameSettings, asciiSprite, mc.renderEngine);
     }
-    
 }

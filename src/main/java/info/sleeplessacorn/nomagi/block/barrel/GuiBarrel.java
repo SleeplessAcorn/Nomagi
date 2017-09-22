@@ -35,5 +35,4 @@ public class GuiBarrel extends GuiContainer {
         mc.getTextureManager().bindTexture(TEXTURE);
         drawTexturedModalRect((width - xSize) >> 1, (height - ySize) >> 1, 0, 0, xSize, ySize);
     }
-
 }

@@ -5,14 +5,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
 import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.Nomagi;
-import info.sleeplessacorn.nomagi.block.BlockControllerPrivacy;
-import info.sleeplessacorn.nomagi.block.BlockControllerRoom;
-import info.sleeplessacorn.nomagi.block.BlockDecorative;
-import info.sleeplessacorn.nomagi.block.BlockNature;
-import info.sleeplessacorn.nomagi.block.BlockNomagiDoor;
-import info.sleeplessacorn.nomagi.block.BlockTapestry;
-import info.sleeplessacorn.nomagi.block.BlockTent;
-import info.sleeplessacorn.nomagi.block.BlockUpsetti;
+import info.sleeplessacorn.nomagi.block.*;
 import info.sleeplessacorn.nomagi.block.barrel.BlockBarrel;
 import info.sleeplessacorn.nomagi.block.barrel.TileBarrel;
 import info.sleeplessacorn.nomagi.core.data.Room;
@@ -81,14 +74,13 @@ public class ModObjects {
 
         DimensionManager.registerDimension(TENT_DIMENSION.getId(), TENT_DIMENSION);
 
-        ModObjects.addRoom(EMPTY_ROOM);
-        ModObjects.addRoom(NATURE_ROOM);
-        ModObjects.addRoom(CELLAR_ROOM);
+        addRoom(EMPTY_ROOM);
+        addRoom(NATURE_ROOM);
+        addRoom(CELLAR_ROOM);
     }
 
     private static void addRoom(Room room) {
         ROOMS.putIfAbsent(room.getSchematic(), room);
         ROOM_IDS.putIfAbsent(room.getSchematic(), ROOM_IDS.size());
     }
-
 }

@@ -122,9 +122,7 @@ public class Room {
             String domain = id.getResourceDomain();
             String path = id.getResourcePath();
             InputStream stream = Nomagi.class.getResourceAsStream("/assets/" + domain + "/rooms/" + path + ".json");
-            return stream != null
-                   ? GSON.fromJson(new InputStreamReader(stream), CustomizationJson.class)
-                   : new Customization();
+            return stream != null ? GSON.fromJson(new InputStreamReader(stream), CustomizationJson.class) : new Customization();
         }
 
         public static class Matches {
@@ -133,10 +131,7 @@ public class Room {
             private final Set<ResourceLocation> blockMatches;
             private final Set<Class<? extends Block>> instanceMatches;
 
-            public Matches(
-                    Set<IBlockState> stateMatches,
-                    Set<ResourceLocation> blockMatches,
-                    Set<Class<? extends Block>> instanceMatches) {
+            public Matches(Set<IBlockState> stateMatches, Set<ResourceLocation> blockMatches, Set<Class<? extends Block>> instanceMatches) {
                 this.stateMatches = stateMatches;
                 this.blockMatches = blockMatches;
                 this.instanceMatches = instanceMatches;
@@ -161,7 +156,5 @@ public class Room {
             }
 
         }
-
     }
-
 }

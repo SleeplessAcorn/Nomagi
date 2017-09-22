@@ -10,7 +10,6 @@ import java.util.UUID;
 public class TileEntityTent extends TileSyncBase {
 
     static {
-        // TODO - Figure out why LL didn't add this
         addAdapter(UUID.class, new NBTAdapterUUID());
     }
 
@@ -37,5 +36,4 @@ public class TileEntityTent extends TileSyncBase {
         this.tentType = tentType;
         markDirty();
     }
-
 }

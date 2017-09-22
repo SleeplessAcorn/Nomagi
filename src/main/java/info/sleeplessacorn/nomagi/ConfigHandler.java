@@ -18,9 +18,7 @@ public class ConfigHandler {
     public static int tentSpacing = 20;
 
     @Config.Name("Tent Radius")
-    @Config.Comment({"The maximum number of rooms a tent can create in any given direction from the core room",
-                     "A value of 0 means only the core room itself will only be permitted",
-                     "Ensure that the tent spacing is modified to account for the value set here"})
+    @Config.Comment({"The maximum number of rooms a tent can create in any given direction from the core room", "A value of 0 means only the core room itself will only be permitted", "Ensure that the tent spacing is modified to account for the value set here"})
     @Config.RangeInt(min = 0, max = 16)
     @Config.LangKey("config.nomagi.tentRadius")
     public static int tentRadius = 2;

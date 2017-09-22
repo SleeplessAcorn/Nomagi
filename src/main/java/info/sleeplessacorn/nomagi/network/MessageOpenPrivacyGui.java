@@ -26,7 +26,8 @@ public class MessageOpenPrivacyGui implements IMessage {
         this.online = online;
     }
 
-    public MessageOpenPrivacyGui() {}
+    public MessageOpenPrivacyGui() {
+    }
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -34,18 +35,16 @@ public class MessageOpenPrivacyGui implements IMessage {
         privacy = new Privacy(Minecraft.getMinecraft().player.getGameProfile().getId());
         privacy.deserializeNBT(ByteBufUtils.readTag(buf));
         int size = buf.readInt();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
             online.add(UUID.fromString(ByteBufUtils.readUTF8String(buf)));
-        }
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         ByteBufUtils.writeTag(buf, privacy.serializeNBT());
         buf.writeInt(online.size());
-        for (UUID uuid : online) {
+        for (UUID uuid : online)
             ByteBufUtils.writeUTF8String(buf, uuid.toString());
-        }
     }
 
     public static class Handler implements IMessageHandler<MessageOpenPrivacyGui, IMessage> {
@@ -57,7 +56,5 @@ public class MessageOpenPrivacyGui implements IMessage {
                     new GuiTentPrivacy(message.privacy, message.online)));
             return null;
         }
-
     }
-
 }

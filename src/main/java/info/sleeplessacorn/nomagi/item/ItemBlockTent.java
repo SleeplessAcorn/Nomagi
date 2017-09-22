@@ -22,9 +22,7 @@ public class ItemBlockTent extends ItemBlockMulti {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return stack.hasTagCompound()
-               ? super.getUnlocalizedName(stack) + "." + stack.getTagCompound().getString("tentType")
-               : super.getUnlocalizedName(stack);
+        return stack.hasTagCompound() ? super.getUnlocalizedName(stack) + "." + stack.getTagCompound().getString("tentType") : super.getUnlocalizedName(stack);
     }
 
     @Override
@@ -37,9 +35,7 @@ public class ItemBlockTent extends ItemBlockMulti {
     }
 
     @Override
-    public boolean placeBlockAt(
-            ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side,
-            float hitX, float hitY, float hitZ, IBlockState state) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState state) {
         boolean canPlaceTent = true;
         Vec3i min = new Vec3i(1, 0, 1), max = new Vec3i(1, 1, 1);
         for (BlockPos.MutableBlockPos posAt : BlockPos.getAllInBoxMutable(pos.subtract(min), pos.add(max))) {
@@ -47,7 +43,7 @@ public class ItemBlockTent extends ItemBlockMulti {
                 canPlaceTent = false;
             }
         }
+
         return canPlaceTent && super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, state);
     }
-
 }
