@@ -34,6 +34,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -41,9 +42,7 @@ public class BlockTent extends BlockAxisY implements IModeled {
 
     public static final IProperty<TentType> TENT_TYPE = PropertyEnum.create("tent_type", TentType.class);
 
-    public static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TENT = ImmutableMap
-            .copyOf(Arrays.stream(EnumFacing.values())
-                    .collect(Collectors.toMap(Function.identity(), BlockTent::computeAABBForFacing)));
+    public static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TENT = ImmutableMap.copyOf(createTentAABBs());
 
     public BlockTent() {
         super(Material.CLOTH);
@@ -55,18 +54,20 @@ public class BlockTent extends BlockAxisY implements IModeled {
                 .withProperty(TENT_TYPE, TentType.BASIC));
     }
 
-    private static AxisAlignedBB computeAABBForFacing(EnumFacing facing) {
-        AxisAlignedBB aabb = new AxisAlignedBB(-0.50D, 0.00D, 0.00D, 1.50D, 1.75D, 2.00D);
-        double minX = aabb.minX, minY = aabb.minY, minZ = aabb.minZ;
-        double maxX = aabb.maxX, maxY = aabb.maxY, maxZ = aabb.maxZ;
-        switch (facing) {
-            case DOWN:  return new AxisAlignedBB(1 - maxX, minZ, 1 - maxY, 1 - minX, 1, 1 - minY);
-            case UP:    return new AxisAlignedBB(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY);
-            case SOUTH: return new AxisAlignedBB(1 - maxX, minY, 1 - maxZ, 1 - minX, maxY, 1 - minZ);
-            case WEST:  return new AxisAlignedBB(minZ, minY, minX, maxZ, maxY, maxX);
-            case EAST:  return new AxisAlignedBB(1 - maxZ, minY, 1 - maxX, 1 - minZ, maxY, 1 - minX);
-        }
-        return aabb;
+    private static Map<EnumFacing, AxisAlignedBB> createTentAABBs() {
+        return Arrays.stream(EnumFacing.values()).collect(Collectors.toMap(Function.identity(), facing -> {
+            AxisAlignedBB aabb = new AxisAlignedBB(-0.50D, 0.00D, 0.00D, 1.50D, 1.75D, 2.00D);
+            double minX = aabb.minX, minY = aabb.minY, minZ = aabb.minZ;
+            double maxX = aabb.maxX, maxY = aabb.maxY, maxZ = aabb.maxZ;
+            switch (facing) {
+                case DOWN:  return new AxisAlignedBB(1 - maxX, minZ, 1 - maxY, 1 - minX, 1, 1 - minY);
+                case UP:    return new AxisAlignedBB(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY);
+                case SOUTH: return new AxisAlignedBB(1 - maxX, minY, 1 - maxZ, 1 - minX, maxY, 1 - minZ);
+                case WEST:  return new AxisAlignedBB(minZ, minY, minX, maxZ, maxY, maxX);
+                case EAST:  return new AxisAlignedBB(1 - maxZ, minY, 1 - maxX, 1 - minZ, maxY, 1 - minX);
+            }
+            return aabb;
+        }));
     }
 
     @Override
