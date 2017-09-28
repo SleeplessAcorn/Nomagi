@@ -1,0 +1,23 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "nomagi:table_surface" }
+    },
+    {
+      "when": { "connect_north": "false", "connect_west": "false" },
+      "apply": { "model": "nomagi:table_leg", "y": 0, "uvlock": true }
+    },
+    {
+      "when": { "connect_north": "false", "connect_east": "false" },
+      "apply": { "model": "nomagi:table_leg", "y": 90, "uvlock": true }
+    },
+    {
+      "when": { "connect_south": "false", "connect_west": "false" },
+      "apply": { "model": "nomagi:table_leg", "y": 270, "uvlock": true }
+    },
+    {
+      "when": { "connect_south": "false", "connect_east": "false" },
+      "apply": { "model": "nomagi:table_leg", "y": 180, "uvlock": true }
+    }
+  ]
+}

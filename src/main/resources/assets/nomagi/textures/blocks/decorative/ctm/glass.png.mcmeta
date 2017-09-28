@@ -1,0 +1,11 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTM",
+    "layer": "TRANSLUCENT",
+    "textures": [ "nomagi:blocks/decorative/ctm/glass_ctm" ],
+    "extra": {
+      "connect_inside": true
+    }
+  }
+}

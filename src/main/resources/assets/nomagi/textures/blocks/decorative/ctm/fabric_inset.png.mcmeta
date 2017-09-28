@@ -1,0 +1,10 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTM",
+    "textures": [ "nomagi:blocks/decorative/ctm/fabric_inset_ctm" ],
+    "extra": {
+      "connect_inside": true
+    }
+  }
+}

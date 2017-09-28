@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "nomagi",
+    "name": "Nomagi",
+    "description": "",
+    "version": "${mod_version}",
+    "mcversion": "${mc_version}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [ "InsomniaKitten", "TehNut" ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [ ],
+    "dependencies": [ ]
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "facing": {
+      "north": { "y": 0 },
+      "south": { "y": 180 },
+      "east": { "y": 90 },
+      "west": { "y": 270 }
+    },
+    "normal": {
+      "model": "nomagi:room_worktable_inventory"
+    },
+    "side": {
+      "left": { "model": "nomagi:room_worktable_left" },
+      "right": { "model": "nomagi:room_worktable_right" }
+    }
+  }
+}
+

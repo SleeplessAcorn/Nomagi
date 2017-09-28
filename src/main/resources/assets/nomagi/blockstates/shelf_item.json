@@ -1,0 +1,8 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "inventory": {
+      "model": "nomagi:shelf_all"
+    }
+  }
+}

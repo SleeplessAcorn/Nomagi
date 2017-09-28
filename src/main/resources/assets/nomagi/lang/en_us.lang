@@ -1,0 +1,40 @@
+itemGroup.nomagi=Nomagi
+
+config.nomagi=Nomagi Config
+config.nomagi.tentDimensionId=Tent Dimension ID
+config.nomagi.tentSpacing=Tent Spacing
+config.nomagi.tentRadius=Tent Radius
+
+tile.nomagi.tent.basic.name=Basic Tent
+
+tile.nomagi.decorative.bricks.name=Ebonstone Bricks
+tile.nomagi.decorative.bricks.tooltip=Normal
+tile.nomagi.decorative.bricksInset.name=Ebonstone Bricks
+tile.nomagi.decorative.bricksInset.tooltip=Inset
+tile.nomagi.decorative.fabric.name=Tent Fabric
+tile.nomagi.decorative.fabric.tooltip=Normal
+tile.nomagi.decorative.fabricInset.name=Tent Fabric
+tile.nomagi.decorative.fabricInset.tooltip=Inset
+tile.nomagi.decorative.fabricRibbon.name=Tent Fabric
+tile.nomagi.decorative.fabricRibbon.tooltip=Ribbon
+tile.nomagi.decorative.glass.name=Embossed Glass
+tile.nomagi.decorative.planks.name=Ancient Planks
+tile.nomagi.decorative.stone.name=Ornate Stone
+
+tile.nomagi.chair.name=Wooden Chair
+tile.nomagi.table.name=Wooden Table
+tile.nomagi.shelf.name=Wooden Shelf
+
+tile.nomagi.candle.name=Candle
+
+tile.nomagi.roomWorktable.name=Room Worktable
+container.nomagi.roomWorktable=Room Worktable
+
+tile.nomagi.privacyLectern.name=Privacy Lectern
+container.nomagi.privacyLectern=Privacy Lectern
+
+button.nomagi.roomWorktable.test=Button test
+button.nomagi.roomWorktable.test.tooltip=This is a test tooltip
+button.nomagi.privacyLectern.addPlayer.tooltip=Add player to list
+button.nomagi.privacyLectern.removePlayer.tooltip=Remove player from list
+button.nomagi.privacyLectern.refreshList.tooltip=Refresh list of online players

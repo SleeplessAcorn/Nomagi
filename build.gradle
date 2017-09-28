@@ -1,3 +1,6 @@
+import javax.imageio.ImageIO
+import java.awt.image.BufferedImage
+
 buildscript {
     repositories {
         mavenCentral()
@@ -30,7 +33,7 @@ minecraft {
     runDir = 'run'
     replaceIn 'Nomagi.java'
     replace '@VERSION@', project.version
-    clientRunArgs += "--username=${userName}"
+//    clientRunArgs += "--username=${userName}"
     mappings = project.mcpMappings
 }
 
@@ -44,17 +47,24 @@ dependencies {
     deobfCompile "info.amerifrance.guideapi:Guide-API:${gapiVersion}"
     deobfCompile "mcp.mobius.waila:Hwyla:${hwylaVersion}"
     deobfCompile "mezz.jei:jei_${jeiVersion}"
-    deobfCompile "team.chisel.ctm:CTM:${ctmVersion}"
+//    deobfCompile "team.chisel.ctm:CTM:${ctmVersion}"
 }
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info', '**/*.properties', 'pack.mcmeta'
-        expand  'version':   project.version,
-                'mcversion': minecraft.version
+        expand 'mod_version': modVersion,
+                'mc_version': mcVersion
     }
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info', '**/*.properties', 'pack.mcmeta'
+    }
+    doLast {
+        println ':stripPngMetadata'
+        fileTree(dir: sourceSets.main.output.resourcesDir,
+                 include: '**/*.png').getFiles().forEach {
+            rewritePng(it)
+        }
     }
 }
 
@@ -62,7 +72,7 @@ jar {
     manifest.mainAttributes(
             'Built-By': System.getProperty('user.name'),
             'Created-By': "${System.getProperty('java.vm.version')}"
-                        + "(${System.getProperty('java.vm.vendor')})",
+                    + "(${System.getProperty('java.vm.vendor')})",
             'Implementation-Title': project.name,
             'Implementation-Version': project.version,
             'Built-On': minecraft.version
@@ -94,8 +104,22 @@ curseforge {
     }
 }
 
+def rewritePng(File file) {
+    BufferedImage image = null
+    try {
+        image = ImageIO.read(file)
+    } catch(IOException ignored) {
+        println "    Failed to parse ${file.getName()}, skipping..."
+    }
+    if(image != null) {
+        int oldSize = file.length()
+        ImageIO.write(image, 'png', file)
+        println "    Rewrote ${file.getName()}, reduced size by ${(oldSize - file.length())} bytes"
+    }
+}
+
 static String getChangelogText() {
-    def changelog = new File('changelog.txt')
+    File changelog = new File('changelog.txt')
     String entry = '', separator = '---'
     if (changelog.exists()) {
         int lineCount = 0
@@ -114,7 +138,7 @@ static String getChangelogText() {
                 entry += "$it" + (lineCount < 3 ? ':\n\n' : '\n')
                 return
             }
-            done = true // once we go past the first version block, parse no more
+            done = true
         }
     }
     return entry

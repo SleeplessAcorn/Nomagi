@@ -1,0 +1,7 @@
+{
+  "ctm": {
+    "ctm_version": 1,
+    "type": "CTM",
+    "textures": [ "nomagi:blocks/table/ctm/up_ctm" ]
+  }
+}

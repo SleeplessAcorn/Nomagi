@@ -1,0 +1,68 @@
+{
+  "multipart": [
+    {
+      "when": { "connect_left": "true", "connect_right": "true", "facing": "north" },
+      "apply": { "model": "nomagi:shelf_none" }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "false", "facing": "north" },
+      "apply": { "model": "nomagi:shelf_all" }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "false", "facing": "north" },
+      "apply": { "model": "nomagi:shelf_left" }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "true", "facing": "north" },
+      "apply": { "model": "nomagi:shelf_right" }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "true", "facing": "south" },
+      "apply": { "model": "nomagi:shelf_none", "y": 180 }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "false", "facing": "south" },
+      "apply": { "model": "nomagi:shelf_all", "y": 180 }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "false", "facing": "south" },
+      "apply": { "model": "nomagi:shelf_left", "y": 180 }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "true", "facing": "south" },
+      "apply": { "model": "nomagi:shelf_right", "y": 180 }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "true", "facing": "east" },
+      "apply": { "model": "nomagi:shelf_none", "y": 90 }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "false", "facing": "east" },
+      "apply": { "model": "nomagi:shelf_all", "y": 90 }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "false", "facing": "east" },
+      "apply": { "model": "nomagi:shelf_left", "y": 90 }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "true", "facing": "east" },
+      "apply": { "model": "nomagi:shelf_right", "y": 90 }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "true", "facing": "west" },
+      "apply": { "model": "nomagi:shelf_none", "y": 270 }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "false", "facing": "west" },
+      "apply": { "model": "nomagi:shelf_all", "y": 270 }
+    },
+    {
+      "when": { "connect_left": "true", "connect_right": "false", "facing": "west" },
+      "apply": { "model": "nomagi:shelf_left", "y": 270 }
+    },
+    {
+      "when": { "connect_left": "false", "connect_right": "true", "facing": "west" },
+      "apply": { "model": "nomagi:shelf_right", "y": 270 }
+    }
+  ]
+}

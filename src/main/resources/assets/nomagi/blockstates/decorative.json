@@ -1,0 +1,34 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cube_all"
+  },
+  "variants": {
+    "type": {
+      "bricks": {
+        "textures": { "all": "nomagi:blocks/decorative/bricks" }
+      },
+      "bricks_inset": {
+        "textures": { "all": "nomagi:blocks/decorative/bricks_inset" }
+      },
+      "fabric": {
+        "textures": { "all": "nomagi:blocks/decorative/fabric" }
+      },
+      "fabric_inset": {
+        "textures": { "all": "nomagi:blocks/decorative/fabric_inset" }
+      },
+      "fabric_ribbon": {
+        "textures": { "all": "nomagi:blocks/decorative/fabric_ribbon" }
+      },
+      "glass": {
+        "textures": { "all": "nomagi:blocks/decorative/glass" }
+      },
+      "planks": {
+        "textures": { "all": "nomagi:blocks/decorative/planks" }
+      },
+      "stone": {
+        "textures": { "all": "nomagi:blocks/decorative/stone" }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "nomagi:tent"
+  },
+  "variants": {
+    "facing": {
+      "north": { "y": 0 },
+      "south": { "y": 180 },
+      "east": { "y": 90 },
+      "west": { "y": 270 }
+    },
+    "type": {
+      "basic": {
+        "textures": {
+          "side": "nomagi:blocks/tent/basic_all",
+          "beam": "nomagi:blocks/tent/basic_beam"
+        }
+      }
+    }
+  }
+}

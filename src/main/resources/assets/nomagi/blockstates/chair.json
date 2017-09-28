@@ -1,0 +1,23 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "facing": {
+      "north": { "y": 0 },
+      "south": { "y": 180 },
+      "east": { "y": 90 },
+      "west": { "y": 270 }
+    },
+    "has_table": {
+      "false": {},
+      "true": {}
+    },
+    "half": {
+      "lower": { "model": "nomagi:chair_lower" },
+      "upper": { "model": "nomagi:chair_upper" }
+    },
+    "normal": {
+      "model": "nomagi:chair_inventory"
+    }
+  }
+}
+

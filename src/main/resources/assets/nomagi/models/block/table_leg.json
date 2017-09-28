@@ -1,0 +1,22 @@
+{
+  "__comment": "Copyright © InsomniaKitten 2017",
+  "textures": {
+    "particle": "nomagi:blocks/table/side",
+    "down": "nomagi:blocks/table/down_leg",
+    "side": "nomagi:blocks/table/side"
+  },
+  "elements": [
+    {
+      "__comment": "leg",
+      "from": [ 2, 0, 2 ],
+      "to": [ 5, 13, 5 ],
+      "faces": {
+        "down": { "uv": [ 2, 11, 5, 14 ], "texture": "#down", "cullface": "down" },
+        "north": { "uv": [ 11, 3, 14, 16 ], "texture": "#side" },
+        "south": { "uv": [ 2, 3, 5, 16 ], "texture": "#side" },
+        "west": { "uv": [ 2, 3, 5, 16 ], "texture": "#side" },
+        "east": { "uv": [ 11, 3, 14, 16 ], "texture": "#side" }
+      }
+    }
+  ]
+}
