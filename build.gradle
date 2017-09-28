@@ -38,16 +38,16 @@ minecraft {
 }
 
 repositories {
-    maven { url 'http://tehnut.info/maven' }
-    maven { url 'http://maven.tterrag.com' }
     maven { url 'http://dvs1.progwml6.com/files/maven' }
+    maven { url 'http://maven.tterrag.com' }
+    maven { url 'http://tehnut.info/maven' }
 }
 
 dependencies {
     deobfCompile "info.amerifrance.guideapi:Guide-API:${gapiVersion}"
     deobfCompile "mcp.mobius.waila:Hwyla:${hwylaVersion}"
     deobfCompile "mezz.jei:jei_${jeiVersion}"
-//    deobfCompile "team.chisel.ctm:CTM:${ctmVersion}"
+    deobfCompile "team.chisel.ctm:CTM:${ctmVersion}"
 }
 
 processResources {
