@@ -100,22 +100,34 @@ public class BlockShelf extends BlockCardinalBase implements MultiSelectionRende
     public List<AxisAlignedBB> getCollisionBoxList(IBlockState state) {
         List<AxisAlignedBB> list = Lists.newArrayList();
         EnumFacing facing = getFacing(state);
-        boolean none = state.getValue(CONNECT_R) && state.getValue(CONNECT_L);
-        boolean leftPanel = state.getValue(CONNECT_R) && !state.getValue(CONNECT_L);
-        boolean rightPanel = !state.getValue(CONNECT_R) && state.getValue(CONNECT_L);
-        boolean all = !state.getValue(CONNECT_R) && !state.getValue(CONNECT_L);
-        if (none) {
+        boolean connectNone = state.getValue(CONNECT_R) && state.getValue(CONNECT_L);
+        boolean connectRight = state.getValue(CONNECT_R) && !state.getValue(CONNECT_L);
+        boolean connectLeft = !state.getValue(CONNECT_R) && state.getValue(CONNECT_L);
+        boolean connectBoth = !state.getValue(CONNECT_R) && !state.getValue(CONNECT_L);
+        if (connectNone) {
             list.add(AABB.SHELF_UPPER_NONE.get(facing));
             list.add(AABB.SHELF_LOWER_NONE.get(facing));
-        } else if (leftPanel) {
-            list.add(AABB.LEFT_PANEL.get(facing));
-            list.add(AABB.SHELF_UPPER_LEFT.get(facing));
-            list.add(AABB.SHELF_LOWER_LEFT.get(facing));
-        } else if (rightPanel) {
-            list.add(AABB.RIGHT_PANEL.get(facing));
-            list.add(AABB.SHELF_UPPER_RIGHT.get(facing));
-            list.add(AABB.SHELF_LOWER_RIGHT.get(facing));
-        } else if (all) {
+        } else if (connectRight) {
+            if (facing.getAxis() == EnumFacing.Axis.Z) {
+                list.add(AABB.RIGHT_PANEL.get(facing));
+                list.add(AABB.SHELF_UPPER_RIGHT.get(facing));
+                list.add(AABB.SHELF_LOWER_RIGHT.get(facing));
+            } else {
+                list.add(AABB.LEFT_PANEL.get(facing));
+                list.add(AABB.SHELF_UPPER_LEFT.get(facing));
+                list.add(AABB.SHELF_LOWER_LEFT.get(facing));
+            }
+        } else if (connectLeft) {
+            if (facing.getAxis() == EnumFacing.Axis.Z) {
+                list.add(AABB.LEFT_PANEL.get(facing));
+                list.add(AABB.SHELF_UPPER_LEFT.get(facing));
+                list.add(AABB.SHELF_LOWER_LEFT.get(facing));
+            } else {
+                list.add(AABB.RIGHT_PANEL.get(facing));
+                list.add(AABB.SHELF_UPPER_RIGHT.get(facing));
+                list.add(AABB.SHELF_LOWER_RIGHT.get(facing));
+            }
+        } else if (connectBoth) {
             list.add(AABB.LEFT_PANEL.get(facing));
             list.add(AABB.RIGHT_PANEL.get(facing));
             list.add(AABB.SHELF_UPPER_ALL.get(facing));

@@ -94,8 +94,18 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
 
     public enum Side implements IStatePropertyHolder<Side> {
 
-        LEFT(BoundingBoxHelper.computeAABBsForFacing(-16, 0, 0, 16, 16, 16)),
-        RIGHT(BoundingBoxHelper.computeAABBsForFacing(0, 0, 0, 32, 16, 16));
+        LEFT(ImmutableMap.of(
+                EnumFacing.NORTH, BoundingBoxHelper.createAABB(-16, 0, 0, 16, 16, 16),
+                EnumFacing.SOUTH, BoundingBoxHelper.createAABB(0, 0, 0, 32, 16, 16),
+                EnumFacing.EAST, BoundingBoxHelper.createAABB(0, 0, -16, 16, 16, 16),
+                EnumFacing.WEST, BoundingBoxHelper.createAABB(0, 0, 0, 16, 16, 32)
+        )),
+        RIGHT(ImmutableMap.of(
+                EnumFacing.NORTH, BoundingBoxHelper.createAABB(0, 0, 0, 32, 16, 16),
+                EnumFacing.SOUTH, BoundingBoxHelper.createAABB(-16, 0, 0, 16, 16, 16),
+                EnumFacing.EAST, BoundingBoxHelper.createAABB(0, 0, 0, 16, 16, 32),
+                EnumFacing.WEST, BoundingBoxHelper.createAABB(0, 0, -16, 16, 16, 16)
+        ));
 
         private final ImmutableMap<EnumFacing, AxisAlignedBB> boundingBoxes;
 
@@ -129,8 +139,6 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
         }
 
         public AxisAlignedBB getBoundingBox(EnumFacing facing) {
-            if (facing.getAxis() == EnumFacing.Axis.X)
-                facing = facing.getOpposite();
             return boundingBoxes.get(facing);
         }
 
