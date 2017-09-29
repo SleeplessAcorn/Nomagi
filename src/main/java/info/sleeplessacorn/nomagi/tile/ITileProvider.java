@@ -1,4 +1,4 @@
-package info.sleeplessacorn.nomagi.util;
+package info.sleeplessacorn.nomagi.tile;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public interface ITileHolder {
+public interface ITileProvider {
 
     @Nullable
     default TileEntity getTileEntity(IBlockState state) {

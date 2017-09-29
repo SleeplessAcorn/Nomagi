@@ -3,7 +3,6 @@ package info.sleeplessacorn.nomagi.block.base;
 import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
 import info.sleeplessacorn.nomagi.util.StringHelper;
 import info.sleeplessacorn.nomagi.util.TileHelper;
 import net.minecraft.block.Block;
@@ -33,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockEnumBase <E extends Enum<E> & IStatePropertyHolder<E>> extends Block {
+public class BlockEnumBase <E extends Enum<E> & IPropertyProvider<E>> extends Block {
 
     protected final E[] values;
     protected final PropertyEnum<E> propertyEnum;

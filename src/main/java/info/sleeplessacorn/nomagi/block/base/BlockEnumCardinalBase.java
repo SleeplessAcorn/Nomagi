@@ -4,7 +4,6 @@ import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
 import info.sleeplessacorn.nomagi.client.model.WrappedModel;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +15,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockEnumCardinalBase <E extends Enum<E> & IStatePropertyHolder<E>> extends BlockEnumBase<E> {
+public class BlockEnumCardinalBase <E extends Enum<E> & IPropertyProvider<E>> extends BlockEnumBase<E> {
 
     private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 

@@ -4,7 +4,7 @@ import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
 import info.sleeplessacorn.nomagi.client.model.WrappedModel;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumBase;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemBlock;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBlockEnumBase <E extends Enum<E> & IStatePropertyHolder<E>> extends ItemBlock {
+public class ItemBlockEnumBase <E extends Enum<E> & IPropertyProvider<E>> extends ItemBlock {
 
     protected final E[] values;
 

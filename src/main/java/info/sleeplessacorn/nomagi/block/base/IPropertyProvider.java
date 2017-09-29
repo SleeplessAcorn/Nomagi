@@ -1,5 +1,7 @@
-package info.sleeplessacorn.nomagi.util;
+package info.sleeplessacorn.nomagi.block.base;
 
+import info.sleeplessacorn.nomagi.util.MaterialHelper;
+import info.sleeplessacorn.nomagi.util.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,9 +14,9 @@ import net.minecraft.world.IBlockAccess;
 
 import java.util.Locale;
 
-public interface IStatePropertyHolder <E extends Enum<E> & IStringSerializable> extends IStringSerializable {
+public interface IPropertyProvider <E extends Enum<E> & IStringSerializable> extends IStringSerializable {
 
-    E getEnum();
+    E getProvider();
 
     Material getMaterial();
 
@@ -55,7 +57,7 @@ public interface IStatePropertyHolder <E extends Enum<E> & IStringSerializable> 
     }
 
     default String getName() {
-        return this.getEnum().name().toLowerCase(Locale.ROOT);
+        return this.getProvider().name().toLowerCase(Locale.ROOT);
     }
 
     default String getUnlocalizedName() {
@@ -63,7 +65,7 @@ public interface IStatePropertyHolder <E extends Enum<E> & IStringSerializable> 
     }
 
     default int getMetadata() {
-        return this.getEnum().ordinal();
+        return this.getProvider().ordinal();
     }
 
     default String getOreDict() {

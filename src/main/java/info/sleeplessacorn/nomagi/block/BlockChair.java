@@ -6,7 +6,7 @@ import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.entity.EntityChair;
 import info.sleeplessacorn.nomagi.item.ItemBlockChair;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -110,7 +110,7 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
         return new ItemStack(this); // TODO: Handle this in the base class with a setter
     }
 
-    public enum Half implements IStatePropertyHolder<Half> {
+    public enum Half implements IPropertyProvider<Half> {
 
         LOWER(BoundingBoxHelper.computeAABBsForFacing(1, 0, 2, 15, 15, 14)),
         UPPER(BoundingBoxHelper.computeAABBsForFacing(2, -1, 12, 14, 9, 14));
@@ -122,7 +122,7 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
         }
 
         @Override
-        public Half getEnum() {
+        public Half getProvider() {
             return this;
         }
 

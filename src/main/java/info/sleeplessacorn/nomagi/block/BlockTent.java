@@ -9,8 +9,8 @@ import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import info.sleeplessacorn.nomagi.tile.TileTent;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
-import info.sleeplessacorn.nomagi.util.ITileHolder;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
+import info.sleeplessacorn.nomagi.tile.ITileProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> implements ITileHolder {
+public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> implements ITileProvider {
 
     public static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TENT =
             BoundingBoxHelper.computeAABBsForFacing(-8, 0, 0, 24, 28, 32);
@@ -66,12 +66,12 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> implemen
         return AABB_TENT.get(getFacing(state));
     }
 
-    public enum Variant implements IStatePropertyHolder<Variant> {
+    public enum Variant implements IPropertyProvider<Variant> {
 
         BASIC; // TODO Handle variants in the tile entity. Maybe the variants could be dye colors?
 
         @Override
-        public Variant getEnum() {
+        public Variant getProvider() {
             return this;
         }
 

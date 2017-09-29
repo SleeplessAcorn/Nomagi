@@ -1,7 +1,7 @@
 package info.sleeplessacorn.nomagi.block;
 
 import info.sleeplessacorn.nomagi.block.base.BlockEnumBase;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockRenderLayer;
 
@@ -11,7 +11,7 @@ public class BlockDecorative extends BlockEnumBase<BlockDecorative.Variant> {
         super("decorative", Variant.class);
     }
 
-    public enum Variant implements IStatePropertyHolder<Variant> {
+    public enum Variant implements IPropertyProvider<Variant> {
 
         BRICKS(Material.ROCK),
         BRICKS_INSET(Material.ROCK),
@@ -44,7 +44,7 @@ public class BlockDecorative extends BlockEnumBase<BlockDecorative.Variant> {
         }
 
         @Override
-        public Variant getEnum() {
+        public Variant getProvider() {
             return this;
         }
 

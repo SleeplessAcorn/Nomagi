@@ -8,8 +8,8 @@ import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.item.ItemBlockRoomWorktable;
 import info.sleeplessacorn.nomagi.tile.TileRoomWorktable;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
-import info.sleeplessacorn.nomagi.util.IStatePropertyHolder;
-import info.sleeplessacorn.nomagi.util.ITileHolder;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
+import info.sleeplessacorn.nomagi.tile.ITileProvider;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 import javax.annotation.Nullable;
 
-public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable.Side> implements ITileHolder {
+public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable.Side> implements ITileProvider {
 
     public BlockRoomWorktable() {
         super("room_worktable", "side", Side.class);
@@ -92,7 +92,7 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
         return new ItemStack(this); // TODO: Handle this in the base class as a block class toggle
     }
 
-    public enum Side implements IStatePropertyHolder<Side> {
+    public enum Side implements IPropertyProvider<Side> {
 
         LEFT(ImmutableMap.of(
                 EnumFacing.NORTH, BoundingBoxHelper.createAABB(-16, 0, 0, 16, 16, 16),
@@ -114,7 +114,7 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
         }
 
         @Override
-        public Side getEnum() {
+        public Side getProvider() {
             return this;
         }
 

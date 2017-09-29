@@ -4,7 +4,7 @@ import info.sleeplessacorn.nomagi.ModGuis;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockCardinalBase;
 import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
-import info.sleeplessacorn.nomagi.util.ITileHolder;
+import info.sleeplessacorn.nomagi.tile.ITileProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 import javax.annotation.Nullable;
 
-public class BlockPrivacyLectern extends BlockCardinalBase implements ITileHolder {
+public class BlockPrivacyLectern extends BlockCardinalBase implements ITileProvider {
 
     public BlockPrivacyLectern() {
         super("privacy_lectern", Material.WOOD);
