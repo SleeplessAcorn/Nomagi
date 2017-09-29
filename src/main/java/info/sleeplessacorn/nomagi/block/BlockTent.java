@@ -6,7 +6,7 @@ import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel;
+import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import info.sleeplessacorn.nomagi.tile.TileTent;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
@@ -51,9 +51,11 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
             protected void registerModels() {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "tent_item");
                 for (Variant value : values) {
-                    ModelRegistry
-                            .registerModel(new WrappedModel.Builder(this, value.getMetadata()).setResourceLocation(path)
-                                    .addVariant("type=" + value.getName()).build());
+                    ModelRegistry.registerModel(new Builder(this, value.getMetadata())
+                            .setResourceLocation(path)
+                            .addVariant("type=" + value.getName())
+                            .build()
+                    );
                 }
             }
         }.setMaxStackSize(1));

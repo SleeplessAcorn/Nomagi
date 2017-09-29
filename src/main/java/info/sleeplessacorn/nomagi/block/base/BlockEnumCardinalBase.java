@@ -2,7 +2,7 @@ package info.sleeplessacorn.nomagi.block.base;
 
 import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel;
+import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -58,9 +58,11 @@ public class BlockEnumCardinalBase <E extends Enum<E> & IPropertyProvider<E>> ex
             @Override
             protected void registerModels() {
                 for (E value : values) {
-                    ModelRegistry.registerModel(
-                            new WrappedModel.Builder(this, value.getMetadata()).addVariant("facing=north")
-                                    .addVariant("type=" + value.getName()).build());
+                    ModelRegistry.registerModel(new Builder(this, value.getMetadata())
+                            .addVariant("facing=north")
+                            .addVariant("type=" + value.getName())
+                            .build()
+                    );
                 }
             }
         });

@@ -2,7 +2,7 @@ package info.sleeplessacorn.nomagi.block.base;
 
 import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel;
+import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -47,7 +47,10 @@ public class BlockCardinalBase extends BlockBase {
         ModRegistry.registerItemBlock(new ItemBlockBase(this) {
             @Override
             protected void registerModels() {
-                ModelRegistry.registerModel(new WrappedModel.Builder(this).addVariant("facing=north").build());
+                ModelRegistry.registerModel(new Builder(this)
+                        .addVariant("facing=north")
+                        .build()
+                );
             }
         });
     }
