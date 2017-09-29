@@ -25,6 +25,7 @@ public class MultiSelectionRenderer {
     protected static void onDrawBlockHighlight(DrawBlockHighlightEvent event) {
         BlockPos pos = event.getTarget().getBlockPos();
         World world = event.getPlayer().getEntityWorld();
+        if (pos == null) return;
         IBlockState state = world.getBlockState(pos);
         IBlockState actualState = state.getActualState(world, pos);
         if (state.getBlock() instanceof IProvider) {
