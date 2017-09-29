@@ -5,26 +5,19 @@ import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import info.sleeplessacorn.nomagi.util.MaterialHelper;
 import info.sleeplessacorn.nomagi.util.StringHelper;
-import info.sleeplessacorn.nomagi.util.TileHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
 
 public class BlockBase extends Block {
 
@@ -108,20 +101,8 @@ public class BlockBase extends Block {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        TileHelper.onTileRemove(state, world, pos);
-    }
-
-    @Override
     public BlockRenderLayer getBlockLayer() {
         return layer;
-    }
-
-    @Override
-    public boolean onBlockActivated(
-            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
-        return TileHelper.onTileInteract(state, world, pos, player);
     }
 
     @Override
@@ -132,17 +113,6 @@ public class BlockBase extends Block {
     @Override
     public final BlockStateContainer getBlockState() {
         return container;
-    }
-
-    @Override
-    public boolean hasTileEntity(IBlockState state) {
-        return TileHelper.hasTileEntity(state);
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        return TileHelper.getTileEntity(state);
     }
 
     protected BlockStateContainer.Builder createStateContainer() {

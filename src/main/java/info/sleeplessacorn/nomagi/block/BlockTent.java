@@ -3,17 +3,15 @@ package info.sleeplessacorn.nomagi.block;
 import com.google.common.collect.ImmutableMap;
 import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
+import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
 import info.sleeplessacorn.nomagi.client.model.WrappedModel;
-import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import info.sleeplessacorn.nomagi.tile.TileTent;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
-import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
-import info.sleeplessacorn.nomagi.tile.ITileProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +22,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> implements ITileProvider {
+public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
 
     public static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TENT =
             BoundingBoxHelper.computeAABBsForFacing(-8, 0, 0, 24, 28, 32);
@@ -34,15 +32,16 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> implemen
         // TODO REWRITE THE SHIT OUT OF THIS
     }
 
-    @Nullable
     @Override
-    public TileEntity getTileEntity(IBlockState state) {
-        return new TileTent();
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
     }
 
+    @Nullable
     @Override
-    public boolean onTileInteract(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
-        return true; // FIXME Teleportation stuff
+    public TileEntity createTileEntity(
+            World world, IBlockState state) {
+        return new TileTent();
     }
 
     @Override
@@ -52,8 +51,8 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> implemen
             protected void registerModels() {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "tent_item");
                 for (Variant value : values) {
-                    ModelRegistry.registerModel(
-                            new WrappedModel.Builder(this, value.getMetadata()).setResourceLocation(path)
+                    ModelRegistry
+                            .registerModel(new WrappedModel.Builder(this, value.getMetadata()).setResourceLocation(path)
                                     .addVariant("type=" + value.getName()).build());
                 }
             }

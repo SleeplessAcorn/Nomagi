@@ -4,11 +4,12 @@ import info.sleeplessacorn.nomagi.ModGuis;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockCardinalBase;
 import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
-import info.sleeplessacorn.nomagi.tile.ITileProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 import javax.annotation.Nullable;
 
-public class BlockPrivacyLectern extends BlockCardinalBase implements ITileProvider {
+public class BlockPrivacyLectern extends BlockCardinalBase {
 
     public BlockPrivacyLectern() {
         super("privacy_lectern", Material.WOOD);
@@ -24,20 +25,27 @@ public class BlockPrivacyLectern extends BlockCardinalBase implements ITileProvi
         setNonFullBlock();
     }
 
-    @Nullable
     @Override
-    public TileEntity getTileEntity(IBlockState state) {
-        return new TilePrivacyLectern();
-    }
-
-    @Override
-    public boolean onTileInteract(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
+    public boolean onBlockActivated(
+            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
+            float hitX, float hitY, float hitZ) {
         if (world.getTileEntity(pos) != null) {
             int id = ModGuis.PRIVACY_LECTERN.getID();
             FMLNetworkHandler.openGui(player, Nomagi.instance, id, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TilePrivacyLectern();
     }
 
 }
