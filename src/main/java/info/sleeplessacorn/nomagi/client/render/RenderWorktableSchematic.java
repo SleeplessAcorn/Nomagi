@@ -1,6 +1,6 @@
 package info.sleeplessacorn.nomagi.client.render;
 
-import info.sleeplessacorn.nomagi.common.tile.TileRoomWorktable;
+import info.sleeplessacorn.nomagi.tile.TileRoomWorktable;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 
 public class RenderWorktableSchematic extends TileEntitySpecialRenderer<TileRoomWorktable> {

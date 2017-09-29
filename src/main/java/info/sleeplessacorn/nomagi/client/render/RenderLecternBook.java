@@ -1,7 +1,7 @@
 package info.sleeplessacorn.nomagi.client.render;
 
-import info.sleeplessacorn.nomagi.common.block.base.BlockCardinalBase;
-import info.sleeplessacorn.nomagi.common.tile.TilePrivacyLectern;
+import info.sleeplessacorn.nomagi.block.base.BlockCardinalBase;
+import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;

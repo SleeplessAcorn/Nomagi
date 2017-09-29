@@ -4,7 +4,7 @@ import info.sleeplessacorn.nomagi.ModGuis;
 import info.sleeplessacorn.nomagi.ModLogger;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.client.gui.Button.ButtonType;
-import info.sleeplessacorn.nomagi.common.container.ContainerPrivacyLectern;
+import info.sleeplessacorn.nomagi.container.ContainerPrivacyLectern;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;

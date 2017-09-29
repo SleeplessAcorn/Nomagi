@@ -1,14 +1,14 @@
 package info.sleeplessacorn.nomagi;
 
-import info.sleeplessacorn.nomagi.common.block.BlockCandle;
-import info.sleeplessacorn.nomagi.common.block.BlockChair;
-import info.sleeplessacorn.nomagi.common.block.BlockDecorative;
-import info.sleeplessacorn.nomagi.common.block.BlockPrivacyLectern;
-import info.sleeplessacorn.nomagi.common.block.BlockRoomWorktable;
-import info.sleeplessacorn.nomagi.common.block.BlockShelf;
-import info.sleeplessacorn.nomagi.common.block.BlockTable;
-import info.sleeplessacorn.nomagi.common.block.BlockTent;
-import info.sleeplessacorn.nomagi.common.world.WorldProviderTent;
+import info.sleeplessacorn.nomagi.block.BlockCandle;
+import info.sleeplessacorn.nomagi.block.BlockChair;
+import info.sleeplessacorn.nomagi.block.BlockDecorative;
+import info.sleeplessacorn.nomagi.block.BlockPrivacyLectern;
+import info.sleeplessacorn.nomagi.block.BlockRoomWorktable;
+import info.sleeplessacorn.nomagi.block.BlockShelf;
+import info.sleeplessacorn.nomagi.block.BlockTable;
+import info.sleeplessacorn.nomagi.block.BlockTent;
+import info.sleeplessacorn.nomagi.world.WorldProviderTent;
 import net.minecraft.world.DimensionType;
 
 public final class ModObjects {

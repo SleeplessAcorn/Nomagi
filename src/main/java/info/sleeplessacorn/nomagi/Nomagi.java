@@ -1,6 +1,6 @@
 package info.sleeplessacorn.nomagi;
 
-import info.sleeplessacorn.nomagi.common.command.CommandBase;
+import info.sleeplessacorn.nomagi.command.CommandBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;

@@ -1,9 +1,9 @@
 package info.sleeplessacorn.nomagi;
 
-import info.sleeplessacorn.nomagi.common.entity.EntityChair;
-import info.sleeplessacorn.nomagi.common.tile.TilePrivacyLectern;
-import info.sleeplessacorn.nomagi.common.tile.TileRoomWorktable;
-import info.sleeplessacorn.nomagi.common.tile.TileTent;
+import info.sleeplessacorn.nomagi.entity.EntityChair;
+import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
+import info.sleeplessacorn.nomagi.tile.TileRoomWorktable;
+import info.sleeplessacorn.nomagi.tile.TileTent;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
