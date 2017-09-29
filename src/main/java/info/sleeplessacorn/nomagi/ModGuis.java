@@ -54,7 +54,7 @@ public enum ModGuis implements IGuiHandler {
 
     private static final ModGuis[] VALUES = values();
 
-    private static final Range<Integer> RANGE = Range.openClosed(0, VALUES.length);
+    private static final Range<Integer> RANGE = Range.closedOpen(0, VALUES.length);
 
     private static final IGuiHandler NO_OP = new IGuiHandler() {
         @Override
