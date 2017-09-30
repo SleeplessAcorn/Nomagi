@@ -49,7 +49,7 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
     public ItemBlock getItemBlock() {
         return (ItemBlock) new ItemBlockEnumBase<Variant>(this) {
             @Override
-            public void getModels(Set<WrappedModel> models) {
+            public void gatherModels(Set<WrappedModel> models) {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "tent_item");
                 for (Variant value : values) {
                     models.add(new Builder(this, value.getMetadata()).setResourceLocation(path).addVariant("type=" + value.getName()).build());

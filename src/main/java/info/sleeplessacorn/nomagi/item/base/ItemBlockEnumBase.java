@@ -24,7 +24,7 @@ public class ItemBlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends
     }
 
     @Override
-    public void getModels(Set<WrappedModel> models) {
+    public void gatherModels(Set<WrappedModel> models) {
         for (E value : values) {
             WrappedModel.Builder model = new WrappedModel.Builder(this, value.getMetadata());
             model.addVariant("type=" + value.getName());

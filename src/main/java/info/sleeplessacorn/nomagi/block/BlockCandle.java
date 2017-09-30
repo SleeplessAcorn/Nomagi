@@ -99,7 +99,7 @@ public class BlockCandle extends BlockBase implements MultiSelectionRenderer.IPr
     public ItemBlock getItemBlock() {
         return new ItemBlockBase(this) {
             @Override
-            public void getModels(Set<WrappedModel> models) {
+            public void gatherModels(Set<WrappedModel> models) {
                 models.add(new WrappedModel.Builder(this).addVariant("facing=up,lit=false").build());
             }
         };

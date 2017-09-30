@@ -8,12 +8,11 @@ import info.sleeplessacorn.nomagi.block.*;
 import info.sleeplessacorn.nomagi.block.base.BlockBase;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumBase;
 import info.sleeplessacorn.nomagi.client.ICustomStateMapper;
+import info.sleeplessacorn.nomagi.client.IModelProvider;
 import info.sleeplessacorn.nomagi.client.WrappedModel;
 import info.sleeplessacorn.nomagi.client.render.RenderLecternBook;
 import info.sleeplessacorn.nomagi.client.render.RenderWorktableSchematic;
 import info.sleeplessacorn.nomagi.entity.EntityChair;
-import info.sleeplessacorn.nomagi.item.base.ItemBase;
-import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
 import info.sleeplessacorn.nomagi.tile.TileRoomWorktable;
 import info.sleeplessacorn.nomagi.tile.TileTent;
@@ -115,16 +114,11 @@ public class RegistrarNomagi {
     @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event) {
         items.forEach(i -> {
-            if (i instanceof ItemBlockBase) {
+            if (i instanceof IModelProvider) {
                 Set<WrappedModel> models = Sets.newHashSet();
-                ((ItemBlockBase) i).getModels(models);
+                ((IModelProvider) i).gatherModels(models);
                 for (WrappedModel model : models)
-                    ModelLoader.setCustomModelResourceLocation(model.getItem(), model.getMetadata(), model.getMRL());
-            } else if (i instanceof ItemBase) {
-                Set<WrappedModel> models = Sets.newHashSet();
-                ((ItemBase) i).getModels(models);
-                for (WrappedModel model : models)
-                    ModelLoader.setCustomModelResourceLocation(model.getItem(), model.getMetadata(), model.getMRL());
+                    ModelLoader.setCustomModelResourceLocation(i, model.getMetadata(), model.getMRL());
             } else {
                 ModelLoader.setCustomModelResourceLocation(i, 0, new ModelResourceLocation(i.getRegistryName(), "inventory"));
             }

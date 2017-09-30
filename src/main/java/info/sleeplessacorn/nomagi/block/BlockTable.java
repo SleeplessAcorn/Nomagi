@@ -78,7 +78,7 @@ public class BlockTable extends BlockBase implements MultiSelectionRenderer.IPro
     public ItemBlock getItemBlock() {
         return new ItemBlockBase(this) {
             @Override
-            public void getModels(Set<WrappedModel> models) {
+            public void gatherModels(Set<WrappedModel> models) {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "table_item");
                 models.add(new Builder(this).setResourceLocation(path).build());
             }

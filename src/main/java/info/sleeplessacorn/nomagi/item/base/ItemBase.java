@@ -1,6 +1,7 @@
 package info.sleeplessacorn.nomagi.item.base;
 
 import info.sleeplessacorn.nomagi.Nomagi;
+import info.sleeplessacorn.nomagi.client.IModelProvider;
 import info.sleeplessacorn.nomagi.client.WrappedModel;
 import info.sleeplessacorn.nomagi.util.StringHelper;
 import net.minecraft.client.resources.I18n;
@@ -14,14 +15,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Set;
 
-public class ItemBase extends Item {
+public class ItemBase extends Item implements IModelProvider {
 
     public ItemBase(String name) {
         setUnlocalizedName(Nomagi.ID + "." + StringHelper.toLangKey(name));
         setCreativeTab(Nomagi.TAB);
     }
 
-    public void getModels(Set<WrappedModel> models) {
+    @Override
+    public void gatherModels(Set<WrappedModel> models) {
         models.add(new WrappedModel.Builder(this).build());
     }
 

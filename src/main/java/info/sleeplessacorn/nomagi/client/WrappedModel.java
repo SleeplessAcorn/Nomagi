@@ -8,22 +8,16 @@ import java.util.TreeSet;
 
 public final class WrappedModel {
 
-    private final Item item;
     private final int meta;
     private final ResourceLocation resource;
     private final String variants;
     private final ModelResourceLocation mrl;
 
     private WrappedModel(Builder model) {
-        this.item = model.item;
         this.meta = model.meta;
         this.resource = model.resource;
         this.variants = String.join(",", model.variants);
         this.mrl = new ModelResourceLocation(this.resource, this.variants);
-    }
-
-    public Item getItem() {
-        return item;
     }
 
     public int getMetadata() {
@@ -44,13 +38,11 @@ public final class WrappedModel {
 
     public static final class Builder {
 
-        private Item item;
         private int meta;
         private ResourceLocation resource;
         private TreeSet<String> variants = new TreeSet<>();
 
         public Builder(Item item, int meta) {
-            this.item = item;
             this.meta = meta;
             this.resource = item.getRegistryName();
         }

@@ -45,7 +45,7 @@ public class BlockShelf extends BlockCardinalBase implements MultiSelectionRende
     public ItemBlock getItemBlock() {
         return new ItemBlockBase(this) {
             @Override
-            public void getModels(Set<WrappedModel> models) {
+            public void gatherModels(Set<WrappedModel> models) {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "shelf_item");
                 models.add(new Builder(this).setResourceLocation(path).build());
             }

@@ -44,7 +44,7 @@ public class BlockCardinalBase extends BlockBase {
     public ItemBlock getItemBlock() {
         return new ItemBlockBase(this) {
             @Override
-            public void getModels(Set<WrappedModel> models) {
+            public void gatherModels(Set<WrappedModel> models) {
                 models.add(new Builder(this).addVariant("facing=north").build());
             }
         };

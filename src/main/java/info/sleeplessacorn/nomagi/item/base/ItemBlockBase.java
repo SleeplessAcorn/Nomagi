@@ -1,5 +1,6 @@
 package info.sleeplessacorn.nomagi.item.base;
 
+import info.sleeplessacorn.nomagi.client.IModelProvider;
 import info.sleeplessacorn.nomagi.client.WrappedModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -13,13 +14,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Set;
 
-public class ItemBlockBase extends ItemBlock {
+public class ItemBlockBase extends ItemBlock implements IModelProvider {
 
     public ItemBlockBase(Block block) {
         super(block);
     }
 
-    public void getModels(Set<WrappedModel> models) {
+    @Override
+    public void gatherModels(Set<WrappedModel> models) {
         models.add(new WrappedModel.Builder(this).addVariant("normal").build());
     }
 
