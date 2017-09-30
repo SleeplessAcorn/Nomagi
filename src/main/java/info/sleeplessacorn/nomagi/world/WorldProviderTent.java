@@ -84,7 +84,5 @@ public class WorldProviderTent extends WorldProvider {
         public void render(float partialTicks, WorldClient world, Minecraft mc) {
             // no-op
         }
-
     }
-
 }

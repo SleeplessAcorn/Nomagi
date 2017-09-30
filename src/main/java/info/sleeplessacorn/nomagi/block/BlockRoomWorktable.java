@@ -51,34 +51,31 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
     }
 
     @Override
-    public void getDrops(
-            NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         drops.add(new ItemStack(this)); // TODO: Handle this in the base class as a block class toggle
     }
 
     @Override
-    public ItemStack getPickBlock(
-            IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this); // TODO: Handle this in the base class as a block class toggle
     }
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        world.setBlockToAir(getType(state) == Side.LEFT
-                ? pos.offset(getFacing(state).rotateYCCW())
-                : pos.offset(getFacing(state).rotateY()));
+        world.setBlockToAir(getType(state) == Side.LEFT ? pos.offset(getFacing(state).rotateYCCW()) : pos.offset(getFacing(state).rotateY()));
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
-        if (getType(state) == Side.RIGHT) pos = pos.offset(getFacing(state).rotateY());
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (getType(state) == Side.RIGHT)
+            pos = pos.offset(getFacing(state).rotateY());
+
         if (world.getTileEntity(pos) != null) {
             int id = GuiHandler.ROOM_WORKTABLE.ordinal();
             FMLNetworkHandler.openGui(player, Nomagi.INSTANCE, id, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
+
         return false;
     }
 
@@ -148,7 +145,5 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
         public AxisAlignedBB getBoundingBox(EnumFacing facing) {
             return boundingBoxes.get(facing);
         }
-
     }
-
 }

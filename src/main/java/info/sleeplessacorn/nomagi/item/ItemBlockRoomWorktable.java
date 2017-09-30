@@ -22,18 +22,15 @@ public class ItemBlockRoomWorktable extends ItemBlockBase {
     }
 
     @Override
-    public boolean placeBlockAt(
-            ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY,
-            float hitZ, IBlockState newState) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
         BlockPos posOffsetLeft = pos.offset(player.getHorizontalFacing().rotateYCCW());
         BlockPos posOffsetRight = pos.offset(player.getHorizontalFacing().rotateY());
-        if (world.getBlockState(posOffsetRight).getBlock().isReplaceable(world, posOffsetRight)) {
+
+        if (world.getBlockState(posOffsetRight).getBlock().isReplaceable(world, posOffsetRight))
             return placeWorktableAt(world, player, pos, posOffsetRight);
-        } else {
-            if (world.getBlockState(posOffsetLeft).getBlock().isReplaceable(world, posOffsetLeft)) {
-                return placeWorktableAt(world, player, posOffsetLeft, pos);
-            }
-        }
+        else if (world.getBlockState(posOffsetLeft).getBlock().isReplaceable(world, posOffsetLeft))
+            return placeWorktableAt(world, player, posOffsetLeft, pos);
+
         return false;
     }
 
@@ -44,11 +41,10 @@ public class ItemBlockRoomWorktable extends ItemBlockBase {
             EnumFacing facing = player.getHorizontalFacing().getOpposite();
             IBlockState state = block.getDefaultState().withProperty(direction, facing);
             SoundType sound = SoundType.WOOD;
-            world.playSound(null, posLeft, sound.getPlaceSound(), SoundCategory.BLOCKS,
-                    (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
-            return world.setBlockState(posLeft, state.withProperty(block.getPropertyEnum(), Side.LEFT)) &&
-                    world.setBlockState(posRight, state.withProperty(block.getPropertyEnum(), Side.RIGHT));
+            world.playSound(null, posLeft, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
+            return world.setBlockState(posLeft, state.withProperty(block.getPropertyEnum(), Side.LEFT)) && world.setBlockState(posRight, state.withProperty(block.getPropertyEnum(), Side.RIGHT));
         }
+
         return false;
     }
 

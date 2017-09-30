@@ -81,5 +81,4 @@ public class GuiPrivacyLectern extends GuiContainer {
             );
         }
     }
-
 }

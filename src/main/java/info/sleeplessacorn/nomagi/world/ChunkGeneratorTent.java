@@ -31,5 +31,4 @@ public class ChunkGeneratorTent extends ChunkGeneratorFlat {
     public void populate(int x, int z) {
         // No-op
     }
-
 }

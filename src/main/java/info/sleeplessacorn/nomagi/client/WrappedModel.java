@@ -67,7 +67,5 @@ public final class WrappedModel {
             }
             return new WrappedModel(this);
         }
-
     }
-
 }

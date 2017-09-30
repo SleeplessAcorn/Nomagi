@@ -128,9 +128,8 @@ public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Blo
 
     @Override
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
-        for (E type : values) {
+        for (E type : values)
             items.add(new ItemStack(this, 1, type.getMetadata()));
-        }
     }
 
     @Override
@@ -155,11 +154,9 @@ public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Blo
     }
 
     @Override
-    public void getDrops(
-            NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        if (!getType(state).requiresSilkTouch()) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        if (!getType(state).requiresSilkTouch())
             super.getDrops(drops, world, pos, state, fortune);
-        }
     }
 
     @Override
@@ -173,8 +170,7 @@ public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Blo
     }
 
     @Override
-    public ItemStack getPickBlock(
-            IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this, 1, getType(state).getMetadata());
     }
 
@@ -202,5 +198,4 @@ public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Blo
     protected BlockStateContainer.Builder createStateContainer() {
         return new BlockStateContainer.Builder(this).add(propertyEnum);
     }
-
 }

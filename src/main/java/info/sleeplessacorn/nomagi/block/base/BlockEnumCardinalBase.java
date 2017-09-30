@@ -43,9 +43,7 @@ public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> ext
 
     @Override
     @SuppressWarnings("deprecation")
-    public IBlockState getStateForPlacement(
-            World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta,
-            EntityLivingBase placer, EnumHand hand) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         EnumFacing facing = placer.getHorizontalFacing().getOpposite();
         return super.getStateFromMeta(meta).withProperty(FACING, facing);
     }
@@ -86,6 +84,5 @@ public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> ext
     public static PropertyDirection getFacingProperty() {
         return FACING;
     }
-
 }
 

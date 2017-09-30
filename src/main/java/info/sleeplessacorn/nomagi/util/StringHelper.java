@@ -11,6 +11,5 @@ public final class StringHelper {
     public static String getOreName(String registryName) {
         return CaseFormat.LOWER_UNDERSCORE.converterTo(CaseFormat.UPPER_CAMEL).convert(registryName);
     }
-
 }
 

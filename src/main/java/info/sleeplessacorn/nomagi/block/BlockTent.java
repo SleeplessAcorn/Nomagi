@@ -25,8 +25,7 @@ import java.util.Set;
 
 public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
 
-    public static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TENT =
-            BoundingBoxHelper.computeAABBsForFacing(-8, 0, 0, 24, 28, 32);
+    public static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_TENT = BoundingBoxHelper.computeAABBsForFacing(-8, 0, 0, 24, 28, 32);
 
     public BlockTent() {
         super("tent", Variant.class);
@@ -40,8 +39,7 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(
-            World world, IBlockState state) {
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileTent();
     }
 
@@ -84,5 +82,4 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
         }
 
     }
-
 }

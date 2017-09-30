@@ -65,8 +65,7 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
 
     @Override
     @Deprecated
-    public BlockFaceShape getBlockFaceShape(
-            IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing side) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing side) {
         return BlockFaceShape.UNDEFINED;
     }
 
@@ -76,10 +75,10 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
-        if (world.isRemote) return false;
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (world.isRemote)
+            return false;
+
         if (!player.isSneaking() && player.getHeldItem(hand).isEmpty()) {
             BlockPos entityPos = getType(state) == Half.LOWER ? pos : pos.down();
             AxisAlignedBB range = new AxisAlignedBB(entityPos, entityPos.add(1, 1, 1));
@@ -88,8 +87,10 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
                 world.spawnEntity(entityChair);
                 player.startRiding(entityChair);
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -99,14 +100,12 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
     }
 
     @Override
-    public void getDrops(
-            NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         drops.add(new ItemStack(this)); // TODO: Handle this in the base class with a setter
     }
 
     @Override
-    public ItemStack getPickBlock(
-            IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this); // TODO: Handle this in the base class with a setter
     }
 
@@ -144,7 +143,5 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
         public AxisAlignedBB getBoundingBox(EnumFacing facing) {
             return boundingBoxes.get(facing);
         }
-
     }
-
 }

@@ -26,7 +26,8 @@ public class TilePrivacyLectern extends TileEntity implements ITickable {
             float prevFlip = flipT;
             while (true) {
                 flipT += (float) (FLIP_RAND.nextInt(4) - FLIP_RAND.nextInt(4));
-                if (prevFlip != flipT) break;
+                if (prevFlip != flipT)
+                    break;
             }
         }
         ++tickCount;
@@ -35,5 +36,4 @@ public class TilePrivacyLectern extends TileEntity implements ITickable {
         flipA += (flipInterpolation - flipA) * 0.9F;
         pageFlip += flipA;
     }
-
 }

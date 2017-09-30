@@ -87,8 +87,7 @@ public class BlockBase extends Block {
 
     @Override
     @Deprecated
-    public BlockFaceShape getBlockFaceShape(
-            IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return fullBlock ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
     }
 
@@ -116,5 +115,4 @@ public class BlockBase extends Block {
     protected BlockStateContainer.Builder createStateContainer() {
         return new BlockStateContainer.Builder(this);
     }
-
 }

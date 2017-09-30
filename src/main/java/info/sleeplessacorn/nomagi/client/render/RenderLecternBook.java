@@ -41,5 +41,4 @@ public class RenderLecternBook extends TileEntitySpecialRenderer<TilePrivacyLect
         model.render(null, tile.tickCount + partialTicks, flip0, flip1, 1.0F, 0.0F, 0.0625F);
         GlStateManager.popMatrix();
     }
-
 }

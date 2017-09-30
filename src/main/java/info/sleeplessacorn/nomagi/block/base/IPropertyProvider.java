@@ -84,6 +84,5 @@ public interface IPropertyProvider<E extends Enum<E> & IStringSerializable> exte
     default boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
         return true;
     }
-
 }
 

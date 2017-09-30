@@ -118,9 +118,7 @@ public class BlockCandle extends BlockBase implements MultiSelectionRenderer.IPr
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         world.setBlockState(pos, state.withProperty(LIT, !state.getValue(LIT)));
         SoundEvent sound = state.getValue(LIT) ? SoundEvents.BLOCK_CLOTH_HIT : SoundEvents.ITEM_FLINTANDSTEEL_USE;
         world.playSound(null, pos, sound, SoundCategory.BLOCKS, 0.5F, 0.8F);
@@ -206,27 +204,23 @@ public class BlockCandle extends BlockBase implements MultiSelectionRenderer.IPr
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        for (EnumFacing side : FACING.getAllowedValues()) {
-            if (canPlaceAt(world, pos, side)) {
+        for (EnumFacing side : FACING.getAllowedValues())
+            if (canPlaceAt(world, pos, side))
                 return true;
-            }
-        }
+
         return false;
     }
 
     @Override
     @Deprecated
-    public IBlockState getStateForPlacement(
-            World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
-            EntityLivingBase placer) {
-        if (canPlaceAt(world, pos, facing)) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        if (canPlaceAt(world, pos, facing))
             return getDefaultState().withProperty(FACING, facing);
-        }
-        for (EnumFacing face : EnumFacing.Plane.HORIZONTAL) {
-            if (canPlaceAt(world, pos, face)) {
+
+        for (EnumFacing face : EnumFacing.Plane.HORIZONTAL)
+            if (canPlaceAt(world, pos, face))
                 return getDefaultState().withProperty(FACING, face);
-            }
-        }
+
         return getDefaultState().withProperty(FACING, EnumFacing.UP);
     }
 
@@ -245,5 +239,4 @@ public class BlockCandle extends BlockBase implements MultiSelectionRenderer.IPr
     public List<AxisAlignedBB> apply(IBlockState state) {
         return getCollisionBoxList(state);
     }
-
 }

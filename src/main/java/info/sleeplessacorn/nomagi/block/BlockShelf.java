@@ -32,7 +32,6 @@ import java.util.Set;
 public class BlockShelf extends BlockCardinalBase implements MultiSelectionRenderer.IProvider {
 
     private static final AxisAlignedBB EMPTY_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
-
     private static final PropertyBool CONNECT_L = PropertyBool.create("connect_left");
     private static final PropertyBool CONNECT_R = PropertyBool.create("connect_right");
 
@@ -69,15 +68,14 @@ public class BlockShelf extends BlockCardinalBase implements MultiSelectionRende
 
     @Override
     @Deprecated
-    public void addCollisionBoxToList(
-            IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes,
-            @Nullable Entity entity, boolean isActualState) {
-        if (!isActualState) state = state.getActualState(world, pos);
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean isActualState) {
+        if (!isActualState)
+            state = state.getActualState(world, pos);
+
         for (AxisAlignedBB aabb : getCollisionBoxList(state)) {
             AxisAlignedBB aabbAt = aabb.offset(pos);
-            if (entityBox.intersects(aabbAt)) {
+            if (entityBox.intersects(aabbAt))
                 collidingBoxes.add(aabbAt);
-            }
         }
     }
 
@@ -164,7 +162,5 @@ public class BlockShelf extends BlockCardinalBase implements MultiSelectionRende
         public AxisAlignedBB get(EnumFacing facing) {
             return aabb.get(facing);
         }
-
     }
-
 }

@@ -84,9 +84,7 @@ public class BlockCardinalBase extends BlockBase {
     }
 
     @Override
-    public IBlockState getStateForPlacement(
-            World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta,
-            EntityLivingBase placer, EnumHand hand) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         EnumFacing facing = placer.getHorizontalFacing().getOpposite();
         return getDefaultState().withProperty(FACING, facing);
     }
@@ -94,6 +92,5 @@ public class BlockCardinalBase extends BlockBase {
     public static PropertyDirection getFacingProperty() {
         return FACING;
     }
-
 }
 

@@ -60,10 +60,19 @@ public class BlockTable extends BlockBase implements MultiSelectionRenderer.IPro
         boolean east = state.getValue(ADJACENT_CONNECTIONS.get(EnumFacing.EAST));
         boolean south = state.getValue(ADJACENT_CONNECTIONS.get(EnumFacing.SOUTH));
         boolean west = state.getValue(ADJACENT_CONNECTIONS.get(EnumFacing.WEST));
-        if (!north && !west) list.add(AABB.LEG_NW.get());
-        if (!north && !east) list.add(AABB.LEG_NE.get());
-        if (!south && !west) list.add(AABB.LEG_SW.get());
-        if (!south && !east) list.add(AABB.LEG_SE.get());
+
+        if (!north && !west)
+            list.add(AABB.LEG_NW.get());
+
+        if (!north && !east)
+            list.add(AABB.LEG_NE.get());
+
+        if (!south && !west)
+            list.add(AABB.LEG_SW.get());
+
+        if (!south && !east)
+            list.add(AABB.LEG_SE.get());
+
         return list;
     }
 
@@ -125,15 +134,14 @@ public class BlockTable extends BlockBase implements MultiSelectionRenderer.IPro
 
     @Override
     @Deprecated
-    public void addCollisionBoxToList(
-            IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes,
-            Entity entity, boolean isActualState) {
-        if (!isActualState) state = state.getActualState(world, pos);
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity, boolean isActualState) {
+        if (!isActualState)
+            state = state.getActualState(world, pos);
+
         for (AxisAlignedBB aabb : getCollisionBoxList(state)) {
             AxisAlignedBB aabbAt = aabb.offset(pos);
-            if (entityBox.intersects(aabbAt)) {
+            if (entityBox.intersects(aabbAt))
                 collidingBoxes.add(aabbAt);
-            }
         }
     }
 
@@ -166,7 +174,5 @@ public class BlockTable extends BlockBase implements MultiSelectionRenderer.IPro
         public AxisAlignedBB get() {
             return aabb;
         }
-
     }
-
 }

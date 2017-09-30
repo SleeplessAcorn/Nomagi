@@ -30,5 +30,4 @@ public class ContainerPrivacyLectern extends Container {
     public boolean canInteractWith(EntityPlayer player) {
         return true;
     }
-
 }

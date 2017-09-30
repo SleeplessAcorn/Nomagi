@@ -100,5 +100,4 @@ public final class TentData implements INBTSerializable<NBTTagCompound> {
             // FIXME: This should be a RoomData not null, I just need to implement it properly later
         });
     }
-
 }

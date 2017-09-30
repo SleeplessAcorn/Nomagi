@@ -86,7 +86,5 @@ public class GuiButtonNomagi extends GuiButton {
             this.uvW = uvW;
             this.uvH = uvH;
         }
-
     }
-
 }

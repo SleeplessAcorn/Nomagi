@@ -41,9 +41,8 @@ public class EntityChair extends Entity {
         super.onUpdate();
         if (!getEntityWorld().isRemote && getEntityWorld().isBlockLoaded(getPosition())) {
             IBlockState state = getEntityWorld().getBlockState(getPosition());
-            if (getPassengers().isEmpty() || !(state.getBlock() instanceof BlockChair)) {
+            if (getPassengers().isEmpty() || !(state.getBlock() instanceof BlockChair))
                 setDead();
-            }
         }
     }
 
@@ -58,5 +57,4 @@ public class EntityChair extends Entity {
     public static ResourceLocation getRegistryName() {
         return ID;
     }
-
 }

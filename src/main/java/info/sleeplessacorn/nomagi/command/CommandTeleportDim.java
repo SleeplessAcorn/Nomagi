@@ -45,9 +45,8 @@ public class CommandTeleportDim extends CommandBase {
             xPos = Integer.parseInt(args[2]);
             yPos = Integer.parseInt(args[3]);
             zPos = Integer.parseInt(args[4]);
-        } else if (args.length > 2) throw new CommandException(
-                "Additional arguments were given, but did not reach the required amount.\n" + TextFormatting.RED +
-                        getUsage(sender));
+        } else if (args.length > 2)
+            throw new CommandException("Additional arguments were given, but did not reach the required amount.\n" + TextFormatting.RED + getUsage(sender));
 
         TeleporterTent.teleportToDimension(player, dimension, new BlockPos(xPos, yPos, zPos));
     }
@@ -73,5 +72,4 @@ public class CommandTeleportDim extends CommandBase {
         }
         return completion;
     }
-
 }

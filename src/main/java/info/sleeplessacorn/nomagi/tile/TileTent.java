@@ -7,5 +7,4 @@ public class TileTent extends TileEntity {
     public TileTent() {
         // TODO Handle ownership and privacy, sync variant data
     }
-
 }

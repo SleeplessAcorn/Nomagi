@@ -26,14 +26,13 @@ public class BlockPrivacyLectern extends BlockCardinalBase {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (world.getTileEntity(pos) != null) {
             int id = GuiHandler.PRIVACY_LECTERN.ordinal();
             FMLNetworkHandler.openGui(player, Nomagi.INSTANCE, id, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
+
         return false;
     }
 
@@ -47,5 +46,4 @@ public class BlockPrivacyLectern extends BlockCardinalBase {
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TilePrivacyLectern();
     }
-
 }

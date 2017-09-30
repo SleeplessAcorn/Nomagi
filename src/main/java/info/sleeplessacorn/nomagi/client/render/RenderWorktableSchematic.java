@@ -10,5 +10,4 @@ public class RenderWorktableSchematic extends TileEntitySpecialRenderer<TileRoom
         super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
         // FIXME bleh
     }
-
 }

@@ -19,5 +19,4 @@ public final class ConfigHandler {
     @Config.RangeInt(min = 0, max = 16)
     @Config.LangKey("config.nomagi.tentRadius")
     public static int tentRadius = 2;
-
 }

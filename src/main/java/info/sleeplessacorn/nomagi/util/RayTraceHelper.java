@@ -22,10 +22,13 @@ public class RayTraceHelper {
             }
             return null;
         }).collect(Collectors.toList());
+
         RayTraceResult returnResult = null;
         double sqrDis = 0.0D;
         for (RayTraceResult resultAt : list) {
-            if (resultAt == null) continue;
+            if (resultAt == null)
+                continue;
+
             double newSqrDis = resultAt.hitVec.squareDistanceTo(end);
             if (newSqrDis > sqrDis) {
                 returnResult = resultAt;
@@ -34,5 +37,4 @@ public class RayTraceHelper {
         }
         return returnResult;
     }
-
 }

@@ -7,7 +7,6 @@ import net.minecraft.block.material.Material;
 public final class MaterialHelper {
 
     private static final MaterialData DEFAULT = new MaterialData(SoundType.STONE, 00.00f, 00.00f);
-
     private static final ImmutableMap<Material, MaterialData> MATERIAL_DATA = ImmutableMap.<Material, MaterialData>
             builder()
             .put(Material.GROUND, new MaterialData(SoundType.GROUND, 00.50f, 02.50f))
@@ -48,7 +47,5 @@ public final class MaterialHelper {
             this.hardness = hardness;
             this.resistance = resistance;
         }
-
     }
-
 }

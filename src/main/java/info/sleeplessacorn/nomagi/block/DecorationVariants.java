@@ -45,5 +45,4 @@ public enum DecorationVariants implements IPropertyProvider<DecorationVariants> 
     public Material getMaterial() {
         return material;
     }
-
 }

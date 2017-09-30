@@ -7,5 +7,4 @@ public class TileRoomWorktable extends TileEntity {
     public TileRoomWorktable() {
         // TODO Sync with dimension's world data and handle TESR
     }
-
 }

@@ -45,5 +45,4 @@ public class GuiRoomWorktable extends GuiContainer {
         mc.getTextureManager().bindTexture(GuiHandler.ROOM_WORKTABLE.getTexture());
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
-
 }
