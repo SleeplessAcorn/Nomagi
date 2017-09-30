@@ -77,7 +77,7 @@ public class RegistrarNomagi {
                 new BlockPrivacyLectern().setRegistryName("privacy_lectern")
         );
 
-        event.getRegistry().registerAll(blocks.toArray(new Block[0]));
+        blocks.forEach(event.getRegistry()::register);
     }
 
     @SubscribeEvent
@@ -95,7 +95,7 @@ public class RegistrarNomagi {
                 items.add(new ItemBlock(b).setRegistryName(b.getRegistryName()));
         });
 
-        event.getRegistry().registerAll(items.toArray(new Item[0]));
+        items.forEach(event.getRegistry()::register);
     }
 
     @SubscribeEvent
@@ -117,14 +117,13 @@ public class RegistrarNomagi {
             if (i instanceof IModelProvider) {
                 Set<WrappedModel> models = Sets.newHashSet();
                 ((IModelProvider) i).gatherModels(models);
-                for (WrappedModel model : models)
-                    ModelLoader.setCustomModelResourceLocation(i, model.getMetadata(), model.getMRL());
+                models.forEach(m -> ModelLoader.setCustomModelResourceLocation(i, m.getMetadata(), m.getMRL()));
             } else {
                 ModelLoader.setCustomModelResourceLocation(i, 0, new ModelResourceLocation(i.getRegistryName(), "inventory"));
             }
         });
 
-        blocks.stream().filter(b -> b instanceof ICustomStateMapper).forEach(b -> ModelLoader.setCustomStateMapper(b, ((ICustomStateMapper) b).getCustomMapper()));
+        blocks.stream().filter(ICustomStateMapper.class::isInstance).forEach(b -> ModelLoader.setCustomStateMapper(b, ((ICustomStateMapper) b).getCustomMapper()));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TilePrivacyLectern.class, new RenderLecternBook());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRoomWorktable.class, new RenderWorktableSchematic());
