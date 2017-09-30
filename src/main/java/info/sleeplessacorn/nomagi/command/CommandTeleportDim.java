@@ -70,6 +70,7 @@ public class CommandTeleportDim extends CommandBase {
                 break;
             }
         }
+
         return completion;
     }
 }

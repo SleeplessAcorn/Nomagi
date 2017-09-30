@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> extends BlockEnumBase<E> {
 
-    private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
     public BlockEnumCardinalBase(String name, String prefix, Class<E> clazz) {
         super(name, prefix, clazz);
@@ -79,10 +79,6 @@ public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> ext
 
     public EnumFacing getFacing(IBlockState state) {
         return state.getValue(FACING);
-    }
-
-    public static PropertyDirection getFacingProperty() {
-        return FACING;
     }
 }
 

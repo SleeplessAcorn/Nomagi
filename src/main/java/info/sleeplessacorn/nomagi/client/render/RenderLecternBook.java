@@ -24,7 +24,7 @@ public class RenderLecternBook extends TileEntitySpecialRenderer<TilePrivacyLect
         GlStateManager.translate(0.0F, 0.1F + tickInterpolation * 0.01F, 0.0F);
 
         IBlockState state = tile.getWorld().getBlockState(tile.getPos());
-        EnumFacing facing = state.getValue(BlockCardinalBase.getFacingProperty());
+        EnumFacing facing = state.getValue(BlockCardinalBase.FACING);
         float angleOffset = facing.getAxis() == EnumFacing.Axis.X ? 90F : -90F; // EnumFacing hates me.
 
         GlStateManager.rotate(facing.getHorizontalAngle() + angleOffset, 0.0F, 1.0F, 0.0F);

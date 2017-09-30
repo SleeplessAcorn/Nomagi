@@ -34,8 +34,7 @@ public class GuiRoomWorktable extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String label = "container." + Nomagi.ID + ".roomWorktable";
-        fontRenderer.drawString(I18n.format(label), 8, 6, 0x404040);
+        fontRenderer.drawString(I18n.format("container." + Nomagi.ID + ".roomWorktable"), 8, 6, 0x404040);
         fontRenderer.drawString(I18n.format("container.inventory"), 48, ySize - 94, 0x404040);
     }
 

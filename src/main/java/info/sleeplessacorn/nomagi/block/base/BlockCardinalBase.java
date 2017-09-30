@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class BlockCardinalBase extends BlockBase {
 
-    private static final PropertyDirection FACING = PropertyDirection.create("facing", Plane.HORIZONTAL);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", Plane.HORIZONTAL);
 
     public BlockCardinalBase(String name, float hardness, float resistance, Material material, SoundType sound) {
         super(name, hardness, resistance, material, sound);
@@ -87,10 +87,6 @@ public class BlockCardinalBase extends BlockBase {
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         EnumFacing facing = placer.getHorizontalFacing().getOpposite();
         return getDefaultState().withProperty(FACING, facing);
-    }
-
-    public static PropertyDirection getFacingProperty() {
-        return FACING;
     }
 }
 

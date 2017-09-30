@@ -20,8 +20,6 @@ public class CommandNomagi extends CommandTreeBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return Nomagi.ID + " [" + Joiner.on("|").join(
-                getSubCommands().stream().map(ICommand::getName).iterator()
-        ) + "]";
+        return Nomagi.ID + " [" + Joiner.on("|").join(getSubCommands().stream().map(ICommand::getName).iterator()) + "]";
     }
 }

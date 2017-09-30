@@ -62,9 +62,9 @@ public final class WrappedModel {
         }
 
         public WrappedModel build() {
-            if (variants.isEmpty()) {
+            if (variants.isEmpty())
                 variants.add("inventory");
-            }
+
             return new WrappedModel(this);
         }
     }

@@ -40,7 +40,9 @@ public class GuiButtonNomagi extends GuiButton {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-        if (!visible) return;
+        if (!visible)
+            return;
+
         mc.getTextureManager().bindTexture(texture);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableBlend();
@@ -49,7 +51,10 @@ public class GuiButtonNomagi extends GuiButton {
         hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
         int newUvY = buttonType.uvY + (hovered ? (Mouse.isButtonDown(0) ? height * 2 : height) : 0);
         mc.ingameGUI.drawTexturedModalRect(x, y, buttonType.uvX, newUvY, width, height);
-        if (displayString == null) return;
+
+        if (displayString == null)
+            return;
+
         String label = I18n.format(displayString);
         int labelX = x + (width / 2) - (mc.fontRenderer.getStringWidth(label) / 2);
         int labelY = y + (height / 2) - (mc.fontRenderer.FONT_HEIGHT / 2);
@@ -61,8 +66,7 @@ public class GuiButtonNomagi extends GuiButton {
         if (isMouseOver() && tooltip != null && I18n.hasKey(tooltip)) {
             ScaledResolution res = new ScaledResolution(mc);
             List<String> ls = Collections.singletonList(I18n.format(tooltip));
-            GuiUtils.drawHoveringText(ItemStack.EMPTY, ls, mouseX, mouseY, res.getScaledWidth(), res.getScaledHeight(),
-                    -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(ItemStack.EMPTY, ls, mouseX, mouseY, res.getScaledWidth(), res.getScaledHeight(), -1, mc.fontRenderer);
         }
     }
 

@@ -43,19 +43,17 @@ public final class TentData implements INBTSerializable<NBTTagCompound> {
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> usedChunks = Sets.newHashSet();
         int range = ConfigHandler.tentRadius; // FIXME: This will be inaccurate when multi-chunk rooms are implemented
-        for (int x = -range; x <= range; x++) {
-            for (int z = -range; z <= range; z++) {
-                if (rooms.containsKey(new ChunkPos(x, z))) {
+
+        for (int x = -range; x <= range; x++)
+            for (int z = -range; z <= range; z++)
+                if (rooms.containsKey(new ChunkPos(x, z)))
                     usedChunks.add(getWorld().getChunkFromChunkCoords(origin.x + x, origin.z + z));
-                }
-            }
-        }
+
         return usedChunks;
     }
 
     public Set<EntityPlayer> getPlayersInside() {
-        return Sets.newHashSet(getWorld().getPlayers(EntityPlayer.class, entity -> getUsedChunks()
-                .contains(entity.getEntityWorld().getChunkFromBlockCoords(entity.getPosition()))));
+        return Sets.newHashSet(getWorld().getPlayers(EntityPlayer.class, entity -> getUsedChunks().contains(entity.getEntityWorld().getChunkFromBlockCoords(entity.getPosition()))));
     }
 
     public World getWorld() {

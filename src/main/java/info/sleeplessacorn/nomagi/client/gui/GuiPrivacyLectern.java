@@ -72,13 +72,9 @@ public class GuiPrivacyLectern extends GuiContainer {
 
     private void reloadPlayerMap() {
         playerCache.clear(); // Invalidate existing cache
-        if (world == null || world.playerEntities == null) {
+        if (world == null || world.playerEntities == null)
             Nomagi.LOGGER.warn("Failed to collect player names! Entity list doesn't exist!");
-        } else {
-            world.playerEntities.forEach(player -> playerCache.putIfAbsent(
-                    player.getUniqueID(),
-                    player.getDisplayNameString())
-            );
-        }
+        else
+            world.playerEntities.forEach(player -> playerCache.putIfAbsent(player.getUniqueID(), player.getDisplayNameString()));
     }
 }
