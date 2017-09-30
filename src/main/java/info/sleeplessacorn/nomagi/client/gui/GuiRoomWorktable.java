@@ -1,8 +1,8 @@
 package info.sleeplessacorn.nomagi.client.gui;
 
-import info.sleeplessacorn.nomagi.ModGuis;
 import info.sleeplessacorn.nomagi.Nomagi;
-import info.sleeplessacorn.nomagi.client.gui.Button.ButtonType;
+import info.sleeplessacorn.nomagi.client.GuiHandler;
+import info.sleeplessacorn.nomagi.client.gui.GuiButtonNomagi.ButtonType;
 import info.sleeplessacorn.nomagi.container.ContainerRoomWorktable;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,7 +22,7 @@ public class GuiRoomWorktable extends GuiContainer {
     @Override
     public void initGui() {
         super.initGui();
-        addButton(new Button(ButtonType.LONG, guiLeft + 184, guiTop + 8, btnKey + "test"));
+        addButton(new GuiButtonNomagi(ButtonType.LONG, guiLeft + 184, guiTop + 8, btnKey + "test"));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class GuiRoomWorktable extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1f, 1f, 1f);
-        mc.getTextureManager().bindTexture(ModGuis.ROOM_WORKTABLE.getTexture());
+        mc.getTextureManager().bindTexture(GuiHandler.ROOM_WORKTABLE.getTexture());
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 

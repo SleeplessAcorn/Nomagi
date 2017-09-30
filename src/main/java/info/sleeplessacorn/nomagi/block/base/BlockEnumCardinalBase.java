@@ -1,13 +1,13 @@
 package info.sleeplessacorn.nomagi.block.base;
 
-import info.sleeplessacorn.nomagi.ModRegistry;
-import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
+import info.sleeplessacorn.nomagi.client.WrappedModel;
+import info.sleeplessacorn.nomagi.client.WrappedModel.Builder;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
@@ -15,7 +15,9 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockEnumCardinalBase <E extends Enum<E> & IPropertyProvider<E>> extends BlockEnumBase<E> {
+import java.util.Set;
+
+public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> extends BlockEnumBase<E> {
 
     private static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
@@ -25,10 +27,6 @@ public class BlockEnumCardinalBase <E extends Enum<E> & IPropertyProvider<E>> ex
 
     public BlockEnumCardinalBase(String name, Class<E> clazz) {
         super(name, clazz);
-    }
-
-    public static PropertyDirection getFacingProperty() {
-        return FACING;
     }
 
     @Override
@@ -53,19 +51,14 @@ public class BlockEnumCardinalBase <E extends Enum<E> & IPropertyProvider<E>> ex
     }
 
     @Override
-    public void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockEnumBase<E>(this) {
+    public ItemBlock getItemBlock() {
+        return new ItemBlockEnumBase<E>(this) {
             @Override
-            protected void registerModels() {
-                for (E value : values) {
-                    ModelRegistry.registerModel(new Builder(this, value.getMetadata())
-                            .addVariant("facing=north")
-                            .addVariant("type=" + value.getName())
-                            .build()
-                    );
-                }
+            public void getModels(Set<WrappedModel> models) {
+                for (E value : values)
+                    models.add(new Builder(this, value.getMetadata()).addVariant("facing=north").addVariant("type=" + value.getName()).build());
             }
-        });
+        };
     }
 
     @Override
@@ -88,6 +81,10 @@ public class BlockEnumCardinalBase <E extends Enum<E> & IPropertyProvider<E>> ex
 
     public EnumFacing getFacing(IBlockState state) {
         return state.getValue(FACING);
+    }
+
+    public static PropertyDirection getFacingProperty() {
+        return FACING;
     }
 
 }

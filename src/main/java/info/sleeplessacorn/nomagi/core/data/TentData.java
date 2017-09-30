@@ -1,9 +1,9 @@
-package info.sleeplessacorn.nomagi.data;
+package info.sleeplessacorn.nomagi.core.data;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import info.sleeplessacorn.nomagi.ModConfig;
-import info.sleeplessacorn.nomagi.ModObjects;
+import info.sleeplessacorn.nomagi.ConfigHandler;
+import info.sleeplessacorn.nomagi.core.RegistrarNomagi;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.ChunkPos;
@@ -42,7 +42,7 @@ public final class TentData implements INBTSerializable<NBTTagCompound> {
 
     public Set<Chunk> getUsedChunks() {
         Set<Chunk> usedChunks = Sets.newHashSet();
-        int range = ModConfig.tentRadius; // FIXME: This will be inaccurate when multi-chunk rooms are implemented
+        int range = ConfigHandler.tentRadius; // FIXME: This will be inaccurate when multi-chunk rooms are implemented
         for (int x = -range; x <= range; x++) {
             for (int z = -range; z <= range; z++) {
                 if (rooms.containsKey(new ChunkPos(x, z))) {
@@ -59,11 +59,11 @@ public final class TentData implements INBTSerializable<NBTTagCompound> {
     }
 
     public World getWorld() {
-        return DimensionManager.getWorld(ModObjects.TENT_DIMENSION.getId());
+        return DimensionManager.getWorld(RegistrarNomagi.tentDimension.getId());
     }
 
     public boolean canExtendTo(ChunkPos pos) {
-        int range = ModConfig.tentRadius;
+        int range = ConfigHandler.tentRadius;
         return (pos.x <= range) && (pos.x >= -range) && (pos.z <= range) && (pos.z >= -range);
     }
 
@@ -80,7 +80,7 @@ public final class TentData implements INBTSerializable<NBTTagCompound> {
         nbt.setInteger("chunkZ", this.origin.z);
         this.rooms.forEach((pos, room) -> {
             String name = room.getSchematic().toString();
-            rooms.setIntArray(name, new int[] { pos.x, pos.z });
+            rooms.setIntArray(name, new int[]{pos.x, pos.z});
         });
         nbt.setTag("rooms", rooms);
         return nbt;

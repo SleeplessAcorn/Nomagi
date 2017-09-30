@@ -14,7 +14,7 @@ import net.minecraft.world.IBlockAccess;
 
 import java.util.Locale;
 
-public interface IPropertyProvider <E extends Enum<E> & IStringSerializable> extends IStringSerializable {
+public interface IPropertyProvider<E extends Enum<E> & IStringSerializable> extends IStringSerializable {
 
     E getProvider();
 

@@ -2,12 +2,11 @@ package info.sleeplessacorn.nomagi.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
-import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
-import info.sleeplessacorn.nomagi.client.render.MultiSelectionRenderer;
 import info.sleeplessacorn.nomagi.block.base.BlockCardinalBase;
+import info.sleeplessacorn.nomagi.client.WrappedModel;
+import info.sleeplessacorn.nomagi.client.WrappedModel.Builder;
+import info.sleeplessacorn.nomagi.client.render.MultiSelectionRenderer;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
 import info.sleeplessacorn.nomagi.util.RayTraceHelper;
@@ -16,6 +15,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Set;
 
 public class BlockShelf extends BlockCardinalBase implements MultiSelectionRenderer.IProvider {
 
@@ -41,14 +42,14 @@ public class BlockShelf extends BlockCardinalBase implements MultiSelectionRende
     }
 
     @Override
-    protected void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockBase(this) {
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this) {
             @Override
-            protected void registerModels() {
+            public void getModels(Set<WrappedModel> models) {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "shelf_item");
-                ModelRegistry.registerModel(new Builder(this).setResourceLocation(path).build());
+                models.add(new Builder(this).setResourceLocation(path).build());
             }
-        });
+        };
     }
 
     @Override

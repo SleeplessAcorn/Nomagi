@@ -16,14 +16,14 @@ import org.lwjgl.input.Mouse;
 import java.util.Collections;
 import java.util.List;
 
-public class Button extends GuiButton {
+public class GuiButtonNomagi extends GuiButton {
 
     private final ResourceLocation texture = new ResourceLocation(Nomagi.ID, "textures/gui/buttons_all.png");
     private final ButtonType buttonType;
 
     private String tooltip;
 
-    public Button(ButtonType buttonType, int posX, int posY, String label) {
+    public GuiButtonNomagi(ButtonType buttonType, int posX, int posY, String label) {
         super(-1, posX, posY, 0, 0, label);
         this.buttonType = buttonType;
         this.width = buttonType.uvW;
@@ -31,7 +31,7 @@ public class Button extends GuiButton {
         this.tooltip = label + ".tooltip";
     }
 
-    public Button(ButtonType buttonType, int posX, int posY) {
+    public GuiButtonNomagi(ButtonType buttonType, int posX, int posY) {
         super(-1, posX, posY, 0, 0, "");
         this.buttonType = buttonType;
         this.width = buttonType.uvW;
@@ -66,7 +66,7 @@ public class Button extends GuiButton {
         }
     }
 
-    public Button setTooltip(String tooltip) {
+    public GuiButtonNomagi setTooltip(String tooltip) {
         this.tooltip = tooltip;
         return this;
     }

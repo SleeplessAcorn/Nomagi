@@ -1,6 +1,5 @@
 package info.sleeplessacorn.nomagi.block.base;
 
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import info.sleeplessacorn.nomagi.util.StringHelper;
@@ -14,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnumBase <E extends Enum<E> & IPropertyProvider<E>> extends Block {
+public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Block {
 
     protected final E[] values;
     protected final PropertyEnum<E> propertyEnum;
@@ -38,19 +38,17 @@ public class BlockEnumBase <E extends Enum<E> & IPropertyProvider<E>> extends Bl
         values = clazz.getEnumConstants();
         propertyEnum = PropertyEnum.create(prefix, clazz);
         container = createStateContainer().build();
-        setRegistryName(name);
         setUnlocalizedName(Nomagi.ID + "." + StringHelper.toLangKey(name));
         setCreativeTab(Nomagi.TAB);
         setDefaultState(getBlockState().getBaseState());
-        registerItemBlock();
     }
 
     public BlockEnumBase(String name, Class<E> clazz) {
         this(name, "type", clazz);
     }
 
-    protected void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockEnumBase<>(this));
+    public ItemBlock getItemBlock() {
+        return new ItemBlockEnumBase<>(this);
     }
 
     public final E getType(IBlockState state) {

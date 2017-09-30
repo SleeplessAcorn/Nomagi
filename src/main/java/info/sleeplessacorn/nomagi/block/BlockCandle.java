@@ -2,11 +2,9 @@ package info.sleeplessacorn.nomagi.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import info.sleeplessacorn.nomagi.ModRegistry;
-import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel;
-import info.sleeplessacorn.nomagi.client.render.MultiSelectionRenderer;
 import info.sleeplessacorn.nomagi.block.base.BlockBase;
+import info.sleeplessacorn.nomagi.client.WrappedModel;
+import info.sleeplessacorn.nomagi.client.render.MultiSelectionRenderer;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import info.sleeplessacorn.nomagi.util.RayTraceHelper;
 import net.minecraft.block.Block;
@@ -21,14 +19,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -40,13 +32,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class BlockCandle extends BlockBase implements MultiSelectionRenderer.IProvider {
 
     private static final PropertyBool LIT = PropertyBool.create("lit");
-
-    private static final PropertyDirection FACING = PropertyDirection
-            .create("facing", facing -> facing != EnumFacing.DOWN);
+    private static final PropertyDirection FACING = PropertyDirection.create("facing", facing -> facing != EnumFacing.DOWN);
 
     private static final ImmutableMap<EnumFacing, AxisAlignedBB> AABB_CANDLE = ImmutableMap.of(
             EnumFacing.UP, new AxisAlignedBB(0.4375D, 0.0625D, 0.4375D, 0.5625D, 0.5625D, 0.5625D),
@@ -105,13 +96,13 @@ public class BlockCandle extends BlockBase implements MultiSelectionRenderer.IPr
     }
 
     @Override
-    protected void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockBase(this) {
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this) {
             @Override
-            protected void registerModels() {
-                ModelRegistry.registerModel(new WrappedModel.Builder(this).addVariant("facing=up,lit=false").build());
+            public void getModels(Set<WrappedModel> models) {
+                models.add(new WrappedModel.Builder(this).addVariant("facing=up,lit=false").build());
             }
-        });
+        };
     }
 
     @Override

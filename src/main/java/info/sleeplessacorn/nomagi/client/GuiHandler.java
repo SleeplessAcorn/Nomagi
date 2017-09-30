@@ -1,6 +1,7 @@
-package info.sleeplessacorn.nomagi;
+package info.sleeplessacorn.nomagi.client;
 
 import com.google.common.collect.Range;
+import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.client.gui.GuiPrivacyLectern;
 import info.sleeplessacorn.nomagi.client.gui.GuiRoomWorktable;
 import info.sleeplessacorn.nomagi.container.ContainerPrivacyLectern;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @SuppressWarnings("NewExpressionSideOnly")
-public enum ModGuis implements IGuiHandler {
+public enum GuiHandler implements IGuiHandler {
 
     PRIVACY_LECTERN(new ResourceLocation(Nomagi.ID, "textures/gui/privacy_lectern.png")) {
         @Override
@@ -38,24 +39,8 @@ public enum ModGuis implements IGuiHandler {
         }
     };
 
-    private final ResourceLocation texture;
-
-    ModGuis(ResourceLocation texture) {
-        this.texture = texture;
-    }
-
-    public ResourceLocation getTexture() {
-        return texture;
-    }
-
-    public int getID() {
-        return ordinal();
-    }
-
-    private static final ModGuis[] VALUES = values();
-
+    private static final GuiHandler[] VALUES = values();
     private static final Range<Integer> RANGE = Range.closedOpen(0, VALUES.length);
-
     private static final IGuiHandler NO_OP = new IGuiHandler() {
         @Override
         public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -67,6 +52,15 @@ public enum ModGuis implements IGuiHandler {
             return null;
         }
     };
+    private final ResourceLocation texture;
+
+    GuiHandler(ResourceLocation texture) {
+        this.texture = texture;
+    }
+
+    public ResourceLocation getTexture() {
+        return texture;
+    }
 
     private static IGuiHandler getHandler(int ID) {
         return RANGE.contains(ID) ? VALUES[ID] : NO_OP;

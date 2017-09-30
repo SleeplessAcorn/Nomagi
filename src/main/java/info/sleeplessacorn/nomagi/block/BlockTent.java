@@ -1,17 +1,17 @@
 package info.sleeplessacorn.nomagi.block;
 
 import com.google.common.collect.ImmutableMap;
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
-import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
+import info.sleeplessacorn.nomagi.client.WrappedModel;
+import info.sleeplessacorn.nomagi.client.WrappedModel.Builder;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockEnumBase;
 import info.sleeplessacorn.nomagi.tile.TileTent;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -21,6 +21,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Set;
 
 public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
 
@@ -45,20 +46,16 @@ public class BlockTent extends BlockEnumCardinalBase<BlockTent.Variant> {
     }
 
     @Override
-    public void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockEnumBase<Variant>(this) {
+    public ItemBlock getItemBlock() {
+        return (ItemBlock) new ItemBlockEnumBase<Variant>(this) {
             @Override
-            protected void registerModels() {
+            public void getModels(Set<WrappedModel> models) {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "tent_item");
                 for (Variant value : values) {
-                    ModelRegistry.registerModel(new Builder(this, value.getMetadata())
-                            .setResourceLocation(path)
-                            .addVariant("type=" + value.getName())
-                            .build()
-                    );
+                    models.add(new Builder(this, value.getMetadata()).setResourceLocation(path).addVariant("type=" + value.getName()).build());
                 }
             }
-        }.setMaxStackSize(1));
+        }.setMaxStackSize(1);
     }
 
     @Override

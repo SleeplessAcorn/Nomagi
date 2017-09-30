@@ -33,7 +33,7 @@ minecraft {
     runDir = 'run'
     replaceIn 'Nomagi.java'
     replace '@VERSION@', project.version
-//    clientRunArgs += "--username=${userName}"
+    clientRunArgs += "--username=${userName}"
     mappings = project.mcpMappings
 }
 

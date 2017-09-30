@@ -1,6 +1,6 @@
 package info.sleeplessacorn.nomagi.world;
 
-import info.sleeplessacorn.nomagi.ModLogger;
+import info.sleeplessacorn.nomagi.Nomagi;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -25,6 +25,15 @@ public class TeleporterTent extends Teleporter {
         this.z = z;
     }
 
+    @Override
+    public void placeInPortal(Entity entity, float rotationYaw) {
+        worldServer.getBlockState(new BlockPos((int) x, (int) y, (int) z));
+        entity.setPosition(x, y, z);
+        entity.motionX = 0.0f;
+        entity.motionY = 0.0f;
+        entity.motionZ = 0.0f;
+    }
+
     public static boolean teleportToDimension(EntityPlayer player, int dimension, BlockPos pos) {
         return teleportToDimension(player, Pair.of(dimension, pos));
     }
@@ -40,7 +49,7 @@ public class TeleporterTent extends Teleporter {
         MinecraftServer server = player.getEntityWorld().getMinecraftServer();
 
         if (server == null || server.getWorld(dimension).getMinecraftServer() == null) {
-            ModLogger.error(true, "Dimension {} doesn't exist!", dimension);
+            Nomagi.LOGGER.error("Dimension {} doesn't exist!", dimension);
             return false;
         }
 
@@ -61,15 +70,6 @@ public class TeleporterTent extends Teleporter {
 
         player.setSneaking(false);
         return true;
-    }
-
-    @Override
-    public void placeInPortal(Entity entity, float rotationYaw) {
-        worldServer.getBlockState(new BlockPos((int) x, (int) y, (int) z));
-        entity.setPosition(x, y, z);
-        entity.motionX = 0.0f;
-        entity.motionY = 0.0f;
-        entity.motionZ = 0.0f;
     }
 
 }

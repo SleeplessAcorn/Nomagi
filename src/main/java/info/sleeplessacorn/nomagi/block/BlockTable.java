@@ -2,12 +2,12 @@ package info.sleeplessacorn.nomagi.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
-import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
-import info.sleeplessacorn.nomagi.client.render.MultiSelectionRenderer;
 import info.sleeplessacorn.nomagi.block.base.BlockBase;
+import info.sleeplessacorn.nomagi.client.ICustomStateMapper;
+import info.sleeplessacorn.nomagi.client.WrappedModel;
+import info.sleeplessacorn.nomagi.client.WrappedModel.Builder;
+import info.sleeplessacorn.nomagi.client.render.MultiSelectionRenderer;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import info.sleeplessacorn.nomagi.util.RayTraceHelper;
 import net.minecraft.block.material.Material;
@@ -16,8 +16,10 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -26,21 +28,24 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Function;
 
 
-public class BlockTable extends BlockBase implements MultiSelectionRenderer.IProvider {
+public class BlockTable extends BlockBase implements MultiSelectionRenderer.IProvider, ICustomStateMapper {
 
     private static final ImmutableMap<EnumFacing, IProperty<Boolean>> ADJACENT_CONNECTIONS = Arrays
-            .stream(EnumFacing.HORIZONTALS).collect(ImmutableMap.toImmutableMap(Function.identity(),
-                    facing -> PropertyBool.create("connect_" + facing.getName().toLowerCase(Locale.ROOT))));
+            .stream(EnumFacing.HORIZONTALS)
+            .collect(ImmutableMap.toImmutableMap(
+                    Function.identity(),
+                    facing -> PropertyBool.create("connect_" + facing.getName().toLowerCase(Locale.ROOT))
+            ));
 
     public BlockTable() {
         super("table", Material.WOOD);
@@ -63,21 +68,21 @@ public class BlockTable extends BlockBase implements MultiSelectionRenderer.IPro
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerStateMapper() {
+    public IStateMapper getCustomMapper() {
         StateMap.Builder builder = new StateMap.Builder();
         ADJACENT_CONNECTIONS.values().forEach(builder::ignore);
-        ModelLoader.setCustomStateMapper(this, builder.build());
+        return builder.build();
     }
 
     @Override
-    protected void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockBase(this) {
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this) {
             @Override
-            protected void registerModels() {
+            public void getModels(Set<WrappedModel> models) {
                 ResourceLocation path = new ResourceLocation(Nomagi.ID, "table_item");
-                ModelRegistry.registerModel(new Builder(this).setResourceLocation(path).build());
+                models.add(new Builder(this).setResourceLocation(path).build());
             }
-        });
+        };
     }
 
     @Override

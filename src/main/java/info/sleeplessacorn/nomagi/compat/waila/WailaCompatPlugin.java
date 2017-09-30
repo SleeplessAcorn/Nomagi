@@ -14,5 +14,4 @@ public class WailaCompatPlugin implements IWailaPlugin {
     public void register(IWailaRegistrar registrar) {
         registrar.registerBodyProvider(new TentOwnerProvider(), BlockTent.class);
     }
-
 }

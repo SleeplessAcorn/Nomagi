@@ -1,11 +1,10 @@
 package info.sleeplessacorn.nomagi.block;
 
 import com.google.common.collect.ImmutableMap;
-import info.sleeplessacorn.nomagi.ModGuis;
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
 import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
+import info.sleeplessacorn.nomagi.client.GuiHandler;
 import info.sleeplessacorn.nomagi.item.ItemBlockRoomWorktable;
 import info.sleeplessacorn.nomagi.tile.TileRoomWorktable;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
@@ -14,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -35,8 +35,8 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
     }
 
     @Override
-    public void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockRoomWorktable(this));
+    public ItemBlock getItemBlock() {
+        return new ItemBlockRoomWorktable(this);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         world.setBlockToAir(getType(state) == Side.LEFT
-                            ? pos.offset(getFacing(state).rotateYCCW())
-                            : pos.offset(getFacing(state).rotateY()));
+                ? pos.offset(getFacing(state).rotateYCCW())
+                : pos.offset(getFacing(state).rotateY()));
     }
 
     @Override
@@ -75,8 +75,8 @@ public class BlockRoomWorktable extends BlockEnumCardinalBase<BlockRoomWorktable
             float hitX, float hitY, float hitZ) {
         if (getType(state) == Side.RIGHT) pos = pos.offset(getFacing(state).rotateY());
         if (world.getTileEntity(pos) != null) {
-            int id = ModGuis.ROOM_WORKTABLE.getID();
-            FMLNetworkHandler.openGui(player, Nomagi.instance, id, world, pos.getX(), pos.getY(), pos.getZ());
+            int id = GuiHandler.ROOM_WORKTABLE.ordinal();
+            FMLNetworkHandler.openGui(player, Nomagi.INSTANCE, id, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return false;

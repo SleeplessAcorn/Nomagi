@@ -1,8 +1,7 @@
 package info.sleeplessacorn.nomagi.block.base;
 
-import info.sleeplessacorn.nomagi.ModRegistry;
-import info.sleeplessacorn.nomagi.client.model.ModelRegistry;
-import info.sleeplessacorn.nomagi.client.model.WrappedModel.Builder;
+import info.sleeplessacorn.nomagi.client.WrappedModel;
+import info.sleeplessacorn.nomagi.client.WrappedModel.Builder;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -10,6 +9,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Plane;
 import net.minecraft.util.EnumHand;
@@ -17,6 +17,8 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Set;
 
 public class BlockCardinalBase extends BlockBase {
 
@@ -38,21 +40,14 @@ public class BlockCardinalBase extends BlockBase {
         super(name, material);
     }
 
-    public static PropertyDirection getFacingProperty() {
-        return FACING;
-    }
-
     @Override
-    protected void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockBase(this) {
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this) {
             @Override
-            protected void registerModels() {
-                ModelRegistry.registerModel(new Builder(this)
-                        .addVariant("facing=north")
-                        .build()
-                );
+            public void getModels(Set<WrappedModel> models) {
+                models.add(new Builder(this).addVariant("facing=north").build());
             }
-        });
+        };
     }
 
     @Override
@@ -94,6 +89,10 @@ public class BlockCardinalBase extends BlockBase {
             EntityLivingBase placer, EnumHand hand) {
         EnumFacing facing = placer.getHorizontalFacing().getOpposite();
         return getDefaultState().withProperty(FACING, facing);
+    }
+
+    public static PropertyDirection getFacingProperty() {
+        return FACING;
     }
 
 }

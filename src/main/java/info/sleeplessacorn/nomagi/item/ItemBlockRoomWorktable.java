@@ -1,9 +1,9 @@
 package info.sleeplessacorn.nomagi.item;
 
-import info.sleeplessacorn.nomagi.ModObjects;
 import info.sleeplessacorn.nomagi.block.BlockRoomWorktable;
 import info.sleeplessacorn.nomagi.block.BlockRoomWorktable.Side;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
+import info.sleeplessacorn.nomagi.core.RegistrarNomagi;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyDirection;
@@ -39,7 +39,7 @@ public class ItemBlockRoomWorktable extends ItemBlockBase {
 
     private boolean placeWorktableAt(World world, EntityPlayer player, BlockPos posLeft, BlockPos posRight) {
         if (!world.isRemote) {
-            BlockRoomWorktable block = ModObjects.BLOCK_ROOM_WORKTABLE;
+            BlockRoomWorktable block = (BlockRoomWorktable) RegistrarNomagi.ROOM_WORKTABLE;
             PropertyDirection direction = BlockEnumCardinalBase.getFacingProperty();
             EnumFacing facing = player.getHorizontalFacing().getOpposite();
             IBlockState state = block.getDefaultState().withProperty(direction, facing);

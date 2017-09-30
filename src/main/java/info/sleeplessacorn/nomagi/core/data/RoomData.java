@@ -1,6 +1,5 @@
-package info.sleeplessacorn.nomagi.data;
+package info.sleeplessacorn.nomagi.core.data;
 
-import info.sleeplessacorn.nomagi.ModLogger;
 import info.sleeplessacorn.nomagi.Nomagi;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -61,7 +60,7 @@ public final class RoomData {
             template.read(nbt);
             return template;
         } catch (IOException ignored) {
-            ModLogger.error(true, "Failed to parse NBT file for room <{}>!", schematic.toString());
+            Nomagi.LOGGER.error("Failed to parse NBT file for room <{}>!", schematic.toString());
             return null;
         }
     }

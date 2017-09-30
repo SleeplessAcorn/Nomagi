@@ -1,5 +1,6 @@
 package info.sleeplessacorn.nomagi.client.render;
 
+import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockCardinalBase;
 import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
 import net.minecraft.block.state.IBlockState;
@@ -12,12 +13,11 @@ import net.minecraft.util.math.MathHelper;
 
 public class RenderLecternBook extends TileEntitySpecialRenderer<TilePrivacyLectern> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("nomagi:textures/entity/lectern_book.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Nomagi.ID, "textures/entity/lectern_book.png");
 
     private final ModelBook model = new ModelBook();
 
-    public void render(
-            TilePrivacyLectern tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(TilePrivacyLectern tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         float tickInterpolation = MathHelper.sin((tile.tickCount + partialTicks) * 0.1F);
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5F, y + 0.62F, z + 0.5F);

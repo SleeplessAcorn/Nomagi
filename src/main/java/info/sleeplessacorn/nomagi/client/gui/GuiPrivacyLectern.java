@@ -1,9 +1,8 @@
 package info.sleeplessacorn.nomagi.client.gui;
 
-import info.sleeplessacorn.nomagi.ModGuis;
-import info.sleeplessacorn.nomagi.ModLogger;
 import info.sleeplessacorn.nomagi.Nomagi;
-import info.sleeplessacorn.nomagi.client.gui.Button.ButtonType;
+import info.sleeplessacorn.nomagi.client.GuiHandler;
+import info.sleeplessacorn.nomagi.client.gui.GuiButtonNomagi.ButtonType;
 import info.sleeplessacorn.nomagi.container.ContainerPrivacyLectern;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -35,7 +34,7 @@ public class GuiPrivacyLectern extends GuiContainer {
         String loc = "button.nomagi.privacyLectern.addPlayer.tooltip";
         for (int i = 0; i < playerCache.values().size(); i++) {
             int padding = fontRenderer.FONT_HEIGHT * i + 4 * i;
-            addButton(new Button(ButtonType.PLUS, guiLeft + 71, guiTop + 22 + padding).setTooltip(loc));
+            addButton(new GuiButtonNomagi(ButtonType.PLUS, guiLeft + 71, guiTop + 22 + padding).setTooltip(loc));
             // FIXME Use a fucking GuiScrollableList
         }
     }
@@ -50,8 +49,7 @@ public class GuiPrivacyLectern extends GuiContainer {
     @Override
     protected void renderHoveredToolTip(int mouseX, int mouseY) {
         super.renderHoveredToolTip(mouseX, mouseY);
-        buttonList.stream().filter(Button.class::isInstance)
-                .forEach(btn -> ((Button) btn).renderHoveredTooltip(mc, mouseX, mouseY));
+        buttonList.stream().filter(GuiButtonNomagi.class::isInstance).forEach(btn -> ((GuiButtonNomagi) btn).renderHoveredTooltip(mc, mouseX, mouseY));
     }
 
     @Override
@@ -68,19 +66,20 @@ public class GuiPrivacyLectern extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1f, 1f, 1f);
-        mc.getTextureManager().bindTexture(ModGuis.PRIVACY_LECTERN.getTexture());
+        mc.getTextureManager().bindTexture(GuiHandler.PRIVACY_LECTERN.getTexture());
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
     private void reloadPlayerMap() {
         playerCache.clear(); // Invalidate existing cache
         if (world == null || world.playerEntities == null) {
-            ModLogger.warn(false, "Failed to collect player names! Entity list doesn't exist!");
-        } else world.playerEntities
-                .forEach(player -> playerCache.putIfAbsent(
-                        player.getUniqueID(),
-                        player.getDisplayNameString())
-                );
+            Nomagi.LOGGER.warn("Failed to collect player names! Entity list doesn't exist!");
+        } else {
+            world.playerEntities.forEach(player -> playerCache.putIfAbsent(
+                    player.getUniqueID(),
+                    player.getDisplayNameString())
+            );
+        }
     }
 
 }

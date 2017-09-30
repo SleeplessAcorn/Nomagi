@@ -12,9 +12,7 @@ public class TentOwnerProvider implements IWailaDataProvider {
 
     @Override
     @Nonnull
-    public List<String> getWailaBody(
-            ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return tooltip; // TODO
     }
-
 }

@@ -1,6 +1,5 @@
 package info.sleeplessacorn.nomagi.block.base;
 
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import info.sleeplessacorn.nomagi.util.MaterialHelper;
@@ -11,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -30,14 +30,12 @@ public class BlockBase extends Block {
     public BlockBase(String name, float hardness, float resistance, Material material, SoundType sound) {
         super(material);
         container = createStateContainer().build();
-        setRegistryName(name);
         setUnlocalizedName(Nomagi.ID + "." + StringHelper.toLangKey(name));
         setHardness(hardness);
         setResistance(resistance);
         setSoundType(sound);
         setCreativeTab(Nomagi.TAB);
         setDefaultState(getBlockState().getBaseState());
-        registerItemBlock();
     }
 
     public BlockBase(String name, Material material, SoundType sound) {
@@ -52,8 +50,8 @@ public class BlockBase extends Block {
         this(name, material, MaterialHelper.getSoundType(material));
     }
 
-    protected void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockBase(this));
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this);
     }
 
     protected final void setRenderLayer(BlockRenderLayer layer) {

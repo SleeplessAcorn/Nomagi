@@ -1,6 +1,6 @@
 package info.sleeplessacorn.nomagi.world;
 
-import info.sleeplessacorn.nomagi.ModObjects;
+import info.sleeplessacorn.nomagi.core.RegistrarNomagi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
@@ -20,7 +20,8 @@ public class WorldProviderTent extends WorldProvider {
     private static final BiomeProvider BIOME = new BiomeProviderSingle(Biomes.VOID);
     private static final EmptyRenderer EMPTY_RENDERER = new EmptyRenderer();
 
-    public WorldProviderTent() {}
+    public WorldProviderTent() {
+    }
 
     @Override
     public IChunkGenerator createChunkGenerator() {
@@ -74,7 +75,7 @@ public class WorldProviderTent extends WorldProvider {
 
     @Override
     public DimensionType getDimensionType() {
-        return ModObjects.TENT_DIMENSION;
+        return RegistrarNomagi.tentDimension;
     }
 
     private static class EmptyRenderer extends IRenderHandler {

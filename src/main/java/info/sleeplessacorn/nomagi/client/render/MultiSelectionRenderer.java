@@ -40,7 +40,8 @@ public class MultiSelectionRenderer {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(
                 GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO
+        );
         GlStateManager.glLineWidth(2.0F);
         GlStateManager.disableTexture2D();
         GlStateManager.depthMask(false);
@@ -60,7 +61,9 @@ public class MultiSelectionRenderer {
     }
 
     @FunctionalInterface
-    public interface IProvider extends Function<IBlockState, List<AxisAlignedBB>> {}
+    public interface IProvider extends Function<IBlockState, List<AxisAlignedBB>> {
+
+    }
 
 }
 

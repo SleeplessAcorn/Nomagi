@@ -1,9 +1,9 @@
 package info.sleeplessacorn.nomagi.item;
 
-import info.sleeplessacorn.nomagi.ModObjects;
 import info.sleeplessacorn.nomagi.block.BlockChair;
 import info.sleeplessacorn.nomagi.block.BlockChair.Half;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
+import info.sleeplessacorn.nomagi.core.RegistrarNomagi;
 import info.sleeplessacorn.nomagi.item.base.ItemBlockBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyDirection;
@@ -37,7 +37,7 @@ public class ItemBlockChair extends ItemBlockBase {
 
     private boolean placeChairAt(World world, EntityPlayer player, BlockPos posUpper, BlockPos posLower) {
         if (!world.isRemote) {
-            BlockChair block = ModObjects.BLOCK_CHAIR;
+            BlockChair block = (BlockChair) RegistrarNomagi.CHAIR;
             PropertyDirection direction = BlockEnumCardinalBase.getFacingProperty();
             EnumFacing facing = player.getHorizontalFacing().getOpposite();
             IBlockState state = block.getDefaultState().withProperty(direction, facing);

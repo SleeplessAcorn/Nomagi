@@ -1,8 +1,8 @@
 package info.sleeplessacorn.nomagi.block;
 
-import info.sleeplessacorn.nomagi.ModGuis;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.base.BlockCardinalBase;
+import info.sleeplessacorn.nomagi.client.GuiHandler;
 import info.sleeplessacorn.nomagi.tile.TilePrivacyLectern;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,8 +30,8 @@ public class BlockPrivacyLectern extends BlockCardinalBase {
             World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing,
             float hitX, float hitY, float hitZ) {
         if (world.getTileEntity(pos) != null) {
-            int id = ModGuis.PRIVACY_LECTERN.getID();
-            FMLNetworkHandler.openGui(player, Nomagi.instance, id, world, pos.getX(), pos.getY(), pos.getZ());
+            int id = GuiHandler.PRIVACY_LECTERN.ordinal();
+            FMLNetworkHandler.openGui(player, Nomagi.INSTANCE, id, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return false;

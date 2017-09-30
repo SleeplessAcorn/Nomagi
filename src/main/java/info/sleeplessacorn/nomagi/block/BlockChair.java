@@ -1,12 +1,11 @@
 package info.sleeplessacorn.nomagi.block;
 
 import com.google.common.collect.ImmutableMap;
-import info.sleeplessacorn.nomagi.ModRegistry;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumCardinalBase;
+import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import info.sleeplessacorn.nomagi.entity.EntityChair;
 import info.sleeplessacorn.nomagi.item.ItemBlockChair;
 import info.sleeplessacorn.nomagi.util.BoundingBoxHelper;
-import info.sleeplessacorn.nomagi.block.base.IPropertyProvider;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -15,6 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -34,8 +34,8 @@ public class BlockChair extends BlockEnumCardinalBase<BlockChair.Half> {
     }
 
     @Override
-    public void registerItemBlock() {
-        ModRegistry.registerItemBlock(new ItemBlockChair(this));
+    public ItemBlock getItemBlock() {
+        return new ItemBlockChair(this);
     }
 
     @Override

@@ -27,17 +27,14 @@ public class EntityChair extends Entity {
         this(world, BlockPos.ORIGIN);
     }
 
-    public static ResourceLocation getRegistryName() {
-        return ID;
-    }
-
     @Override
     public float getExplosionResistance(Explosion explosion, World world, BlockPos pos, IBlockState state) {
         return MaterialHelper.getResistance(Material.WOOD);
     }
 
     @Override
-    protected void entityInit() {}
+    protected void entityInit() {
+    }
 
     @Override
     public void onUpdate() {
@@ -51,9 +48,15 @@ public class EntityChair extends Entity {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound nbt) {}
+    protected void readEntityFromNBT(NBTTagCompound nbt) {
+    }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound nbt) {}
+    protected void writeEntityToNBT(NBTTagCompound nbt) {
+    }
+
+    public static ResourceLocation getRegistryName() {
+        return ID;
+    }
 
 }
