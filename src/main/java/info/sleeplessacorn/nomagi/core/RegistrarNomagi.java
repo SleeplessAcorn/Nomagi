@@ -5,8 +5,8 @@ import com.google.common.collect.Sets;
 import info.sleeplessacorn.nomagi.ConfigHandler;
 import info.sleeplessacorn.nomagi.Nomagi;
 import info.sleeplessacorn.nomagi.block.*;
-import info.sleeplessacorn.nomagi.block.base.BlockBase;
 import info.sleeplessacorn.nomagi.block.base.BlockEnumBase;
+import info.sleeplessacorn.nomagi.block.base.IItemProvider;
 import info.sleeplessacorn.nomagi.client.ICustomStateMapper;
 import info.sleeplessacorn.nomagi.client.IModelProvider;
 import info.sleeplessacorn.nomagi.client.WrappedModel;
@@ -51,6 +51,7 @@ public class RegistrarNomagi {
     public static final Block CANDLE = Blocks.AIR;
     public static final Block ROOM_WORKTABLE = Blocks.AIR;
     public static final Block PRIVACY_LECTERN = Blocks.AIR;
+    public static final Block ROOM_DOOR = Blocks.AIR;
 
     public static DimensionType tentDimension = DimensionType.register(Nomagi.ID, "_tent", ConfigHandler.tentDimensionId, WorldProviderTent.class, false);
 
@@ -87,11 +88,11 @@ public class RegistrarNomagi {
         );
 
         blocks.forEach(b -> {
-            if (b instanceof BlockEnumBase)
-                items.add(((BlockEnumBase) b).getItemBlock().setRegistryName(b.getRegistryName()));
-            else if (b instanceof BlockBase)
-                items.add(((BlockBase) b).getItemBlock().setRegistryName(b.getRegistryName()));
-            else
+            if (b instanceof IItemProvider) {
+                ItemBlock itemBlock = ((IItemProvider) b).getItemBlock();
+                if (itemBlock != null)
+                    items.add(itemBlock.setRegistryName(b.getRegistryName()));
+            } else
                 items.add(new ItemBlock(b).setRegistryName(b.getRegistryName()));
         });
 

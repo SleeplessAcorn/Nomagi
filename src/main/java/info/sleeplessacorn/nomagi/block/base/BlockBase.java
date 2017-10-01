@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockBase extends Block {
+public class BlockBase extends Block implements IItemProvider {
 
     protected final BlockStateContainer container;
 
@@ -48,10 +48,6 @@ public class BlockBase extends Block {
 
     public BlockBase(String name, Material material) {
         this(name, material, MaterialHelper.getSoundType(material));
-    }
-
-    public ItemBlock getItemBlock() {
-        return new ItemBlockBase(this);
     }
 
     protected final void setRenderLayer(BlockRenderLayer layer) {
@@ -114,5 +110,10 @@ public class BlockBase extends Block {
 
     protected BlockStateContainer.Builder createStateContainer() {
         return new BlockStateContainer.Builder(this);
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this);
     }
 }

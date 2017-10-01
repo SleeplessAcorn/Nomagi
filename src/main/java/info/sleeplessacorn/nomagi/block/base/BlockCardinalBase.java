@@ -41,16 +41,6 @@ public class BlockCardinalBase extends BlockBase {
     }
 
     @Override
-    public ItemBlock getItemBlock() {
-        return new ItemBlockBase(this) {
-            @Override
-            public void gatherModels(Set<WrappedModel> models) {
-                models.add(new Builder(this).addVariant("facing=north").build());
-            }
-        };
-    }
-
-    @Override
     protected BlockStateContainer.Builder createStateContainer() {
         return super.createStateContainer().add(FACING);
     }
@@ -87,6 +77,16 @@ public class BlockCardinalBase extends BlockBase {
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         EnumFacing facing = placer.getHorizontalFacing().getOpposite();
         return getDefaultState().withProperty(FACING, facing);
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockBase(this) {
+            @Override
+            public void gatherModels(Set<WrappedModel> models) {
+                models.add(new Builder(this).addVariant("facing=north").build());
+            }
+        };
     }
 }
 

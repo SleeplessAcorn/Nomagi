@@ -49,17 +49,6 @@ public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> ext
     }
 
     @Override
-    public ItemBlock getItemBlock() {
-        return new ItemBlockEnumBase<E>(this) {
-            @Override
-            public void gatherModels(Set<WrappedModel> models) {
-                for (E value : values)
-                    models.add(new Builder(this, value.getMetadata()).addVariant("facing=north").addVariant("type=" + value.getName()).build());
-            }
-        };
-    }
-
-    @Override
     @Deprecated
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getHorizontal(meta >> 2);
@@ -79,6 +68,17 @@ public class BlockEnumCardinalBase<E extends Enum<E> & IPropertyProvider<E>> ext
 
     public EnumFacing getFacing(IBlockState state) {
         return state.getValue(FACING);
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockEnumBase<E>(this) {
+            @Override
+            public void gatherModels(Set<WrappedModel> models) {
+                for (E value : values)
+                    models.add(new Builder(this, value.getMetadata()).addVariant("facing=north").addVariant("type=" + value.getName()).build());
+            }
+        };
     }
 }
 

@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Block {
+public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Block implements IItemProvider {
 
     protected final E[] values;
     protected final PropertyEnum<E> propertyEnum;
@@ -45,10 +45,6 @@ public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Blo
 
     public BlockEnumBase(String name, Class<E> clazz) {
         this(name, "type", clazz);
-    }
-
-    public ItemBlock getItemBlock() {
-        return new ItemBlockEnumBase<>(this);
     }
 
     public final E getType(IBlockState state) {
@@ -197,5 +193,10 @@ public class BlockEnumBase<E extends Enum<E> & IPropertyProvider<E>> extends Blo
 
     protected BlockStateContainer.Builder createStateContainer() {
         return new BlockStateContainer.Builder(this).add(propertyEnum);
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockEnumBase<>(this);
     }
 }
